@@ -1,4 +1,4 @@
-# Project Name
+# Doodle Society
 
 <!--
 > This material was originally posted [here](http://www.quora.com/What-is-Amazons-approach-to-product-development-and-product-management). It is reproduced here for posterities sake.
@@ -17,28 +17,28 @@ Once the project moves into development, the press release can be used as a touc
  -->
 
 ## Heading
-  > Name the product in a way the reader (i.e. your target customers) will understand.
+Doodle Society
 
 ## Sub-Heading
-  > Describe who the market for the product is and what benefit they get. One sentence only underneath the title.
+Send your doods to your dudes!
 
 ## Summary
-  > Give a summary of the product and the benefit. Assume the reader will not read anything else so make this paragraph good.
+An app for uploading any image with the ability to draw on to your heart's content and share for your friends to see. 
 
 ## Problem
-  > Describe the problem your product solves.
+COVID-19 Boredom. Socially social distancing.
 
 ## Solution
-  > Describe how your product elegantly solves the problem.
+Provides a safe space for you and your friends to express creativity, interact freely, and make each other laugh.
 
 ## Quote from You
-  > A quote from a spokesperson in your company.
+The world's a better place when we doodle. 
 
 ## How to Get Started
-  > Describe how easy it is to get started.
+Sign up via Google, make a new account, add some friends, upload some pictures, find your friends' pictures and get doodling!
 
 ## Customer Quote
-  > Provide a quote from a hypothetical customer that describes how they experienced the benefit.
+Ever since I started doodling my dudes I'm a happier person. -- Kylie Jenner
 
 ## Closing and Call to Action
-  > Wrap it up and give pointers where the reader should go next.
+Use that noodle to doodle!
