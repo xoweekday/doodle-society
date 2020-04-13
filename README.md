@@ -1,10 +1,9 @@
 # Doodle Society
 
-> Pithy project description
+Ever wanted to draw on your friend's face? Now you can with little to no reprecussions. Come join our doodle society. Share images of yourself for others to mercilessly doodle upon. Share your favorite doodles with your friends. Send doods!
 
 ## Team
 
-  - __Product Owner__: teamMember
   - __Scrum Master__: Jeremy Webber
   - __Development Team Members__: Michael Bazile, Kenny Dang, Harley Padua, Nico Paulino, Jeremy Webber 
 
