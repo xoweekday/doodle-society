@@ -1,12 +1,12 @@
-# Project Name
+# Doodle Society
 
 > Pithy project description
 
 ## Team
 
   - __Product Owner__: teamMember
-  - __Scrum Master__: teamMember
-  - __Development Team Members__: teamMember, teamMember
+  - __Scrum Master__: Jeremy Webber
+  - __Development Team Members__: Michael Bazile, Kenny Dang, Harley Padua, Nico Paulino, Jeremy Webber 
 
 ## Table of Contents
 
