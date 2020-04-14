@@ -1,6 +1,6 @@
 const Pool = require('pg').Pool
 const pool = new Pool({
-  user: 'postgres',
+  user: process.env.DBUSER,
   host: 'localhost',
   database: 'doodle',
   password: process.env.DBPASS,
