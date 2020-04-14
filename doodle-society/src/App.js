@@ -22,6 +22,13 @@ function App() {
               setText(text.data);
             })
         }}>change to noodle</button>
+        <button onClick={() => {
+          const username = prompt('enter username');
+          const fullname = prompt('enter full name');
+          axios.post('/api/users', { username, fullname })
+            .then(id => console.log(id.data))
+            .catch(err => console.error(err));
+        }}>new user</button>
       </header>
     </div>
   );
