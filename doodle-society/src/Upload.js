@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { CloudinaryContext, Image } from "cloudinary-react";
 import { fetchPhotos, openUploadWidget } from "./CloudinaryService";
 
+// function for handling upload widget for cloudinary
 function Upload() {
   const [images, setImages] = useState([]);
 
