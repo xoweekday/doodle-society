@@ -1,34 +1,32 @@
 import React, { useState } from 'react';
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch
+} from "react-router-dom";
+
 import axios from 'axios';
 import './App.css';
+import Login from './Login/log-in.js'
+import Signin from './Login/sign-in.js'
+import NavigationBar from './Nav/nav.js'
+import { Layout } from "./Nav/navlayout.js";
+
 
 function App() {
-  const [text, setText] = useState('hello');
+  const [text, setText] = useState('Welcome to Doodle');
   return (
     <div className="App">
       <header className="App-header">
-        <p>
-          {text}
-        </p>
-        <button onClick={() => {
-          axios.get('/api/doodle')
-            .then((text) => {
-              setText(text.data);
-            })
-        }}>change to doodle</button>
-        <button onClick={() => {
-          axios.get('/api/noodle')
-            .then((text) => {
-              setText(text.data);
-            })
-        }}>change to noodle</button>
-        <button onClick={() => {
-          const username = prompt('enter username');
-          const fullname = prompt('enter full name');
-          axios.post('/api/users', { username, fullname })
-            .then(id => console.log(id.data))
-            .catch(err => console.error(err));
-        }}>new user</button>
+        <h1>{text}</h1>
+        <React.Fragment>
+          <Router>
+            <Switch>
+              <Route exact path="/" component={Signin} />
+              <Route path="/login" component={Login} />
+            </Switch>
+          </Router>
+        </React.Fragment>
       </header>
     </div>
   );
