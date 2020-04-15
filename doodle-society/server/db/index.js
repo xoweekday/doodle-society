@@ -13,6 +13,12 @@ const getUsers = (req, res) => {
 }
 
 //retrieve a user by their id number
+const getUserByGoogleId = (req, res) => {
+  const googleId = req.body.googleId;
+
+  return pool.query('SELECT * FROM users WHERE googleId = $1', [googleId]);
+}
+
 const getUserById = (req, res) => {
   const id = parseInt(req.params.id);
 
@@ -21,9 +27,10 @@ const getUserById = (req, res) => {
 
 //add a user to the db
 const createUser = (req, res) => {
-  const { username, fullname } = req.body;
+  const { googleId, email, name, imageUrl } = req.body;
 
-  return pool.query('INSERT INTO users (username, fullname) VALUES ($1, $2) RETURNING id', [username, fullname]);
+  return pool.query('INSERT INTO users (googleId, email, name, imageUrl) VALUES ($1, $2, $3, $4) RETURNING id', 
+  [googleId, email, name, imageUrl]);
 }
 
 //  add a friend relation to the db
@@ -94,6 +101,7 @@ const getUserDoodles = (req, res) => {
 
 module.exports = {
   getUsers,
+  getUserByGoogleId,
   getUserById,
   createUser,
   addFriend,

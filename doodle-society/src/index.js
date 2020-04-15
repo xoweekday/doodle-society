@@ -7,7 +7,6 @@ import Upload from './Upload'
 ReactDOM.render(
   <React.StrictMode>
     <App />
-    <Upload />
   </React.StrictMode>,
   document.getElementById('root')
 );

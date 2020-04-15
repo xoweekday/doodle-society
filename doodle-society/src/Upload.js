@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { CloudinaryContext, Image } from "cloudinary-react";
 import { fetchPhotos, openUploadWidget } from "./CloudinaryService";
+import { BrowserRouter as Router, Link, Switch, Route } from 'react-router-dom';
+import axios from 'axios';
+import Login from './Login/log-in';
 
 // function for handling upload widget for cloudinary
-function Upload() {
+function Upload(props) {
+  const { user, getImgs, setUser } = props;
   const [images, setImages] = useState([]);
 
   const beginUpload = tag => {
@@ -14,32 +18,35 @@ function Upload() {
     };
     openUploadWidget(uploadOptions, (error, photos) => {
       if (!error) {
-        console.log(photos);
-        if(photos.event === 'success'){
-          setImages([...images, photos.info.public_id])
-        }
+        Promise.all(photos.map((photo) => {
+          return axios.post('/api/images', { url: photo.url, uploader_id: user.id })
+        }))
+        .then((response) => {
+          console.log('response ', response.data);
+          getImgs();
+        })
+        .catch(err => console.error(err));
       } else {
         console.log(error);
       }
     })
   }
-  useEffect( () => {
-    fetchPhotos("image", setImages);
-  }, [])
+
   return (
   <div className="Upload">
     <header className="Upload-header">
         <CloudinaryContext cloudName='dmxywbm74'>
         <button onClick={() => beginUpload("image")}>Upload Image</button>
-      <section>
-        {images.map(i => <Image
-              key={i}
-              publicId={i}
-              fetch-format="auto"
-              quality="auto"
-            />)}
-      </section>
         </CloudinaryContext>
+        <Router>
+          <Switch>
+              <Route 
+                exact path="/" 
+                render={() => <Login setUser={setUser} />}
+              />
+          </Switch>
+          <Link to="/">home</Link>
+        </Router>
     </header>
   </div>
   );

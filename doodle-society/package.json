@@ -9,6 +9,7 @@
     "@testing-library/user-event": "^7.2.1",
     "axios": "^0.19.2",
     "bootstrap": "^4.4.1",
+    "cloudinary-core": "^2.8.2",
     "dotenv": "^8.2.0",
     "fastify": "^2.13.1",
     "pg": "^8.0.2",

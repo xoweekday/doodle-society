@@ -5,8 +5,10 @@ DROP TABLE IF EXISTS doodles;
 
 CREATE TABLE users (
   id serial PRIMARY KEY,
-  username VARCHAR (50) UNIQUE NOT NULL,
-  fullname VARCHAR (50) NOT NULL
+  googleId VARCHAR (50) UNIQUE NOT NULL,
+  email VARCHAR (50) NOT NULL,
+  name VARCHAR (50) NOT NULL,
+  imageUrl VARCHAR (255) NOT NULL
 );
 
 CREATE TABLE friends (
