@@ -1,8 +1,25 @@
 import React from 'react'
 import './log-in.css'
+import {GoogleLogin} from 'react-google-login';
 
+    // const [name, setName] = useState("");
+    // const [email, setEmail] = useState("");
+    // const [url, setUrl] = useState("");
+  
+    const responseGoogle = (response) => {
+
+        // in this function we can set up an axios post to save the data
+        //being sent from google
+
+        //   setName(response.profileObj.name);
+        //   setEmail(response.profileObj.email);
+        //   setUrl(response.profileObj.imageUrl);
+          console.log(response);
+        }
 
 const Login = () => (
+
+
     <form>
         <h3>Sign In</h3>
             <div className="form-group">
@@ -20,6 +37,15 @@ const Login = () => (
                     </div>
                 </div>
                 <button type="submit" className="btn btn-primary btn-block">Submit</button>
+                    <div>
+                    <GoogleLogin
+                        clientId="847322546124-r3jf05c1p89vlk3g6jbrbsv0632mh4go.apps.googleusercontent.com"
+                        buttonText="Login"
+                        onSuccess={responseGoogle}
+                        onFailure={responseGoogle}
+                        cookiePolicy={'single_host_origin'}
+                    />          
+                    </div>
                 <p className="forgot-password text-right">
                     Forgot <a href="#">password?</a>
                 </p>
