@@ -61,7 +61,9 @@ function App() {
     <div className="App">
         <React.Fragment>
           <Router>
-          <NavigationBar />
+          <NavigationBar 
+          imgs={imgs}
+          /> 
             <Switch>
               <Route 
                 exact path="/" 
@@ -71,6 +73,14 @@ function App() {
                 path="/upload"
                 render={() => <Upload user={user} getImgs={getImgs} setUser={setUser} />}
               />
+                <Route path="/profile" render={ (props) => 
+                <Profile 
+                user={user}
+                imgs={props.location.imgs}
+                getDoods={getDoods}
+                doods={doods}
+                /> 
+                } />
               <Route
                 path="/doodle"
                 render={(props) => {
@@ -81,29 +91,8 @@ function App() {
               />
               <Route path="/home" component={Main} />
             </Switch>
-            {!!user.id && <Link to="/upload">upload</Link>}
-            {!!user.id && <Link to="/">home</Link>}
-            {imgs.map(img => {
-          return (
-            <Link to={{
-              pathname: '/doodle',
-              url: img.url,
-              original_id: img.id,
-              getDoods: getDoods
-            }}><img className="gallery-img" src={img.url} /></Link>
-          )
-          })}
           </Router>
         </React.Fragment>
-        {doods.map(dood => {
-          console.log('DOOOOD ', dood);
-          return (
-            <div className="doodle-container">
-            <img className="doodle" src={dood[0].url} />
-            <img className="bg-img" src={dood[1]} />
-            </div>
-          )
-        })}  
     </div>
   );
 }

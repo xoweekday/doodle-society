@@ -16,30 +16,33 @@ const Styles = styled.div`
     }
   }
 `;
-const NavigationBar = () => (
+const NavigationBar = ({ imgs }) => (
   <Styles>
-    < Navbar collapseOnSelect="true" fixed = "top"
-    color = "red"
+    <Navbar
     expand = "lg" >
-      <Navbar.Brand href="/">Team Doodle</Navbar.Brand>
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="ml-auto">
           <Nav.Item>
             <Nav.Link>
-              <Link to="/">Signup</Link>
+              <Link to="/">login</Link>
             </Nav.Link>
           </Nav.Item>
           <Nav.Item>
             <Nav.Link>
-              <Link to="/login">login</Link>
+              <Link to={{
+                pathname:"/profile",
+                imgs,
+                }}>profile</Link>
             </Nav.Link>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link>
-              <Link to="/profile">profile</Link>
-            </Nav.Link>
             <Nav.Link>
               <Link to="/home">home</Link>
+            </Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link>
+              <Link to="/upload">upload</Link>
             </Nav.Link>
           </Nav.Item>
         </Nav>
