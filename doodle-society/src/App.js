@@ -11,6 +11,11 @@ import './App.css';
 import Login from './Login/log-in.js'
 import Upload from './Upload';
 import Canvas from './Canvas';
+import Signin from './Login/sign-in.js'
+import NavigationBar from './Nav/nav.js'
+import Main from './Main/Main';
+import { Layout } from "./Nav/navlayout.js";
+import Profile from './Proflie/profile'
 
 
 function App() {
@@ -54,10 +59,9 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
-        <h1>{text}</h1>
         <React.Fragment>
           <Router>
+          <NavigationBar />
             <Switch>
               <Route 
                 exact path="/" 
@@ -75,6 +79,7 @@ function App() {
                 )
               }}
               />
+              <Route path="/home" component={Main} />
             </Switch>
             {!!user.id && <Link to="/upload">upload</Link>}
             {!!user.id && <Link to="/">home</Link>}
@@ -90,7 +95,6 @@ function App() {
           })}
           </Router>
         </React.Fragment>
-      </header>
         {doods.map(dood => {
           console.log('DOOOOD ', dood);
           return (

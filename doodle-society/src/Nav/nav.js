@@ -5,12 +5,12 @@ import styled from 'styled-components';
 
 const Styles = styled.div`
   .navbar {
-    background-color: #222;
+    background-color: #008080;
   }
   a,
   .navbar-brand,
   .navbar-nav .nav-link {
-    color: #bbb;
+    color: #000;
     &:hover {
       color: white;
     }
@@ -18,9 +18,10 @@ const Styles = styled.div`
 `;
 const NavigationBar = () => (
   <Styles>
-    <Navbar expand="xl">
+    < Navbar collapseOnSelect="true" fixed = "top"
+    color = "red"
+    expand = "lg" >
       <Navbar.Brand href="/">Team Doodle</Navbar.Brand>
-      <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="ml-auto">
           <Nav.Item>
@@ -31,6 +32,14 @@ const NavigationBar = () => (
           <Nav.Item>
             <Nav.Link>
               <Link to="/login">login</Link>
+            </Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link>
+              <Link to="/profile">profile</Link>
+            </Nav.Link>
+            <Nav.Link>
+              <Link to="/home">home</Link>
             </Nav.Link>
           </Nav.Item>
         </Nav>
