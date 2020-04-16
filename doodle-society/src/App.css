@@ -62,3 +62,22 @@
   width: 100px;
   display: inline-block;
 }
+
+.doodle-container {
+  position: relative;
+}
+
+.doodle {
+  position: absolute;
+  height: 100px;
+  width: 100px;
+  z-index: 3;
+}
+
+.bg-img {
+  height: 100px;
+  width: 100px;
+  object-fit: cover;
+  object-position: 0 100%;
+  z-index: 1;
+}

@@ -86,4 +86,13 @@ fastify.post('/api/doodles', (req, res) => {
       console.error(err);
       res.status(500).send();
     })
-})
+});
+
+fastify.get('/api/originals/:id', (req, res) => {
+  db.getImageById(req, res)
+    .then(results => res.status(200).send(results.rows[0].url))
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send();
+    });
+});

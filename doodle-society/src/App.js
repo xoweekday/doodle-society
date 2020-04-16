@@ -29,7 +29,17 @@ function App() {
   const getDoods = () => {
     axios.get(`/api/doodles/${user.id}`)
       .then((doods) => {
-        setDoods(doods.data);
+        // setDoods(doods.data);
+        doods = doods.data;
+        Promise.all(doods.map((dood, i) => {
+          return axios.get(`/api/originals/${dood.original_id}`)
+            .then((img) => {
+              doods[i] = [dood, img.data];
+              console.log(doods);
+            })
+        }))
+        .then(() => setDoods(doods));
+
       })
       .catch(err => console.error(err));
   }
@@ -81,7 +91,15 @@ function App() {
           </Router>
         </React.Fragment>
       </header>
-      {doods.map(dood => <img src={dood.url} />)}  
+        {doods.map(dood => {
+          console.log('DOOOOD ', dood);
+          return (
+            <div className="doodle-container">
+            <img className="doodle" src={dood[0].url} />
+            <img className="bg-img" src={dood[1]} />
+            </div>
+          )
+        })}  
     </div>
   );
 }

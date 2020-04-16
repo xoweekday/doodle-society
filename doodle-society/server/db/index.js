@@ -93,6 +93,11 @@ const getUserUploads = (req, res) => {
   return pool.query('SELECT * FROM images WHERE uploader_id = $1', [id]);
 }
 
+const getImageById = (req, res) => {
+  const { id } = req.params;
+  return pool.query('SELECT url FROM images WHERE id = $1', [id]);
+}
+
 const getUserDoodles = (req, res) => {
   const { id } = req.params;
   return pool.query('SELECT * FROM doodles WHERE doodler_id = $1', [id]);
@@ -112,4 +117,5 @@ module.exports = {
   addDoodle,
   getUserUploads,
   getUserDoodles,
+  getImageById,
 }
