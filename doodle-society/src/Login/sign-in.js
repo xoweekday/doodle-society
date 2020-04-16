@@ -21,7 +21,7 @@ const Signin = () => (
                     <input type="password" className="form-control" placeholder="Enter password" />
                 </div>
                 <button type="submit" className="btn btn-primary btn-block">Sign Up</button>
-                <p className="forgot-password text-right">
+                <p className="form-group">
                     Already registered <a href="/login">sign in?</a>
                 </p>
             </form>
