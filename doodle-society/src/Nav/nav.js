@@ -38,6 +38,9 @@ const NavigationBar = () => (
             <Nav.Link>
               <Link to="/profile">profile</Link>
             </Nav.Link>
+            <Nav.Link>
+              <Link to="/home">home</Link>
+            </Nav.Link>
           </Nav.Item>
         </Nav>
       </Navbar.Collapse>
