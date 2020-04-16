@@ -69,3 +69,21 @@ fastify.get('/api/images/:id', (req, res) => {
       res.status(500).send();
     });
 });
+
+fastify.get('/api/doodles/:id', (req, res) => {
+  db.getUserDoodles(req, res)
+    .then(doodles => res.status(200).send(doodles.rows))
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send();
+    });
+});
+
+fastify.post('/api/doodles', (req, res) => {
+  db.addDoodle(req, res)
+    .then(results => res.status(201).send(results.rows[0].id))
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send();
+    })
+})

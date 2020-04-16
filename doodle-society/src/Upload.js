@@ -1,14 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { CloudinaryContext, Image } from "cloudinary-react";
-import { fetchPhotos, openUploadWidget } from "./CloudinaryService";
-import { BrowserRouter as Router, Link, Switch, Route } from 'react-router-dom';
+import React from 'react';
+import { CloudinaryContext } from "cloudinary-react";
+import { openUploadWidget } from "./CloudinaryService";
 import axios from 'axios';
-import Login from './Login/log-in';
 
 // function for handling upload widget for cloudinary
 function Upload(props) {
-  const { user, getImgs, setUser } = props;
-  const [images, setImages] = useState([]);
+  const { user, getImgs } = props;
 
   const beginUpload = tag => {
     const uploadOptions = {
@@ -22,7 +19,6 @@ function Upload(props) {
           return axios.post('/api/images', { url: photo.url, uploader_id: user.id })
         }))
         .then((response) => {
-          console.log('response ', response.data);
           getImgs();
         })
         .catch(err => console.error(err));
@@ -38,15 +34,6 @@ function Upload(props) {
         <CloudinaryContext cloudName='dmxywbm74'>
         <button onClick={() => beginUpload("image")}>Upload Image</button>
         </CloudinaryContext>
-        <Router>
-          <Switch>
-              <Route 
-                exact path="/" 
-                render={() => <Login setUser={setUser} />}
-              />
-          </Switch>
-          <Link to="/">home</Link>
-        </Router>
     </header>
   </div>
   );

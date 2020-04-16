@@ -36,3 +36,29 @@
     transform: rotate(360deg);
   }
 }
+
+.canvas {
+  z-index: 1;
+  height: 100%;
+  width: 100%;
+}
+
+.canvas-container {
+  height: 375px;
+  width: 375px;
+  position: relative;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.canvas-img {
+  position: relative;
+  height: 375px;
+  width: 375px;
+}
+
+.gallery-img {
+  height: 100px;
+  width: 100px;
+  display: inline-block;
+}

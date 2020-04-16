@@ -7,33 +7,38 @@ import {
 } from "react-router-dom";
 
 import axios from 'axios';
-import ReactDOM from 'react-dom';
 import './App.css';
 import Login from './Login/log-in.js'
-import Signin from './Login/sign-in.js'
 import Upload from './Upload';
-import NavigationBar from './Nav/nav.js'
-import { Layout } from "./Nav/navlayout.js";
+import Canvas from './Canvas';
 
 
 function App() {
   const [user, setUser] = useState({ id: null, name: 'Not logged in' });
   const [text, setText] = useState(user.name);
   const [imgs, setImgs] = useState([]);
+  const [doods, setDoods] = useState([]);
   const getImgs = () => {
     axios.get(`/api/images/${user.id}`)
       .then((imgs) => {
-        console.log(imgs.data);
         setImgs(imgs.data);
       })
       .catch(err => console.error(err));
   }
 
+  const getDoods = () => {
+    axios.get(`/api/doodles/${user.id}`)
+      .then((doods) => {
+        setDoods(doods.data);
+      })
+      .catch(err => console.error(err));
+  }
+
   useEffect(() => {
-    console.log('user changed');
     setText(user.name);
     if(user.id) {
       getImgs();
+      getDoods();
     }
   }, [user]);
 
@@ -52,15 +57,31 @@ function App() {
                 path="/upload"
                 render={() => <Upload user={user} getImgs={getImgs} setUser={setUser} />}
               />
+              <Route
+                path="/doodle"
+                render={(props) => {
+                  return (
+                <Canvas user={user} url={props.location.url} original_id={props.location.original_id} getDoods={props.location.getDoods} />
+                )
+              }}
+              />
             </Switch>
             {!!user.id && <Link to="/upload">upload</Link>}
+            {!!user.id && <Link to="/">home</Link>}
+            {imgs.map(img => {
+          return (
+            <Link to={{
+              pathname: '/doodle',
+              url: img.url,
+              original_id: img.id,
+              getDoods: getDoods
+            }}><img className="gallery-img" src={img.url} /></Link>
+          )
+          })}
           </Router>
         </React.Fragment>
       </header>
-      <div>
-        Your Images:
-        {imgs.map(img => <img src={img.url} />)}
-      </div>
+      {doods.map(dood => <img src={dood.url} />)}  
     </div>
   );
 }
