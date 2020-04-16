@@ -16,9 +16,9 @@ const LikeButton = () => {
 const Home = () => (
   <div className="Home">
     <div class="header">
-        <a href="#default" class="logo">Doodle Society</a>
+        <a href="#default" className="logo">Doodle Society</a>
           <div class="header-right">
-            <a class="active" href="/Home">Home</a>
+            <a className="active" href="/Home">Home</a>
             {/* need to add user image somehow */}
             <a href="#signout">Sign Out</a> 
             <img class="example" src="https://i.postimg.cc/KjLrdMQ0/0896a34002fd272037c30d52d4736264.png" />
