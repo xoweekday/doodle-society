@@ -3,7 +3,6 @@ import {
   BrowserRouter as Router,
   Route,
   Switch,
-  Link,
 } from "react-router-dom";
 
 import axios from 'axios';
@@ -11,16 +10,15 @@ import './App.css';
 import Login from './Login/log-in.js'
 import Upload from './Upload';
 import Canvas from './Canvas';
-import Signin from './Login/sign-in.js'
 import NavigationBar from './Nav/nav.js'
 import Main from './Main/Main';
-import { Layout } from "./Nav/navlayout.js";
-import Profile from './Proflie/profile'
+import SideNav from './Proflie/profile-side-nav';
+import NormalImageFeed from './Proflie/imagesfeed';
+import Doodlefeed from './Proflie/doodlefeed';
 
 
 function App() {
   const [user, setUser] = useState({ id: null, name: 'Not logged in' });
-  const [text, setText] = useState(user.name);
   const [imgs, setImgs] = useState([]);
   const [doods, setDoods] = useState([]);
   const getImgs = () => {
@@ -34,13 +32,11 @@ function App() {
   const getDoods = () => {
     axios.get(`/api/doodles/${user.id}`)
       .then((doods) => {
-        // setDoods(doods.data);
         doods = doods.data;
         Promise.all(doods.map((dood, i) => {
           return axios.get(`/api/originals/${dood.original_id}`)
             .then((img) => {
               doods[i] = [dood, img.data];
-              console.log(doods);
             })
         }))
         .then(() => setDoods(doods));
@@ -50,7 +46,6 @@ function App() {
   }
 
   useEffect(() => {
-    setText(user.name);
     if(user.id) {
       getImgs();
       getDoods();
@@ -61,9 +56,9 @@ function App() {
     <div className="App">
         <React.Fragment>
           <Router>
-          <NavigationBar 
-          imgs={imgs}
-          /> 
+            <NavigationBar 
+              imgs={imgs}
+            /> 
             <Switch>
               <Route 
                 exact path="/" 
@@ -73,14 +68,24 @@ function App() {
                 path="/upload"
                 render={() => <Upload user={user} getImgs={getImgs} setUser={setUser} />}
               />
-                <Route path="/profile" render={ (props) => 
-                <Profile 
-                user={user}
-                imgs={props.location.imgs}
-                getDoods={getDoods}
-                doods={doods}
-                /> 
-                } />
+              <Route
+                path="/profile"
+                render={() => (
+                  <div>
+                    <SideNav />
+                    <img src={user.imageurl}></img>
+                    <NormalImageFeed 
+                      imgs={imgs}
+                      getDoods={getDoods} 
+                      user={user}        
+                    />
+                    <Doodlefeed 
+                      doods={doods}
+                    />
+                  </div>
+                  )
+                } 
+              />
               <Route
                 path="/doodle"
                 render={(props) => {

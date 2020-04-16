@@ -1,8 +1,5 @@
-import React, {useRef, useState } from 'react';
-import ReactDom from "react-dom";
+import React, { useState } from 'react';
 import './Main.css';
-// <Route path="/Home" component={Main} />
-// <Link to="/Home">Home</Link>
 
 const LikeButton = () => {
   const [toggleState, setToggleState] = useState("off");
