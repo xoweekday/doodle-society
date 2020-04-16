@@ -1,7 +1,18 @@
-import React from 'react';
+import React, {useRef, useState } from 'react';
+import ReactDom from "react-dom";
 import './Main.css';
 // <Route path="/Home" component={Main} />
 // <Link to="/Home">Home</Link>
+
+const LikeButton = () => {
+  const [toggleState, setToggleState] = useState("off");
+
+  function toggle() {
+    setToggleState(toggleState === "off" ? "on" : "off");
+  }
+  return <div className={`switch ${toggleState}`} onClick={toggle} />;
+}
+
 const Home = () => (
   <div className="Home">
     <div class="header">
@@ -20,6 +31,7 @@ const Home = () => (
       <div class="main">
         <h6><font color="black">Doodle</font></h6>
         <div class="fakeimg" style={{height: 200}} >Image
+        <LikeButton />
         </div>
           <p align="justify"><font size="3" color="black">Username</font></p>
           <h6><font color="black">Doodle</font></h6>
