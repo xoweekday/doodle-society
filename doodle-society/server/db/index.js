@@ -90,7 +90,7 @@ const addDoodle = (req, res) => {
 
 const getUserUploads = (req, res) => {
   const { id } = req.params;
-  return pool.query('SELECT * FROM images WHERE uploader_id = $1', [id]);
+  return pool.query('SELECT * FROM images WHERE uploader_id = $1 ORDER BY created_at DESC', [id]);
 }
 
 const getImageById = (req, res) => {
@@ -100,7 +100,7 @@ const getImageById = (req, res) => {
 
 const getUserDoodles = (req, res) => {
   const { id } = req.params;
-  return pool.query('SELECT * FROM doodles WHERE doodler_id = $1', [id]);
+  return pool.query('SELECT * FROM doodles WHERE doodler_id = $1 ORDER BY created_at DESC', [id]);
 }
 
 

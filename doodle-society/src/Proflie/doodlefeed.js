@@ -1,17 +1,9 @@
 import React from 'react';
-import {
-  Link,
-  BrowserRouter as Router,
-  Route,
-  Switch
-} from 'react-router-dom'
-import Canvas from '../Canvas.js';
 
-const Doodlefeed = ({ doods }) => {
-
-  return (
+const Doodlefeed = ({ doods }) => (
     <div>
       {doods.map(dood => {
+        console.log(doods);
           return (
             <div className="doodle-container">
             <img className="doodle" src={dood[0].url} />
@@ -20,7 +12,6 @@ const Doodlefeed = ({ doods }) => {
           )
         })}  
     </div>
-  )
-}
+)
 
 export default Doodlefeed; 
