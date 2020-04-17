@@ -104,7 +104,10 @@ function App() {
                 );
               }}
             />
-            <Route path="/home" component={Main} />
+           <Route
+            path="/home"
+            render={() => <Main user={user} imgs={imgs} getDoods={getDoods} doods={doods}/>}
+            /> 
           </Switch>
         </Router>
       </React.Fragment>
