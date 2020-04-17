@@ -16,7 +16,6 @@ const Login = (props) => {
             })
             .then(user => {
                 setUser(user.data);
-                console.log(user.data.imageurl);
             })
             .catch(err => console.error(err));
       }
