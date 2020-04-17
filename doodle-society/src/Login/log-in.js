@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+
 import './log-in.css'
 import {GoogleLogin} from 'react-google-login';
 import axios from 'axios';
 
 const Login = (props) => {
+    const [ welcome, setWelcome ] = useState("");
     const [ name, setName] = useState("");
     const [ url, setUrl] = useState("");
     const { setUser } = props;
@@ -24,10 +25,12 @@ const Login = (props) => {
                 setUser(user.data);
             })
             .catch(err => console.error(err));
-      }
+    }
+
+
 
     return (
-        <h1>{name}
+    <h1>{ name }
         <h2><img src={url} alt={name}/></h2>
             <div>
             <GoogleLogin
