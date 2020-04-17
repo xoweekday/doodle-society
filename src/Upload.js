@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link, BrowserRouter as Router, Route, } from 'react-router-dom';
+import {LinkContainer} from 'react-router-bootstrap';
 import { CloudinaryContext } from "cloudinary-react";
 import { openUploadWidget } from "./CloudinaryService";
 import axios from 'axios';
@@ -20,6 +22,7 @@ function Upload(props) {
         }))
         .then((response) => {
           getImgs();
+          window.alert("Photo Uploaded!")
         })
         .catch(err => console.error(err));
       } else {
@@ -32,7 +35,7 @@ function Upload(props) {
   <div className="Upload">
     <header className="Upload-header">
         <CloudinaryContext cloudName='dmxywbm74'>
-        <button onClick={() => beginUpload("image")}>Upload Image</button>
+        <button onClick={() => beginUpload("image")}>Upload Image</button>          
         </CloudinaryContext>
     </header>
   </div>
