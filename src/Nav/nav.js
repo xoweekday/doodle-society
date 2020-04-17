@@ -59,5 +59,4 @@ const NavigationBar = ({ imgs, user }) => {
   )
 }
 
-
 export default NavigationBar;
