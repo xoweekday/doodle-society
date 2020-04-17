@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 // import axios from 'axios';
 import './App.css';
 import { fabric } from 'fabric';
@@ -8,6 +8,8 @@ let canvas;
 
 function Canvas(props) {
 const { url, original_id, user, getDoods } = props;
+const [caption, setCaption] = useState('');
+
 useEffect(() => {
   canvas = new fabric.Canvas('canvas', {
     isDrawingMode: true,
@@ -33,9 +35,9 @@ useEffect(() => {
 
   const save = () => {
     const dataUrl = document.getElementById('canvas').toDataURL();
-    axios.post('/api/doodles', { url: dataUrl, original_id, doodler_id: user.id })
+    const caption = document.getElementById('caption').value;
+    axios.post('/api/doodles', { url: dataUrl, caption, original_id, doodler_id: user.id })
       .then(id => {
-        console.log(id.data);
         getDoods();
       })
       .catch(err => console.error(err));
@@ -46,6 +48,8 @@ useEffect(() => {
       <header className="Doodle-header">
         <input type='color' name='color' onChange={handleChange}/>
         <input type="range" name='width' min="5" max="50" onChange={handleChange}></input>
+        Caption:
+        <input id="caption" type="text" onChange={(e) => setCaption(e.target.value)} />
         <button onClick={clearCanvas}>Clear</button>
         <button onClick={save}>Save</button>
       </header>

@@ -27,6 +27,7 @@ CREATE TABLE images (
 CREATE TABLE doodles (
   id serial PRIMARY KEY,
   url TEXT NOT NULL,
+  caption VARCHAR(255),
   original_id int NOT NULL,
   doodler_id int NOT NULL,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
