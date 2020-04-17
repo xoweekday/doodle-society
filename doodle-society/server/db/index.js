@@ -83,9 +83,9 @@ const addImage = (req, res) => {
 }
 
 const addDoodle = (req, res) => {
-  const { url, original_id, doodler_id } = req.body;
-  return pool.query('INSERT INTO doodles (url, original_id, doodler_id) VALUES ($1, $2, $3) RETURNING id', 
-  [url, original_id, doodler_id]);
+  const { url, caption, original_id, doodler_id } = req.body;
+  return pool.query('INSERT INTO doodles (url, caption, original_id, doodler_id) VALUES ($1, $2, $3, $4) RETURNING id', 
+  [url, caption, original_id, doodler_id]);
 }
 
 const getUserUploads = (req, res) => {
