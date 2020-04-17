@@ -39,6 +39,7 @@ useEffect(() => {
     axios.post('/api/doodles', { url: dataUrl, caption, original_id, doodler_id: user.id })
       .then(id => {
         getDoods();
+        window.alert("Dood saved!");
       })
       .catch(err => console.error(err));
   }
@@ -51,7 +52,7 @@ useEffect(() => {
         Caption:
         <input id="caption" type="text" onChange={(e) => setCaption(e.target.value)} />
         <button onClick={clearCanvas}>Clear</button>
-        <button onClick={save}>Save</button>
+        <button onClick={save} >Save</button>
       </header>
       <div className="canvas-container" id="canvas-container">
         <canvas className="canvas" id="canvas" />
