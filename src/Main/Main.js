@@ -10,7 +10,11 @@ const LikeButton = () => {
   return <div className={`switch ${toggleState}`} onClick={toggle} />;
 }
 
-const Home = () => (
+const signOut = () => {
+  localStorage.removeItem('JWT_TOKEN');
+}
+
+const Home = ({user, doods}) => (
   <div className="Home">
     <div class="header">
         <a href="#default" className="logo">Doodle Society</a>
@@ -18,7 +22,7 @@ const Home = () => (
             <a className="active" href="/Home">Home</a>
             {/* need to add user image somehow */}
             <a href="#signout">Sign Out</a> 
-            <img class="example" src="https://i.postimg.cc/KjLrdMQ0/0896a34002fd272037c30d52d4736264.png" />
+            <img class="example" onClick={() => {console.log(doods)}} src={user.imageurl} />
           </div>
       </div>
       <h2>Feed</h2>
@@ -26,15 +30,18 @@ const Home = () => (
         <div class="side">
       </div>
       <div class="main">
-        <h6><font color="black">Doodle</font></h6>
-        <div class="fakeimg" style={{height: 200}} >Image
-        <LikeButton />
-        </div>
-          <p align="justify"><font size="3" color="black">Username</font></p>
-          <h6><font color="black">Doodle</font></h6>
-        <div class="fakeimg" style={{height: 200}} >Image</div>
-          <p align="justify"><font size="3" color="black">Username</font></p>
-        </div>
+      {doods.map(dood => {
+          return (
+            <div class="feed-doodle-container">
+            <img class="feed-doodle" src={dood[0].url} />
+            <img class="feed-bg-image" src={dood[1]} />
+            <LikeButton />
+            <p align="justify"><font size="3" class="userName">{user.name}</font></p>
+            <p align="justify"><font size="3" class="caption">{dood[0].caption}</font></p>
+            </div>
+          )
+        })}  
+      </div>
     </div>
     <body>
     </body>

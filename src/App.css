@@ -23,9 +23,10 @@
 }
 
 .gallery-img {
-  height: 100px;
-  width: 100px;
+  height: 200px;
+  width: 200px;
   display: inline-block;
+  padding-bottom: 50px;
 }
 
 .doodle-container {
@@ -34,14 +35,14 @@
 
 .doodle {
   position: absolute;
-  height: 100px;
-  width: 100px;
+  height: 200px;
+  width: 200px;
   z-index: 3;
 }
 
 .bg-img {
-  height: 100px;
-  width: 100px;
+  height: 200px;
+  width: 200px;
   object-fit: cover;
   object-position: 0 100%;
   z-index: 1;

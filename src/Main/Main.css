@@ -133,7 +133,7 @@
 
 /* Main column */
 .main {
-  -ms-flex: 70%; /* IE10 */
+  -ms-flex: 70%;
   flex: 70%;
   background-color: white;
   padding: 20px;
@@ -141,12 +141,34 @@
 }
 
 /* Fake image, just for this example */
-.fakeimg {
-  background-color: #aaa;
-  width: 100%;
-  padding: 20px;
-  display: block;
-  margin: 0 auto;
+.feed-doodle-container {
+  position: relative;
+}
+
+.feed-doodle {
+  position: absolute;
+  height: 200px;
+  width: 200px;
+  z-index: 3;
+}
+
+.feed-bg-image {
+  height: 200px;
+  width: 200px;
+  object-fit: cover;
+  object-position: 0 100%;
+  z-index: 1;
+}
+
+.userName {
+  color: #00d4bc;
+  text-decoration: underline;
+
+}
+
+.caption {
+color: rgb(131, 130, 130);
+margin-bottom:  30px;
 }
 
 /* Footer */

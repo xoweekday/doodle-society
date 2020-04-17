@@ -13,7 +13,8 @@ const getUsers = (req, res) => {
   return pool.query('SELECT * FROM users ORDER BY id ASC');
 }
 
-//retrieve a user by their id number.
+
+//retrieve a user by their id number
 const getUserByGoogleId = (req, res) => {
   const googleId = req.body.googleId;
 
@@ -28,10 +29,9 @@ const getUserById = (req, res) => {
 
 //add a user to the db
 const createUser = (req, res) => {
-  const { googleId, email, name, imageUrl } = req.body;
-
-  return pool.query('INSERT INTO users (googleId, email, name, imageUrl) VALUES ($1, $2, $3, $4) RETURNING id', 
-  [googleId, email, name, imageUrl]);
+  const { googleId, email, name, imageUrl, accessToken} = req.body;
+  return pool.query('INSERT INTO users (googleId, email, name, imageUrl, accessToken) VALUES ($1, $2, $3, $4, $5) RETURNING id', 
+  [googleId, email, name, imageUrl, accessToken]);
 }
 
 //  add a friend relation to the db
