@@ -10,6 +10,10 @@ const LikeButton = () => {
   return <div className={`switch ${toggleState}`} onClick={toggle} />;
 }
 
+const signOut = () => {
+  localStorage.removeItem('JWT_TOKEN');
+}
+
 const Home = () => (
   <div className="Home">
     <div class="header">
