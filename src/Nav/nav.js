@@ -16,6 +16,7 @@ const Styles = styled.div`
     }
   }
 `;
+
 const NavigationBar = ({ imgs, user }) => {
   console.log(user);
   return (
@@ -58,6 +59,5 @@ const NavigationBar = ({ imgs, user }) => {
   </Styles>
   )
 }
-
 
 export default NavigationBar;
