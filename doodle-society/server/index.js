@@ -30,6 +30,7 @@ fastify.get('/api/doodle', (req, res) => {
 });
 
 fastify.post('/api/users', (req, res) => {
+  console.log('its working');
   db.getUserByGoogleId(req, res)
   .then((user) => {
     if(user.rowCount) {
