@@ -1,16 +1,18 @@
 const Pool = require('pg').Pool
 const pool = new Pool({
   user: process.env.DBUSER,
-  host: 'localhost',
+  host: process.env.DBHOST || 'localhost',
   database: 'doodle',
   password: process.env.DBPASS,
   port: 5432,
+  ssl: process.env.SSL || false,
 });
 
 //  get all the users
 const getUsers = (req, res) => {
   return pool.query('SELECT * FROM users ORDER BY id ASC');
 }
+
 
 //retrieve a user by their id number
 const getUserByGoogleId = (req, res) => {

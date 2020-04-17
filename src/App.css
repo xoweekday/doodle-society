@@ -35,8 +35,8 @@
 
 .doodle {
   position: absolute;
-  height: 100px;
-  width: 100px;
+  height: 200px;
+  width: 200px;
   z-index: 3;
 }
 
@@ -47,4 +47,3 @@
   object-position: 0 100%;
   z-index: 1;
 }
-

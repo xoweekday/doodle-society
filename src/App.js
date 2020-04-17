@@ -34,7 +34,6 @@ function App() {
   const getDoods = () => {
     axios.get(`/api/doodles/${user.id}`)
       .then((doods) => {
-        console.log(doods);
         doods = doods.data;
         Promise.all(doods.map((dood, i) => {
           return axios.get(`/api/originals/${dood.original_id}`)
@@ -104,7 +103,10 @@ function App() {
                 );
               }}
             />
-            <Route path="/home" component={Main} />
+           <Route
+            path="/home"
+            render={() => <Main user={user} imgs={imgs} getDoods={getDoods} doods={doods}/>}
+            /> 
           </Switch>
         </Router>
       </React.Fragment>
