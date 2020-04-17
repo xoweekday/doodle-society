@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react'
-import { Image } from 'react-bootstrap';
+
 import './log-in.css'
 import {GoogleLogin} from 'react-google-login';
 import axios from 'axios';
@@ -9,10 +8,16 @@ const Login = (props) => {
     const [ name, setName] = useState("");
     const [ url, setUrl] = useState("");
     const { setUser } = props;
+    const oauthGoogle = data => {
+        console.log('this is the access token', data.accessToken);
+          localStorage.setItem('JWT_Token', data.token);
+    }
     const responseGoogle = (response) => {
         setName(response.profileObj.name);
         setUrl(response.profileObj.imageUrl);
-        axios.post('/api/users', response.profileObj)
+        oauthGoogle(response);
+        const {accessToken} = response;
+        axios.post('/api/users', Object.assign(response.profileObj, {accessToken}))
             .then(id => {
                 return axios.get(`/api/users/${id.data}`);
             })
