@@ -16,7 +16,9 @@ const Styles = styled.div`
     }
   }
 `;
-const NavigationBar = ({ imgs }) => (
+const NavigationBar = ({ imgs, user }) => {
+  console.log(user);
+  return (
   <Styles>
     <Navbar
     expand = "lg" >
@@ -24,7 +26,7 @@ const NavigationBar = ({ imgs }) => (
         <Nav className="ml-auto">
           <Nav.Item>
             <Nav.Link>
-              <Link to="/">login</Link>
+              <Link to="/">Home</Link>
             </Nav.Link>
           </Nav.Item>
           <Nav.Item>
@@ -32,23 +34,30 @@ const NavigationBar = ({ imgs }) => (
               <Link to={{
                 pathname:"/profile",
                 imgs,
-                }}>profile</Link>
+                }}>Profile</Link>
             </Nav.Link>
           </Nav.Item>
           <Nav.Item>
             <Nav.Link>
-              <Link to="/home">home</Link>
+              <Link to="/home">Main</Link>
             </Nav.Link>
           </Nav.Item>
           <Nav.Item>
             <Nav.Link>
-              <Link to="/upload">upload</Link>
+              <Link to="/upload">Upload</Link>
+            </Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link>
+              { user.id !== null ? <Link to="/">Logout</Link> : null}
             </Nav.Link>
           </Nav.Item>
         </Nav>
       </Navbar.Collapse>
     </Navbar>
   </Styles>
-);
+  )
+}
+
 
 export default NavigationBar;
