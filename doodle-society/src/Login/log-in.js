@@ -7,9 +7,19 @@ const Login = (props) => {
     const [ name, setName] = useState("");
     const [ url, setUrl] = useState("");
     const { setUser } = props;
+    const oauthGoogle = data => {
+        console.log('this is the access token', data.accessToken);
+        axios.post('/api/users/auth', data.accessToken)
+        .then(res => {
+            localStorage.setItem('JWT_Token', res.data.token);
+            console.log(localStorage);
+        })
+        .catch(err => console.error(err));
+    }
     const responseGoogle = (response) => {
         setName(response.profileObj.name);
         setUrl(response.profileObj.imageUrl);
+        oauthGoogle(response);
         axios.post('/api/users', response.profileObj)
             .then(id => {
                 return axios.get(`/api/users/${id.data}`);
