@@ -1,9 +1,17 @@
 const fastify = require('fastify')({ logger: true });
 require('dotenv').config();
+const path = require('path');
 const db = require('./db');
+
+fastify.register(require('fastify-static'), {
+  root: path.join(__dirname, '../build')
+});
+
+const PORT = process.env.PORT || 4000;
+
 const start = async () => {
   try {
-    await fastify.listen(4000);
+    await fastify.listen(PORT);
   }
   catch(error) {
     fastify.log.error(error);
@@ -95,4 +103,8 @@ fastify.get('/api/originals/:id', (req, res) => {
       console.error(err);
       res.status(500).send();
     });
+});
+
+fastify.get('*', function (req, res) {
+  res.sendFile(path.join(__dirname, '../build', 'index.html'));
 });
