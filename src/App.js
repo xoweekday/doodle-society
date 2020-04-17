@@ -76,6 +76,7 @@ function App() {
                     <Row>
                       <Col>
                         <Image className="profileimgs" src={user.imageurl} rounded />
+                        <div><b>{user.name}</b></div>
                       </Col>
                     </Row>
                   </Container>
