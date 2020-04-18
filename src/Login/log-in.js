@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import './log-in.css'
 import {GoogleLogin} from 'react-google-login';
 import axios from 'axios';
@@ -7,7 +7,7 @@ const Login = (props) => {
     const [ welcome, setWelcome ] = useState("");
     const [ name, setName] = useState("");
     const [ url, setUrl] = useState("");
-    const { setUser } = props;
+    const { setUser, setBGImage } = props;
     const oauthGoogle = data => {
         console.log('this is the access token', data.accessToken);
           localStorage.setItem('JWT_Token', data.token);
@@ -27,7 +27,9 @@ const Login = (props) => {
             .catch(err => console.error(err));
     }
 
-
+    useEffect(() => {
+        setBGImage('https://i.pinimg.com/originals/45/f9/66/45f9668e4084ecb365ee24f85ee86744.gif');
+    }, [])
 
     return (
     <h1>{ name }
