@@ -25,6 +25,7 @@ function App() {
   const [imgs, setImgs] = useState([]);
   const [doods, setDoods] = useState([]);
   const [friends, setFriends] = useState([]);
+  const [bgImage, setBGImage] = useState('');
 
   const getImgs = () => {
     axios.get(`/api/images/${user.id}`)
@@ -66,6 +67,8 @@ function App() {
     }
   }, [user]);
 
+  
+
   return (
     <div className="App">
       <React.Fragment>
@@ -88,8 +91,9 @@ function App() {
                   <div className="imgheader">
                     <Row>
                       <Col>
-                        <Image className="profileimgs" src={user.imageurl} rounded />
+                        <div></div>
                         <div><b>{user.name}</b></div>
+                        <Image className="profileimgs" src={user.imageurl} rounded />
                         <div>{user.email}</div>
                         <div>{user.id !== null ? `Total Doods: ${doods.length}` : null}</div>
                       </Col>
