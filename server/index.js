@@ -33,8 +33,6 @@ fastify.post('/api/users', (req, res) => {
   db.getUserByGoogleId(req, res)
   .then((user) => {
     if(user.rowCount) {
-      console.log(user.rows);
-      console.log("already logged in as " + user.rows[0].name);
       res.status(200).send(user.rows[0].id);
       return;
     }
@@ -59,6 +57,15 @@ fastify.get('/api/users/:id', (req, res) => {
       res.status(500).send();
     })
 });
+
+fastify.get('/api/users/find/:email', (req, res) => {
+  db.getUserByEmail(req, res)
+  .then(user => res.status(200).send(user.rows[0]))
+  .catch((err) => {
+    console.error(err);
+    res.status(500).send();
+  });
+})
 
 fastify.post('/api/images', (req, res) => {
   db.addImage(req, res)
@@ -99,6 +106,24 @@ fastify.post('/api/doodles', (req, res) => {
 fastify.get('/api/originals/:id', (req, res) => {
   db.getImageById(req, res)
     .then(results => res.status(200).send(results.rows[0].url))
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send();
+    });
+});
+
+fastify.post('/api/friends', (req, res) => {
+  db.addFriend(req, res)
+    .then(result => res.status(201).send(result.rowCount))
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send();
+    });
+});
+
+fastify.get('/api/friends/:id', (req, res) => {
+  db.getFriends(req, res)
+    .then(friends => res.status(200).send(friends.map(friend => friend.rows[0])))
     .catch((err) => {
       console.error(err);
       res.status(500).send();
