@@ -19,49 +19,54 @@ const Styles = styled.div`
 const NavigationBar = ({ imgs, user, getFriends }) => {
   console.log(user);
   return (
-  <Styles>
-    <Navbar
-    expand = "lg" >
-      <Navbar.Collapse id="basic-navbar-nav">
-        <Nav className="ml-auto">
-          <Nav.Item>
-            <Nav.Link>
-              <Link to="/">Home</Link>
-            </Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-            <Nav.Link>
-              <Link onClick={getFriends} to={{
-                pathname:"/profile",
-                imgs,
-                }}>Profile</Link>
-            </Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-            <Nav.Link>
-              <Link to="/home">Main</Link>
-            </Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-            <Nav.Link>
-              <Link to="/upload">Upload</Link>
-            </Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-            <Nav.Link>
-              { user.id !== null ? <Link to="/">Logout</Link> : null}
-            </Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-            <Nav.Link>
-              { user.id !== null ? <Link to="/search">Search</Link> : null}
-            </Nav.Link>
-          </Nav.Item>
-        </Nav>
-      </Navbar.Collapse>
-    </Navbar>
-  </Styles>
-  )
+    <Styles>
+      <Navbar expand="lg">
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="ml-auto">
+            <Nav.Item>
+              <Nav.Link>
+                <Link to="/">Home</Link>
+              </Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link>
+                <Link
+                  onClick={getFriends}
+                  to={{
+                    pathname: "/profile",
+                    imgs,
+                  }}
+                >
+                  Profile
+                </Link>
+              </Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link>
+                <Link to="/home">Main</Link>
+              </Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link>
+                <Link to="/upload">Upload</Link>
+              </Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link>
+                {user.id !== null ? <Link to="/">Logout</Link> : null}
+              </Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link>
+                {user.id !== null ? <Link to="/search">Search</Link> : null}
+              </Nav.Link>
+            </Nav.Item>
+          </Nav>
+        </Navbar.Collapse>
+      </Navbar>
+    </Styles>
+  );
 }
 
 export default NavigationBar;
