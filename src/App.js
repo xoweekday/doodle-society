@@ -16,12 +16,15 @@ import Main from './Main/Main';
 import SideNav from './Proflie/profile-side-nav';
 import NormalImageFeed from './Proflie/imagesfeed';
 import Doodlefeed from './Proflie/doodlefeed';
+import Search from './Friends/Search';
+import { setRef } from '@material-ui/core';
 
 
 function App() {
   const [user, setUser] = useState({ id: null, name: 'Not logged in' });
   const [imgs, setImgs] = useState([]);
   const [doods, setDoods] = useState([]);
+  const [friends, setFriends] = useState([]);
 
   const getImgs = () => {
     axios.get(`/api/images/${user.id}`)
@@ -47,10 +50,19 @@ function App() {
       .catch(err => console.error(err));
   }
 
+  const getFriends = () => {
+    return axios.get(`/api/friends/${user.id}`)
+      .then(results => {
+        setFriends(results.data);
+        })
+      .catch(err => console.error(err));
+  }
+
   useEffect(() => {
     if(user.id) {
       getImgs();
       getDoods();
+      getFriends();
     }
   }, [user]);
 
@@ -59,7 +71,7 @@ function App() {
       <React.Fragment>
         <Router>
           <ReactNotifications/>
-          <NavigationBar user={user} imgs={imgs} />
+          <NavigationBar user={user} imgs={imgs} getFriends={getFriends} />
           <Switch>
             <Route exact path="/" render={() => <Login setUser={setUser} />} />
             <Route
@@ -70,7 +82,8 @@ function App() {
             />
             <Route
               path="/profile"
-              render={() => (
+              render={() => {
+                return (
                 <div>
                   <div className="imgheader">
                   <Container>
@@ -83,7 +96,7 @@ function App() {
                     </Row>
                   </Container>
                   </div>
-                  <SideNav />
+                  <SideNav friends={friends} />
                   <NormalImageFeed
                     imgs={imgs}
                     getDoods={getDoods}
@@ -91,7 +104,7 @@ function App() {
                   />
                   <Doodlefeed doods={doods} user={user}/>
                 </div>
-              )}
+              )}}
             />
             <Route
               path="/doodle"
@@ -109,7 +122,11 @@ function App() {
            <Route
             path="/home"
             render={() => <Main user={user} imgs={imgs} getDoods={getDoods} doods={doods}/>}
-            /> 
+            />
+            <Route
+              path="/search"
+              render={() => <Search user={user} getFriends={getFriends} />}
+            />
           </Switch>
         </Router>
       </React.Fragment>
