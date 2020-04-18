@@ -5,7 +5,7 @@ import {
   Route,
   Switch,
 } from "react-router-dom";
-
+import ReactNotifications from 'react-notifications-component';
 import axios from 'axios';
 import './App.css';
 import Login from './Login/log-in.js'
@@ -75,12 +75,13 @@ function App() {
     <div className="App">
       <React.Fragment>
         <Router>
+          <ReactNotifications/>
           <NavigationBar user={user} imgs={imgs} getFriends={getFriends} setBGImage={setBGImage} />
           <Switch>
             <Route exact path="/" render={() => <Login setUser={setUser} setBGImage={setBGImage} />} />
             <Route
               path="/upload"
-              render={() => (
+              render={() => ( 
                 <Upload user={user} getImgs={getImgs} setUser={setUser} />
               )}
             />
@@ -90,15 +91,14 @@ function App() {
                 return (
                 <div>
                   <div className="imgheader">
-                  <Container>
                     <Row>
                       <Col>
                         <Image className="profileimgs" src={user.imageurl} rounded />
                         <div><b>{user.name}</b></div>
                         <div>{user.email}</div>
+                        <div>{user.id !== null ? `Total Doods: ${doods.length}` : null}</div>
                       </Col>
                     </Row>
-                  </Container>
                   </div>
                   <SideNav friends={friends} />
                   <NormalImageFeed
@@ -123,7 +123,7 @@ function App() {
                 );
               }}
             />
-           <Route
+          <Route
             path="/home"
             render={() => <Main user={user} imgs={imgs} getDoods={getDoods} doods={doods}/>}
             />
