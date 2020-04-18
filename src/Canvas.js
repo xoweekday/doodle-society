@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-// import axios from 'axios';
+import {useHistory} from 'react-router-dom';
 import './App.css';
 import { fabric } from 'fabric';
 import axios from 'axios';
@@ -36,6 +36,7 @@ useEffect(() => {
     }
   };
 
+  const history = useHistory();
   const handleChange = (event) => {
     let value = event.target.value;
     if (!isNaN(Number(value))){
@@ -55,6 +56,7 @@ useEffect(() => {
       .then(id => {
         getDoods();
         setTimeout(function(){store.addNotification(options);},0);
+        history.push('/profile');
       })
       .catch(err => console.error(err));
   }
