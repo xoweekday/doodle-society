@@ -16,7 +16,7 @@ const Styles = styled.div`
     }
   }
 `;
-const NavigationBar = ({ imgs, user }) => {
+const NavigationBar = ({ imgs, user, getFriends }) => {
   console.log(user);
   return (
   <Styles>
@@ -31,7 +31,7 @@ const NavigationBar = ({ imgs, user }) => {
           </Nav.Item>
           <Nav.Item>
             <Nav.Link>
-              <Link to={{
+              <Link onClick={getFriends} to={{
                 pathname:"/profile",
                 imgs,
                 }}>Profile</Link>
@@ -50,6 +50,11 @@ const NavigationBar = ({ imgs, user }) => {
           <Nav.Item>
             <Nav.Link>
               { user.id !== null ? <Link to="/">Logout</Link> : null}
+            </Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link>
+              { user.id !== null ? <Link to="/search">Search</Link> : null}
             </Nav.Link>
           </Nav.Item>
         </Nav>

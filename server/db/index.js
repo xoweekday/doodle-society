@@ -25,6 +25,12 @@ const getUserById = (req, res) => {
   return pool.query('SELECT * FROM users WHERE id = $1', [id]);
 }
 
+const getUserByEmail = (req, res) => {
+  const { email } = req.params;
+
+  return pool.query('SELECT * FROM users WHERE email = $1', [email]);
+}
+
 //add a user to the db
 const createUser = (req, res) => {
   const { googleId, email, name, imageUrl, accessToken} = req.body;
@@ -107,6 +113,7 @@ module.exports = {
   getUsers,
   getUserByGoogleId,
   getUserById,
+  getUserByEmail,
   createUser,
   addFriend,
   getFriends,
