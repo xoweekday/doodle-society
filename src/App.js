@@ -5,7 +5,7 @@ import {
   Route,
   Switch,
 } from "react-router-dom";
-
+import ReactNotifications from 'react-notifications-component';
 import axios from 'axios';
 import './App.css';
 import Login from './Login/log-in.js'
@@ -70,12 +70,13 @@ function App() {
     <div className="App">
       <React.Fragment>
         <Router>
+          <ReactNotifications/>
           <NavigationBar user={user} imgs={imgs} getFriends={getFriends} />
           <Switch>
             <Route exact path="/" render={() => <Login setUser={setUser} />} />
             <Route
               path="/upload"
-              render={() => (
+              render={() => ( 
                 <Upload user={user} getImgs={getImgs} setUser={setUser} />
               )}
             />
