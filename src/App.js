@@ -25,6 +25,7 @@ function App() {
   const [imgs, setImgs] = useState([]);
   const [doods, setDoods] = useState([]);
   const [friends, setFriends] = useState([]);
+  const [bgImage, setBGImage] = useState('');
 
   const getImgs = () => {
     axios.get(`/api/images/${user.id}`)
@@ -66,13 +67,17 @@ function App() {
     }
   }, [user]);
 
+  useEffect(() => {
+    document.getElementById('root').style.backgroundImage = `url(${bgImage})`;
+  }, [bgImage]);
+
   return (
     <div className="App">
       <React.Fragment>
         <Router>
-          <NavigationBar user={user} imgs={imgs} getFriends={getFriends} />
+          <NavigationBar user={user} imgs={imgs} getFriends={getFriends} setBGImage={setBGImage} />
           <Switch>
-            <Route exact path="/" render={() => <Login setUser={setUser} />} />
+            <Route exact path="/" render={() => <Login setUser={setUser} setBGImage={setBGImage} />} />
             <Route
               path="/upload"
               render={() => (

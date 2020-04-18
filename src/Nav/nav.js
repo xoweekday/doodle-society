@@ -16,7 +16,7 @@ const Styles = styled.div`
     }
   }
 `;
-const NavigationBar = ({ imgs, user, getFriends }) => {
+const NavigationBar = ({ imgs, user, getFriends, setBGImage }) => {
   console.log(user);
   return (
   <Styles>
@@ -31,7 +31,12 @@ const NavigationBar = ({ imgs, user, getFriends }) => {
           </Nav.Item>
           <Nav.Item>
             <Nav.Link>
-              <Link onClick={getFriends} to={{
+              <Link 
+                onClick={() => {
+                setBGImage('');
+                getFriends();
+              }} 
+                to={{
                 pathname:"/profile",
                 imgs,
                 }}>Profile</Link>
@@ -39,12 +44,12 @@ const NavigationBar = ({ imgs, user, getFriends }) => {
           </Nav.Item>
           <Nav.Item>
             <Nav.Link>
-              <Link to="/home">Main</Link>
+              <Link to="/home" onClick={() => setBGImage('')}>Main</Link>
             </Nav.Link>
           </Nav.Item>
           <Nav.Item>
             <Nav.Link>
-              <Link to="/upload">Upload</Link>
+              <Link to="/upload" onClick={() => setBGImage('')}>Upload</Link>
             </Nav.Link>
           </Nav.Item>
           <Nav.Item>
@@ -54,7 +59,7 @@ const NavigationBar = ({ imgs, user, getFriends }) => {
           </Nav.Item>
           <Nav.Item>
             <Nav.Link>
-              { user.id !== null ? <Link to="/search">Search</Link> : null}
+              { user.id !== null ? <Link to="/search" onClick={() => setBGImage('')}>Search</Link> : null}
             </Nav.Link>
           </Nav.Item>
         </Nav>

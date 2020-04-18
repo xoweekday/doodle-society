@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import './log-in.css'
 import {GoogleLogin} from 'react-google-login';
 import axios from 'axios';
@@ -7,7 +7,7 @@ const Login = (props) => {
     const [ welcome, setWelcome ] = useState("");
     const [ name, setName] = useState("");
     const [ url, setUrl] = useState("");
-    const { setUser } = props;
+    const { setUser, setBGImage } = props;
     const oauthGoogle = data => {
         console.log('this is the access token', data.accessToken);
           localStorage.setItem('JWT_Token', data.token);
@@ -27,7 +27,9 @@ const Login = (props) => {
             .catch(err => console.error(err));
     }
 
-
+    useEffect(() => {
+        setBGImage('https://vignette.wikia.nocookie.net/spongebob/images/d/d9/DoodleBob.png/revision/latest?cb=20180113221054');
+    }, [])
 
     return (
     <h1>{ name }
