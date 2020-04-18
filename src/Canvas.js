@@ -3,6 +3,9 @@ import React, { useEffect, useState } from 'react';
 import './App.css';
 import { fabric } from 'fabric';
 import axios from 'axios';
+import { store } from 'react-notifications-component';
+import 'react-notifications-component/dist/theme.css';
+import 'animate.css';
 
 let canvas;
 
@@ -20,6 +23,18 @@ useEffect(() => {
    document.getElementById('canvas-container').style.backgroundImage = `url(${url})`;
 
   }, []);
+
+  const options = {
+    title: 'SUCCESS!',
+    message: 'Doods saved!',
+    type: 'success',                         // 'default', 'success', 'info', 'warning'
+    container: 'center',                // where to position the notifications
+    animationIn: ["animated", "fadeIn"],     // animate.css classes that's applied
+    animationOut: ["animated", "fadeOut"],   // animate.css classes that's applied
+    dismiss: {
+      duration: 10000 
+    }
+  };
 
   const handleChange = (event) => {
     let value = event.target.value;
@@ -39,7 +54,7 @@ useEffect(() => {
     axios.post('/api/doodles', { url: dataUrl, caption, original_id, doodler_id: user.id })
       .then(id => {
         getDoods();
-        window.alert("Dood saved!");
+        setTimeout(function(){store.addNotification(options);},0);
       })
       .catch(err => console.error(err));
   }
