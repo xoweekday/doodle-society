@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link, useHistory } from "react-router-dom";
 import {LinkContainer} from 'react-router-bootstrap';
 import { CloudinaryContext } from "cloudinary-react";
 import { openUploadWidget } from "./CloudinaryService";
@@ -8,9 +9,9 @@ import 'react-notifications-component/dist/theme.css';
 import 'animate.css';
 import { Tooltip } from '@material-ui/core';
 
-
 // function for handling upload widget for cloudinary
 function Upload(props) {
+  const history = useHistory();
   const { user, getImgs } = props;
   const options = {
     title: 'SUCCESS!',
@@ -38,6 +39,7 @@ function Upload(props) {
         .then((response) => {
           getImgs();
           setTimeout(function(){store.addNotification(options);},0);
+          history.push('/profile');
           // window.alert("Photo successfully Uploaded");
         })
         .catch(err => console.error(err));
@@ -52,9 +54,11 @@ function Upload(props) {
     <h1><b>Upload your Photo here!</b></h1>
     <header className="Upload-header">
         <CloudinaryContext cloudName='dmxywbm74'>
+          {/* <LinkContainer to="/profile" delay={5000}> */}
         <button onClick={() => {
           beginUpload("image");
         }}>Upload Image</button>                         
+        {/* </LinkContainer> */}
         </CloudinaryContext>
     </header>
   </div>
