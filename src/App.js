@@ -67,18 +67,16 @@ function App() {
     }
   }, [user]);
 
-  useEffect(() => {
-    document.getElementById('root').style.backgroundImage = `url(${bgImage})`;
-  }, [bgImage]);
+  
 
   return (
     <div className="App">
       <React.Fragment>
         <Router>
           <ReactNotifications/>
-          <NavigationBar user={user} imgs={imgs} getFriends={getFriends} setBGImage={setBGImage} />
+          <NavigationBar user={user} imgs={imgs} getFriends={getFriends} />
           <Switch>
-            <Route exact path="/" render={() => <Login setUser={setUser} setBGImage={setBGImage} />} />
+            <Route exact path="/" render={() => <Login setUser={setUser} />} />
             <Route
               path="/upload"
               render={() => ( 
