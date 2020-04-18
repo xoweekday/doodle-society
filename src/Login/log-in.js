@@ -27,11 +27,13 @@ const Login = (props) => {
             .catch(err => console.error(err));
     }
 
-
-
     return (
-    <h1>{ name }
-        <h2><img src={url} alt={name}/></h2>
+    <div className="login">
+        <h1>Doodle Society</h1>
+        <div className="log-form">
+        <h2>Login to continue</h2>
+        <h3>{ name }
+            <h3><img src={url} alt={name}/></h3>
             <div>
             <GoogleLogin
                 clientId="847322546124-r3jf05c1p89vlk3g6jbrbsv0632mh4go.apps.googleusercontent.com"
@@ -39,9 +41,11 @@ const Login = (props) => {
                 onSuccess={responseGoogle}
                 onFailure={responseGoogle}
                 cookiePolicy={'single_host_origin'}
-                />       
+                />
             </div>
-        </h1>
+        </h3>
+        </div>
+    </div>
     )
 };
 
