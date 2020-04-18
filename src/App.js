@@ -72,15 +72,14 @@ function App() {
               render={() => (
                 <div>
                   <div className="imgheader">
-                  <Container>
                     <Row>
                       <Col>
                         <Image className="profileimgs" src={user.imageurl} rounded />
                         <div><b>{user.name}</b></div>
                         <div>{user.email}</div>
+                        <div>{user.id !== null ? `Total Doods: ${doods.length}` : null}</div>
                       </Col>
                     </Row>
-                  </Container>
                   </div>
                   <SideNav />
                   <NormalImageFeed
@@ -105,7 +104,7 @@ function App() {
                 );
               }}
             />
-           <Route
+          <Route
             path="/home"
             render={() => <Main user={user} imgs={imgs} getDoods={getDoods} doods={doods}/>}
             /> 

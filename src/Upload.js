@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link, BrowserRouter as Router, Route, } from 'react-router-dom';
-import {LinkContainer} from 'react-router-bootstrap';
 import { CloudinaryContext } from "cloudinary-react";
 import { openUploadWidget } from "./CloudinaryService";
 import axios from 'axios';
