@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './Main.css';
+import { Redirect } from 'react-router-dom';
 
 const LikeButton = () => {
   const [toggleState, setToggleState] = useState("off");
@@ -14,7 +15,15 @@ const signOut = () => {
   localStorage.removeItem('JWT_TOKEN');
 }
 
-const Home = ({user, doods}) => (
+const Home = ({user, doods }) => {
+  const [ redirect, setRedirect]  = useState(false);
+
+const renderRedirect = () => {
+  if (redirect) {
+    return <Redirect to='/profile' />
+  }
+}
+  return (
   <div className="Home">
     <div class="header">
         <a href="#default" className="logo">Doodle Society</a>
@@ -22,7 +31,7 @@ const Home = ({user, doods}) => (
             <a className="active" href="/Home">Home</a>
             {/* need to add user image somehow */}
             <a href="#signout">Sign Out</a> 
-            <img class="example" onClick={() => {console.log(doods)}} src={user.imageurl} />
+            <img class="example" src={user.imageurl} />
           </div>
       </div>
       <h2>Feed</h2>
@@ -30,14 +39,22 @@ const Home = ({user, doods}) => (
         <div class="side">
       </div>
       <div class="main">
+    {/* <div> */}
       {doods.map(dood => {
           return (
-            <div class="feed-doodle-container">
-            <img class="feed-doodle" src={dood[0].url} />
-            <img class="feed-bg-image" src={dood[1]} />
+            <div className="feed-doodle-container">
+              {renderRedirect()}
+            <img className="feed-doodle" src={dood[0].url} />
+            <img className="feed-bg-image" src={dood[1]} />
             <LikeButton />
-            <p align="justify"><font size="3" class="userName">{user.name}</font></p>
-            <p align="justify"><font size="3" class="caption">{dood[0].caption}</font></p>
+            <p align="justify"><font className="userName" onClick={() => 
+              {
+                setRedirect(true);
+                console.log(redirect);
+                
+              }
+              }>{user.name + ':'}</font></p>
+            <p align="justify"><font className="caption">{dood[0].caption}</font></p>
             </div>
           )
         })}  
@@ -47,5 +64,5 @@ const Home = ({user, doods}) => (
     </body>
   </div>
 
-);
+)};
 export default Home;
