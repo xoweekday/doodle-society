@@ -28,7 +28,7 @@ const Login = (props) => {
     }
 
     useEffect(() => {
-        setBGImage('https://vignette.wikia.nocookie.net/spongebob/images/d/d9/DoodleBob.png/revision/latest?cb=20180113221054');
+        setBGImage('https://i.pinimg.com/originals/45/f9/66/45f9668e4084ecb365ee24f85ee86744.gif');
     }, [])
 
     return (
