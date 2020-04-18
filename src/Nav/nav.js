@@ -16,7 +16,7 @@ const Styles = styled.div`
     }
   }
 `;
-const NavigationBar = ({ imgs, user, getFriends }) => {
+const NavigationBar = ({ imgs, user, getFriends, setBGImage }) => {
   console.log(user);
   return (
     <Styles>
@@ -32,7 +32,9 @@ const NavigationBar = ({ imgs, user, getFriends }) => {
             <Nav.Item>
               <Nav.Link>
                 <Link
-                  onClick={getFriends}
+                  onClick={() => {
+                    getFriends();
+                  }}
                   to={{
                     pathname: "/profile",
                     imgs,
