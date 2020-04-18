@@ -19,56 +19,6 @@ const Styles = styled.div`
 const NavigationBar = ({ imgs, user, getFriends, setBGImage }) => {
   console.log(user);
   return (
-<<<<<<< HEAD
-  <Styles>
-    <Navbar
-    expand = "lg" >
-      <Navbar.Collapse id="basic-navbar-nav">
-        <Nav className="ml-auto">
-          <Nav.Item>
-            <Nav.Link>
-              <Link to="/">Home</Link>
-            </Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-            <Nav.Link>
-              <Link 
-                onClick={() => {
-                setBGImage('');
-                getFriends();
-              }} 
-                to={{
-                pathname:"/profile",
-                imgs,
-                }}>Profile</Link>
-            </Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-            <Nav.Link>
-              <Link to="/home" onClick={() => setBGImage('')}>Main</Link>
-            </Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-            <Nav.Link>
-              <Link to="/upload" onClick={() => setBGImage('')}>Upload</Link>
-            </Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-            <Nav.Link>
-              { user.id !== null ? <Link to="/">Logout</Link> : null}
-            </Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-            <Nav.Link>
-              { user.id !== null ? <Link to="/search" onClick={() => setBGImage('')}>Search</Link> : null}
-            </Nav.Link>
-          </Nav.Item>
-        </Nav>
-      </Navbar.Collapse>
-    </Navbar>
-  </Styles>
-  )
-=======
     <Styles>
       <Navbar expand="lg">
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -117,7 +67,6 @@ const NavigationBar = ({ imgs, user, getFriends, setBGImage }) => {
       </Navbar>
     </Styles>
   );
->>>>>>> 90cf436b1c4e70059786591e546b7371ef83285c
 }
 
 export default NavigationBar;
