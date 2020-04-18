@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
-// import axios from 'axios';
+import {useHistory} from 'react-router-dom';
 import './App.css';
 import { fabric } from 'fabric';
 import axios from 'axios';
+import { store } from 'react-notifications-component';
+import 'react-notifications-component/dist/theme.css';
+import 'animate.css';
 
 let canvas;
 
@@ -21,6 +24,19 @@ useEffect(() => {
 
   }, []);
 
+  const options = {
+    title: 'SUCCESS!',
+    message: 'Doods saved!',
+    type: 'success',                         // 'default', 'success', 'info', 'warning'
+    container: 'center',                // where to position the notifications
+    animationIn: ["animated", "fadeIn"],     // animate.css classes that's applied
+    animationOut: ["animated", "fadeOut"],   // animate.css classes that's applied
+    dismiss: {
+      duration: 1500 
+    }
+  };
+
+  const history = useHistory();
   const handleChange = (event) => {
     let value = event.target.value;
     if (!isNaN(Number(value))){
@@ -39,6 +55,8 @@ useEffect(() => {
     axios.post('/api/doodles', { url: dataUrl, caption, original_id, doodler_id: user.id })
       .then(id => {
         getDoods();
+        setTimeout(function(){store.addNotification(options);},0);
+        history.push('/profile');
       })
       .catch(err => console.error(err));
   }
@@ -51,7 +69,7 @@ useEffect(() => {
         Caption:
         <input id="caption" type="text" onChange={(e) => setCaption(e.target.value)} />
         <button onClick={clearCanvas}>Clear</button>
-        <button onClick={save}>Save</button>
+        <button onClick={save} >Save</button>
       </header>
       <div className="canvas-container" id="canvas-container">
         <canvas className="canvas" id="canvas" />

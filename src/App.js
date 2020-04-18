@@ -5,7 +5,7 @@ import {
   Route,
   Switch,
 } from "react-router-dom";
-
+import ReactNotifications from 'react-notifications-component';
 import axios from 'axios';
 import './App.css';
 import Login from './Login/log-in.js'
@@ -16,12 +16,15 @@ import Main from './Main/Main';
 import SideNav from './Proflie/profile-side-nav';
 import NormalImageFeed from './Proflie/imagesfeed';
 import Doodlefeed from './Proflie/doodlefeed';
+import Search from './Friends/Search';
+import { setRef } from '@material-ui/core';
 
 
 function App() {
   const [user, setUser] = useState({ id: null, name: 'Not logged in' });
   const [imgs, setImgs] = useState([]);
   const [doods, setDoods] = useState([]);
+  const [friends, setFriends] = useState([]);
 
   const getImgs = () => {
     axios.get(`/api/images/${user.id}`)
@@ -47,10 +50,19 @@ function App() {
       .catch(err => console.error(err));
   }
 
+  const getFriends = () => {
+    return axios.get(`/api/friends/${user.id}`)
+      .then(results => {
+        setFriends(results.data);
+        })
+      .catch(err => console.error(err));
+  }
+
   useEffect(() => {
     if(user.id) {
       getImgs();
       getDoods();
+      getFriends();
     }
   }, [user]);
 
@@ -58,29 +70,32 @@ function App() {
     <div className="App">
       <React.Fragment>
         <Router>
-          <NavigationBar user={user} imgs={imgs} />
+          <ReactNotifications/>
+          <NavigationBar user={user} imgs={imgs} getFriends={getFriends} />
           <Switch>
             <Route exact path="/" render={() => <Login setUser={setUser} />} />
             <Route
               path="/upload"
-              render={() => (
+              render={() => ( 
                 <Upload user={user} getImgs={getImgs} setUser={setUser} />
               )}
             />
             <Route
               path="/profile"
-              render={() => (
+              render={() => {
+                return (
                 <div>
                   <div className="imgheader">
-                  <Container>
                     <Row>
                       <Col>
                         <Image className="profileimgs" src={user.imageurl} rounded />
+                        <div><b>{user.name}</b></div>
+                        <div>{user.email}</div>
+                        <div>{user.id !== null ? `Total Doods: ${doods.length}` : null}</div>
                       </Col>
                     </Row>
-                  </Container>
                   </div>
-                  <SideNav />
+                  <SideNav friends={friends} />
                   <NormalImageFeed
                     imgs={imgs}
                     getDoods={getDoods}
@@ -88,7 +103,7 @@ function App() {
                   />
                   <Doodlefeed doods={doods} user={user}/>
                 </div>
-              )}
+              )}}
             />
             <Route
               path="/doodle"
@@ -103,10 +118,14 @@ function App() {
                 );
               }}
             />
-           <Route
+          <Route
             path="/home"
             render={() => <Main user={user} imgs={imgs} getDoods={getDoods} doods={doods}/>}
-            /> 
+            />
+            <Route
+              path="/search"
+              render={() => <Search user={user} getFriends={getFriends} />}
+            />
           </Switch>
         </Router>
       </React.Fragment>
