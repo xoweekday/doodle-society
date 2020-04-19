@@ -27,7 +27,7 @@ const NavigationBar = ({ imgs, user, setUser, getFriends }) => {
           <Nav className="ml-auto">
             <Nav.Item>
               <Nav.Link>
-                <Link to="/">Home</Link>
+                <Link to="/home">Home</Link>
               </Nav.Link>
             </Nav.Item>
             <Nav.Item>
@@ -43,11 +43,6 @@ const NavigationBar = ({ imgs, user, setUser, getFriends }) => {
                 >
                   Profile
                 </Link>
-              </Nav.Link>
-            </Nav.Item>
-            <Nav.Item>
-              <Nav.Link>
-                <Link to="/home">Main</Link>
               </Nav.Link>
             </Nav.Item>
             <Nav.Item>

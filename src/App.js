@@ -88,7 +88,7 @@ function App() {
               if(!user.id) {
               return <Login setUser={setUser} />
               }
-              return <Redirect to="/profile" /> 
+              return <Redirect to="/home" /> 
             }
             }
            />
@@ -144,7 +144,12 @@ function App() {
             />
           <Route
             path="/home"
-            render={() => <Main user={user} imgs={imgs} getDoods={getDoods} doods={doods}/>}
+            render={() => {
+            if(!user.id) {
+              return <Redirect to="/" />
+            }
+            return <Main user={user} imgs={imgs} getDoods={getDoods} doods={doods}/>
+          }}
             />
             <Route
               path="/search"

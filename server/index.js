@@ -4,7 +4,8 @@ const path = require('path');
 const db = require('./db');
 
 fastify.register(require('fastify-static'), {
-  root: path.join(__dirname, '../build')
+  root: path.join(__dirname, '../build'),
+  wildcard: false,
 });
 
 const PORT = process.env.PORT || 4000;
@@ -141,6 +142,7 @@ fastify.get('/api/friends/:id', (req, res) => {
     });
 });
 
-fastify.get('*', function (req, res) {
+fastify.get('/*', function (req, res) {
+  console.log('**************************************');
   res.sendFile(path.join(__dirname, '../build', 'index.html'));
 });
