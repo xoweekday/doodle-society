@@ -10,14 +10,11 @@ const Login = (props) => {
     const [ url, setUrl] = useState("");
     const history = useHistory();
     const { setUser, setBGImage } = props;
-    const oauthGoogle = data => {
-        console.log('this is the access token', data.accessToken);
-          localStorage.setItem('JWT_Token', data.token);
-    }
+    
     const responseGoogle = (response) => {
+        console.log(response);
         setName(response.profileObj.name);
         setUrl(response.profileObj.imageUrl);
-        oauthGoogle(response);
         const {accessToken} = response;
         axios.post('/api/users', Object.assign(response.profileObj, {accessToken}))
             .then(id => {
@@ -46,7 +43,8 @@ const Login = (props) => {
                 onSuccess={responseGoogle}
                 onFailure={responseGoogle}
                 cookiePolicy={'single_host_origin'}
-                />
+                isSignedIn={true}
+                />       
             </div>
         </h3>
         </div>

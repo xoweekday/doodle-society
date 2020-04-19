@@ -4,7 +4,9 @@ import {
   BrowserRouter as Router,
   Route,
   Switch,
+  Redirect,
 } from "react-router-dom";
+import { GoogleLogout} from 'react-google-login';
 import ReactNotifications from 'react-notifications-component';
 import axios from 'axios';
 import './App.css';
@@ -64,6 +66,10 @@ function App() {
       getImgs();
       getDoods();
       getFriends();
+    } else {
+      setImgs([]);
+      setDoods([]);
+      setFriends([]);
     }
   }, [user]);
 
@@ -74,9 +80,18 @@ function App() {
       <React.Fragment>
         <Router>
           <ReactNotifications/>
-          <NavigationBar user={user} imgs={imgs} getFriends={getFriends} />
+          <NavigationBar user={user} imgs={imgs} getFriends={getFriends} setUser={setUser} />
           <Switch>
-            <Route exact path="/" render={() => <Login setUser={setUser} />} />
+            <Route
+            exact path="/"
+            render={() => {
+              if(!user.id) {
+              return <Login setUser={setUser} />
+              }
+              return <Redirect to="/profile" /> 
+            }
+            }
+           />
             <Route
               path="/upload"
               render={() => ( 
@@ -86,7 +101,12 @@ function App() {
             <Route
               path="/profile"
               render={() => {
+                if(!user.id) {
+                  return <Redirect to ="/" />
+                }
+                
                 return (
+                
                 <div>
                   <div className="imgheader">
                     <Row>
