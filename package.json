@@ -31,6 +31,7 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",
     "reactstrap": "^8.4.1",
+    "sql-template-strings": "^2.2.2",
     "styled-components": "^5.1.0"
   },
   "scripts": {

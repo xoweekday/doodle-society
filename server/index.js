@@ -65,7 +65,18 @@ fastify.get('/api/users/find/:email', (req, res) => {
     console.error(err);
     res.status(500).send();
   });
-})
+});
+
+fastify.post('/api/users/token', (req, res) => {
+  db.getUserByToken(req, res)
+    .then(user => {
+      res.status(200).send(user.rows[0])
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send();
+    });
+});
 
 fastify.post('/api/images', (req, res) => {
   db.addImage(req, res)
