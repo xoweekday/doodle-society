@@ -63,14 +63,19 @@ useEffect(() => {
 
   return (
     <div className="Doodle">
-      <header className="Doodle-header">
+      <h2>Doodle Page</h2>
+      <div className="Doodle-header">
+        <div className="Doodle-tools">
         <input type='color' name='color' onChange={handleChange}/>
         <input type="range" name='width' min="5" max="50" onChange={handleChange}></input>
-        Caption:
+        </div>
+        <div className="Doodle-caption">
+        <b>Caption:</b>
         <input id="caption" type="text" onChange={(e) => setCaption(e.target.value)} />
         <button onClick={clearCanvas}>Clear</button>
         <button onClick={save} >Save</button>
-      </header>
+        </div>
+      </div>
       <div className="canvas-container" id="canvas-container">
         <canvas className="canvas" id="canvas" />
       </div>
