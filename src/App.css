@@ -25,9 +25,11 @@
   display: block;
 }
 
-.doodle-header {
+.Doodle-header {
   position: relative;
-  bottom: 0px;
+  margin-right: auto;
+  margin-left: auto;
+  top: 450px;
 }
 
 .gallery-img {
