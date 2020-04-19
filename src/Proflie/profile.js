@@ -8,7 +8,6 @@ import Canvas from '../Canvas';
 
 
 const Profile = ({imgs, user, getDoods, doods, match, location}) => {
-  console.log(match, location);
     return (
         <div>
           <Router>
@@ -16,7 +15,6 @@ const Profile = ({imgs, user, getDoods, doods, match, location}) => {
               <Route
                 path="/profile"
                 render={() => {
-                  console.log('rendering profile');
                   return (
                     <div>
                       <SideNav />
@@ -36,7 +34,6 @@ const Profile = ({imgs, user, getDoods, doods, match, location}) => {
               <Route
                 path="/doodle"
                 render={(props) => {
-                  console.log('rendering doodle');
                   return (
                     <Canvas
                       user={user}

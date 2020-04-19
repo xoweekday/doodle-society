@@ -50,8 +50,6 @@ const renderRedirect = () => {
             <p align="justify"><font className="userName" onClick={() => 
               {
                 setRedirect(true);
-                console.log(redirect);
-                
               }
               }>{user.name + ':'}</font></p>
             <p align="justify"><font className="caption">{dood[0].caption}</font></p>

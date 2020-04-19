@@ -73,8 +73,6 @@ function App() {
     }
   }, [user]);
 
-  
-
   return (
     <div className="App">
       <React.Fragment>
@@ -84,27 +82,40 @@ function App() {
           <Switch>
             <Route
             exact path="/"
-            render={() => {
+            render={(props) => {
+              const { back } = props.location
               if(!user.id) {
               return <Login setUser={setUser} />
               }
-              return <Redirect to="/home" /> 
+              if(!back) {
+                return <Redirect to='/home' /> 
+              }
+              return <Redirect to={back} />
             }
             }
            />
             <Route
               path="/upload"
-              render={() => ( 
-                <Upload user={user} getImgs={getImgs} setUser={setUser} />
-              )}
+              render={() => {
+                if(!user.id) {
+                  return <Redirect to={{
+                    pathname: '/',
+                    back: '/upload'
+                  }} />
+                }
+                return <Upload user={user} getImgs={getImgs} setUser={setUser} />
+              }}
             />
             <Route
               path="/profile"
               render={() => {
                 if(!user.id) {
-                  return <Redirect to ="/" />
+                  return <Redirect to={{
+                    pathname: '/',
+                    back: '/profile'
+                  }} />
                 }
-                
+
                 return (
                 
                 <div>
@@ -132,6 +143,12 @@ function App() {
             <Route
               path="/doodle"
               render={(props) => {
+                if(!user.id) {
+                  return <Redirect to={{
+                    pathname: '/',
+                    back: '/doodle'
+                  }} />
+                }
                 return (
                   <Canvas
                     user={user}
@@ -146,14 +163,25 @@ function App() {
             path="/home"
             render={() => {
             if(!user.id) {
-              return <Redirect to="/" />
+              return <Redirect to={{
+                pathname: "/",
+                back: "/home"
+              }} />
             }
             return <Main user={user} imgs={imgs} getDoods={getDoods} doods={doods}/>
           }}
             />
             <Route
               path="/search"
-              render={() => <Search user={user} getFriends={getFriends} />}
+              render={() => {
+                if(!user.id) {
+                  return <Redirect to={{
+                    pathname: '/',
+                    back: '/search'
+                  }} />
+                }
+                return <Search user={user} getFriends={getFriends} />
+            }}
             />
           </Switch>
         </Router>

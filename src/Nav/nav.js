@@ -18,7 +18,6 @@ const Styles = styled.div`
   }
 `;
 const NavigationBar = ({ imgs, user, setUser, getFriends }) => {
-  console.log(user);
   return (
     <Styles>
       <Navbar expand="lg">

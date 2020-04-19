@@ -143,6 +143,5 @@ fastify.get('/api/friends/:id', (req, res) => {
 });
 
 fastify.get('/*', function (req, res) {
-  console.log('**************************************');
-  res.sendFile(path.join(__dirname, '../build', 'index.html'));
+  res.sendFile('index.html');
 });
