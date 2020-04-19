@@ -2,11 +2,13 @@ import React, {useState, useEffect} from 'react';
 import './log-in.css'
 import {GoogleLogin} from 'react-google-login';
 import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 
 const Login = (props) => {
     const [ welcome, setWelcome ] = useState("");
     const [ name, setName] = useState("");
     const [ url, setUrl] = useState("");
+    const history = useHistory();
     const { setUser, setBGImage } = props;
     
     const responseGoogle = (response) => {
@@ -20,17 +22,20 @@ const Login = (props) => {
             })
             .then(user => {
                 setUser(user.data);
+                history.push("/home");
             })
             .catch(err => console.error(err));
     }
 
-    useEffect(() => {
-        setBGImage('https://i.pinimg.com/originals/45/f9/66/45f9668e4084ecb365ee24f85ee86744.gif');
-    }, [])
+   
 
     return (
-    <h1>{ name }
-        <h2><img src={url} alt={name}/></h2>
+    <div className="login">
+        <h1>Doodle Society</h1>
+        <div className="log-form">
+        <h2>Login to continue</h2>
+        <h3>{ name }
+            <h3><img src={url} alt={name}/></h3>
             <div>
             <GoogleLogin
                 clientId="847322546124-r3jf05c1p89vlk3g6jbrbsv0632mh4go.apps.googleusercontent.com"
@@ -41,7 +46,9 @@ const Login = (props) => {
                 isSignedIn={true}
                 />       
             </div>
-        </h1>
+        </h3>
+        </div>
+    </div>
     )
 };
 

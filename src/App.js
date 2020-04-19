@@ -73,9 +73,7 @@ function App() {
     }
   }, [user]);
 
-  useEffect(() => {
-    document.getElementById('root').style.backgroundImage = `url(${bgImage})`;
-  }, [bgImage]);
+  
 
   return (
     <div className="App">
@@ -88,7 +86,7 @@ function App() {
             exact path="/"
             render={() => {
               if(!user.id) {
-              return <Login setUser={setUser} setBGImage={setBGImage} />
+              return <Login setUser={setUser} />
               }
               return <Redirect to="/profile" /> 
             }
