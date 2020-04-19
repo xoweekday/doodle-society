@@ -12,6 +12,8 @@
   height: 375px;
   width: 375px;
   position: relative;
+  margin: auto;
+  display: block;
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -20,6 +22,12 @@
   position: relative;
   height: 375px;
   width: 375px;
+  display: block;
+}
+
+.doodle-header {
+  position: relative;
+  bottom: 0px;
 }
 
 .gallery-img {
@@ -47,3 +55,4 @@
   object-position: 0 0;
   z-index: 1;
 }
+
