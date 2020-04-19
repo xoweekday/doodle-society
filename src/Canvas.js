@@ -63,6 +63,7 @@ useEffect(() => {
 
   return (
     <div className="Doodle">
+      <h2>Doodle Page</h2>
       <div className="Doodle-header">
         <div className="Doodle-tools">
         <input type='color' name='color' onChange={handleChange}/>

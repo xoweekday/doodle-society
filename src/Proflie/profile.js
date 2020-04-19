@@ -9,6 +9,7 @@ import Canvas from '../Canvas';
 
 const Profile = ({imgs, user, getDoods, doods, match, location}) => {
     return (
+      <h2>Profile</h2>
         <div>
           <Router>
             <Switch>
