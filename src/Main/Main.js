@@ -26,15 +26,11 @@ const renderRedirect = () => {
   return (
   <div className="Home">
     <div class="header">
-        <a href="#default" className="logo">Doodle Society</a>
+        <a className="logo">Feed</a>
           <div class="header-right">
-            <a className="active" href="/Home">Home</a>
-            {/* need to add user image somehow */}
-            <a href="#signout">Sign Out</a> 
             <img class="example" src={user.imageurl} />
           </div>
       </div>
-      <h2>Feed</h2>
       <div class="row">
         <div class="side">
       </div>
