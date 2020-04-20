@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
 
-const NormalImageFeed = ({ imgs, getDoods, user }) => (
+const NormalImageFeed = ({ imgs, getAllDoods, user }) => (
     <div>
       <div class="main">
       {imgs.map(img => (
@@ -12,7 +12,7 @@ const NormalImageFeed = ({ imgs, getDoods, user }) => (
               pathname: '/doodle',
               url: img.url,
               original_id: img.id,
-              getDoods: getDoods
+              getAllDoods: getAllDoods
             }}>
               <img className="gallery-img" src={img.url} />
             </Link>

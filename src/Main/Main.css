@@ -19,10 +19,10 @@
 
 /* Style the header links */
 .header a {
-  float: left;
+  /* float: left; */
   color: black;
-  text-align: center;
-  padding: 12px;
+  /* text-align: center; */
+  /* padding: 12px; */
   text-decoration: none;
   font-size: 18px;
   line-height: 25px;
@@ -31,8 +31,9 @@
 
 /* Style the logo link */
 .header a.logo {
-  font-size: 25px;
+  font-size: 40px;
   font-weight: bold;
+  text-align: center;
 }
 
 
@@ -88,6 +89,7 @@
   border-radius: 30px;
   background-color: #7caaad;
   padding: 20px;
+  overflow: hidden;
   margin: 0 auto;
 }
 
