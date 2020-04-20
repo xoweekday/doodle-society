@@ -1,8 +1,7 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState } from 'react';
 import './log-in.css'
 import {GoogleLogin} from 'react-google-login';
 import axios from 'axios';
-import { useHistory } from 'react-router-dom';
 
 const Login = ({ setUser }) => {
     const [ name, setName] = useState("");
@@ -27,8 +26,8 @@ const Login = ({ setUser }) => {
         <h1>Doodle Society</h1>
         <div className="log-form">
         <h2>Login to continue</h2>
-        <h3>{ name }
-            <h3><img src={url} alt={name}/></h3>
+        <h3>{ name }</h3>
+        <img src={url} alt={name}/>
             <div>
             <GoogleLogin
                 clientId="847322546124-r3jf05c1p89vlk3g6jbrbsv0632mh4go.apps.googleusercontent.com"
@@ -39,7 +38,6 @@ const Login = ({ setUser }) => {
                 isSignedIn={true}
                 />       
             </div>
-        </h3>
         </div>
     </div>
     )
