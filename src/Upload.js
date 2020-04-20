@@ -1,18 +1,16 @@
 import React from 'react';
-import { Link, useHistory } from "react-router-dom";
-import {LinkContainer} from 'react-router-bootstrap';
+import { useHistory } from "react-router-dom";
 import { CloudinaryContext } from "cloudinary-react";
 import { openUploadWidget } from "./CloudinaryService";
 import axios from 'axios';
 import { store } from 'react-notifications-component';
 import 'react-notifications-component/dist/theme.css';
 import 'animate.css';
-import { Tooltip } from '@material-ui/core';
+import Button from 'react-bootstrap/Button';
 
 // function for handling upload widget for cloudinary
-function Upload(props) {
+function Upload({ user }) {
   const history = useHistory();
-  const { user, getImgs } = props;
   const options = {
     title: 'SUCCESS!',
     message: 'Photo successfully uploaded!',
@@ -29,7 +27,10 @@ function Upload(props) {
     const uploadOptions = {
       cloudName: 'dmxywbm74',
       tags: [tag, 'anImage'],
-      uploadPreset: "xutz4j2r"
+      uploadPreset: "wkyeuokl",
+      cropping: 'true',
+      croppingAspectRatio: 1,
+      croppingCoordinatesMode: 'custom'
     };
     openUploadWidget(uploadOptions, (error, photos) => {
       if (!error) {
@@ -37,7 +38,7 @@ function Upload(props) {
           return axios.post('/api/images', { url: photo.url, uploader_id: user.id })
         }))
         .then((response) => {
-          getImgs();
+          // getImgs();
           setTimeout(function(){store.addNotification(options);},0);
           history.push('/profile');
           // window.alert("Photo successfully Uploaded");
@@ -55,9 +56,9 @@ function Upload(props) {
     <header className="Upload-header">
         <CloudinaryContext cloudName='dmxywbm74'>
           {/* <LinkContainer to="/profile" delay={5000}> */}
-        <button onClick={() => {
+          <Button variant="info" onClick={() => {
           beginUpload("image");
-        }}>Upload Image</button>                         
+        }}>Upload Image</Button>{' '}
         {/* </LinkContainer> */}
         </CloudinaryContext>
     </header>

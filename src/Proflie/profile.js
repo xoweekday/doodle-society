@@ -1,56 +1,44 @@
-import React from 'react';
-import styled from 'styled-components';
-import { BrowserRouter as Router, Route, Link, withRouter, Switch } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { Row, Col, Image } from 'react-bootstrap';
 import SideNav from './profile-side-nav.js';
 import NormalImageFeed from './imagesfeed';
 import Doodlefeed from './doodlefeed.js'
-import Canvas from '../Canvas';
 
 
-const Profile = ({imgs, user, getDoods, doods, match, location}) => {
-    return (
-      <h2>Profile</h2>
-        <div>
-          <Router>
-            <Switch>
-              <Route
-                path="/profile"
-                render={() => {
-                  return (
-                    <div>
-                      <SideNav />
-                      <img src={user.imageurl}></img>
-                      <NormalImageFeed 
-                        imgs={imgs}
-                        getDoods={getDoods} 
-                        user={user}        
-                      />
-                    <Doodlefeed 
-                      doods={doods}
-                    />
-                    </div>
-                  )
-                }} 
-              />
-              <Route
-                path="/doodle"
-                render={(props) => {
-                  return (
-                    <Canvas
-                      user={user}
-                      url={props.location.url} 
-                      original_id={props.location.original_id} 
-                      getDoods={props.location.getDoods}
-                      imgs={imgs}
-                      doods={doods}
-                    />
-                  )
-                }}
-              />
-            </Switch>
-          </Router>
-        </div>
-    )
+const Profile = ({ user, getAllDoods, doods, getImgs, getFriends }) => {
+  const [imgs, setImgs] = useState([]);
+  const [friends, setFriends] = useState([]);
+
+  useEffect(() => {
+    getImgs(user)
+      .then((imgs) => setImgs(imgs.data))
+    getFriends(user)
+      .then((friends) => setFriends(friends.data));
+  }, [getImgs, getFriends, user]);
+
+  return (
+                
+    <div>
+      <div className="imgheader">
+        <Row>
+          <Col>
+            <div></div>
+            <div><b>{user.name}</b></div>
+            <Image className="profileimgs" src={user.imageurl} rounded />
+            <div>{user.email}</div>
+            <div>{user.id !== null && doods[user.id] ? `Total Doods: ${doods[user.id].length}` : null}</div>
+          </Col>
+        </Row>
+      </div>
+      <SideNav friends={friends} />
+      <NormalImageFeed
+        imgs={imgs}
+        getAllDoods={getAllDoods}
+        user={user}
+      />
+      <Doodlefeed doods={doods} user={user}/>
+    </div>
+  )
 }
 
 export default Profile;

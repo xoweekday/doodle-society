@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Image } from 'react-bootstrap';
 import {
   BrowserRouter as Router,
   Route,
   Switch,
   Redirect,
 } from "react-router-dom";
-import { GoogleLogout} from 'react-google-login';
 import ReactNotifications from 'react-notifications-component';
 import axios from 'axios';
 import './App.css';
@@ -15,60 +13,67 @@ import Upload from './Upload';
 import Canvas from './Canvas';
 import NavigationBar from './Nav/nav.js'
 import Main from './Main/Main';
-import SideNav from './Proflie/profile-side-nav';
-import NormalImageFeed from './Proflie/imagesfeed';
-import Doodlefeed from './Proflie/doodlefeed';
 import Search from './Friends/Search';
-import { setRef } from '@material-ui/core';
+import Profile from './Proflie/profile'
 
 
 function App() {
   const [user, setUser] = useState({ id: null, name: 'Not logged in' });
   const [imgs, setImgs] = useState([]);
-  const [doods, setDoods] = useState([]);
+  const [doods, setDoods] = useState({});
   const [friends, setFriends] = useState([]);
-  const [bgImage, setBGImage] = useState('');
+  const [fetchDoods, setFetch] = useState();
 
-  const getImgs = () => {
-    axios.get(`/api/images/${user.id}`)
-      .then((imgs) => {
-        setImgs(imgs.data);
+  const getDoods = (user) => {
+    return axios.get(`/api/doodles/${user.id}`);
+  }
+
+  const getImgs = (user) => {
+    return axios.get(`/api/images/${user.id}`);
+  }
+
+  const getAllDoods = () => {
+    if (!user.id) {
+      return;
+    }
+    const allUsers = [user].concat(friends);
+    return Promise.all(allUsers.map(user => getDoods(user)))
+      .then((allDoods) => {
+        const doodsCopy = {...doods};
+        allDoods
+        .map(userDoods => userDoods.data)
+        .forEach(userDoods => {
+          if(userDoods.length) {
+            doodsCopy[userDoods[0].doodler_id] = userDoods;
+          }
+        });
+        setDoods(doodsCopy);
       })
       .catch(err => console.error(err));
   }
 
-  const getDoods = () => {
-    axios.get(`/api/doodles/${user.id}`)
-      .then((doods) => {
-        doods = doods.data;
-        Promise.all(doods.map((dood, i) => {
-          return axios.get(`/api/originals/${dood.original_id}`)
-            .then((img) => {
-              doods[i] = [dood, img.data];
-            })
-        }))
-        .then(() => setDoods(doods));
-
-      })
-      .catch(err => console.error(err));
-  }
-
-  const getFriends = () => {
-    return axios.get(`/api/friends/${user.id}`)
-      .then(results => {
-        setFriends(results.data);
-        })
-      .catch(err => console.error(err));
+  const getFriends = (user) => {
+    return axios.get(`/api/friends/${user.id}`);
   }
 
   useEffect(() => {
+    if(fetchDoods) {
+      clearInterval(fetchDoods);
+    }
+    getAllDoods();
+    setFetch(setInterval(getAllDoods, 5000));
+  }, [friends]);
+
+  useEffect(() => {
     if(user.id) {
-      getImgs();
-      getDoods();
-      getFriends();
+        getFriends(user)
+        .then(results => {
+          setFriends(results.data);
+          })
+        .catch(err => console.error(err));
     } else {
       setImgs([]);
-      setDoods([]);
+      setDoods({});
       setFriends([]);
     }
   }, [user]);
@@ -78,7 +83,7 @@ function App() {
       <React.Fragment>
         <Router>
           <ReactNotifications/>
-          <NavigationBar user={user} imgs={imgs} getFriends={getFriends} setUser={setUser} />
+          <NavigationBar user={user} setUser={setUser} getAllDoods={getAllDoods} />
           <Switch>
             <Route
             exact path="/"
@@ -103,42 +108,51 @@ function App() {
                     back: '/upload'
                   }} />
                 }
-                return <Upload user={user} getImgs={getImgs} setUser={setUser} />
+                return <Upload user={user} setUser={setUser} />
               }}
             />
             <Route
               path="/profile"
-              render={() => {
+              render={(props) => {
                 if(!user.id) {
                   return <Redirect to={{
                     pathname: '/',
                     back: '/profile'
                   }} />
                 }
+                const profUser = props.location.user || user;
+                return <Profile
+                          user={profUser}
+                          doods={doods} 
+                          getAllDoods={getAllDoods}
+                          getImgs={getImgs}
+                          getFriends={getFriends}
+                        />
 
-                return (
+              //   return (
                 
-                <div>
-                  <div className="imgheader">
-                    <Row>
-                      <Col>
-                        <div></div>
-                        <div><b>{user.name}</b></div>
-                        <Image className="profileimgs" src={user.imageurl} rounded />
-                        <div>{user.email}</div>
-                        <div>{user.id !== null ? `Total Doods: ${doods.length}` : null}</div>
-                      </Col>
-                    </Row>
-                  </div>
-                  <SideNav friends={friends} />
-                  <NormalImageFeed
-                    imgs={imgs}
-                    getDoods={getDoods}
-                    user={user}
-                  />
-                  <Doodlefeed doods={doods} user={user}/>
-                </div>
-              )}}
+              //   <div>
+              //     <div className="imgheader">
+              //       <Row>
+              //         <Col>
+              //           <div></div>
+              //           <div><b>{user.name}</b></div>
+              //           <Image className="profileimgs" src={user.imageurl} rounded />
+              //           <div>{user.email}</div>
+              //           <div>{user.id !== null && doods[user.id] ? `Total Doods: ${doods[user.id].length}` : null}</div>
+              //         </Col>
+              //       </Row>
+              //     </div>
+              //     <SideNav friends={friends} />
+              //     <NormalImageFeed
+              //       imgs={imgs}
+              //       getAllDoods={getAllDoods}
+              //       user={user}
+              //     />
+              //     <Doodlefeed doods={doods} user={user}/>
+              //   </div>
+              // )}
+              }}
             />
             <Route
               path="/doodle"
@@ -154,7 +168,7 @@ function App() {
                     user={user}
                     url={props.location.url}
                     original_id={props.location.original_id}
-                    getDoods={props.location.getDoods}
+                    getAllDoods={props.location.getAllDoods}
                   />
                 );
               }}
@@ -168,7 +182,7 @@ function App() {
                 back: "/home"
               }} />
             }
-            return <Main user={user} imgs={imgs} getDoods={getDoods} doods={doods}/>
+            return <Main user={user} imgs={imgs} doods={doods} friends={friends}/>
           }}
             />
             <Route

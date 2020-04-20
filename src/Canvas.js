@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import {useHistory} from 'react-router-dom';
 import './App.css';
 import { fabric } from 'fabric';
@@ -10,8 +10,7 @@ import 'animate.css';
 let canvas;
 
 function Canvas(props) {
-const { url, original_id, user, getDoods } = props;
-const [caption, setCaption] = useState('');
+const { url, original_id, user, getAllDoods } = props;
 
 useEffect(() => {
   canvas = new fabric.Canvas('canvas', {
@@ -22,7 +21,7 @@ useEffect(() => {
    });
    document.getElementById('canvas-container').style.backgroundImage = `url(${url})`;
 
-  }, []);
+  }, [url]);
 
   const options = {
     title: 'SUCCESS!',
@@ -54,7 +53,7 @@ useEffect(() => {
     const caption = document.getElementById('caption').value;
     axios.post('/api/doodles', { url: dataUrl, caption, original_id, doodler_id: user.id })
       .then(id => {
-        getDoods();
+        getAllDoods();
         setTimeout(function(){store.addNotification(options);},0);
         history.push('/profile');
       })
@@ -71,7 +70,7 @@ useEffect(() => {
         </div>
         <div className="Doodle-caption">
         <b>Caption:</b>
-        <input id="caption" type="text" onChange={(e) => setCaption(e.target.value)} />
+        <input id="caption" type="text" />
         <button onClick={clearCanvas}>Clear</button>
         <button onClick={save} >Save</button>
         </div>
