@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Nav, Navbar } from 'react-bootstrap';
 import styled from 'styled-components';
+import { GoogleLogout } from 'react-google-login';
 
 const Styles = styled.div`
   .navbar {
@@ -16,8 +17,7 @@ const Styles = styled.div`
     }
   }
 `;
-const NavigationBar = ({ imgs, user, getFriends, setBGImage }) => {
-  console.log(user);
+const NavigationBar = ({ imgs, user, setUser, getFriends }) => {
   return (
     <Styles>
       <Navbar expand="lg">
@@ -26,7 +26,7 @@ const NavigationBar = ({ imgs, user, getFriends, setBGImage }) => {
           <Nav className="ml-auto">
             <Nav.Item>
               <Nav.Link>
-                <Link to="/">Home</Link>
+                <Link to="/home">Home</Link>
               </Nav.Link>
             </Nav.Item>
             <Nav.Item>
@@ -46,17 +46,7 @@ const NavigationBar = ({ imgs, user, getFriends, setBGImage }) => {
             </Nav.Item>
             <Nav.Item>
               <Nav.Link>
-                <Link to="/home">Main</Link>
-              </Nav.Link>
-            </Nav.Item>
-            <Nav.Item>
-              <Nav.Link>
                 <Link to="/upload">Upload</Link>
-              </Nav.Link>
-            </Nav.Item>
-            <Nav.Item>
-              <Nav.Link>
-                {user.id !== null ? <Link to="/">Logout</Link> : null}
               </Nav.Link>
             </Nav.Item>
             <Nav.Item>
@@ -64,6 +54,19 @@ const NavigationBar = ({ imgs, user, getFriends, setBGImage }) => {
                 {user.id !== null ? <Link to="/search">Search</Link> : null}
               </Nav.Link>
             </Nav.Item>
+            {user.id &&
+            <Nav.Item>
+            <GoogleLogout
+                    clientId="847322546124-r3jf05c1p89vlk3g6jbrbsv0632mh4go.apps.googleusercontent.com"
+                    render={(renderProps) => (
+                      <Nav.Link>
+                        <Link to="/" onClick={renderProps.onClick}>Logout</Link>
+                      </Nav.Link>
+                    )}
+                    onLogoutSuccess={() => setUser({id: null})}
+                  />
+            </Nav.Item>
+            }   
           </Nav>
         </Navbar.Collapse>
       </Navbar>

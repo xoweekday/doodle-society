@@ -4,7 +4,8 @@ const path = require('path');
 const db = require('./db');
 
 fastify.register(require('fastify-static'), {
-  root: path.join(__dirname, '../build')
+  root: path.join(__dirname, '../build'),
+  wildcard: false,
 });
 
 const PORT = process.env.PORT || 4000;
@@ -65,7 +66,18 @@ fastify.get('/api/users/find/:email', (req, res) => {
     console.error(err);
     res.status(500).send();
   });
-})
+});
+
+fastify.post('/api/users/token', (req, res) => {
+  db.getUserByToken(req, res)
+    .then(user => {
+      res.status(200).send(user.rows[0])
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send();
+    });
+});
 
 fastify.post('/api/images', (req, res) => {
   db.addImage(req, res)
@@ -130,6 +142,6 @@ fastify.get('/api/friends/:id', (req, res) => {
     });
 });
 
-fastify.get('*', function (req, res) {
-  res.sendFile(path.join(__dirname, '../build', 'index.html'));
+fastify.get('/*', function (req, res) {
+  res.sendFile('index.html');
 });

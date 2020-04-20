@@ -4,7 +4,9 @@ import {
   BrowserRouter as Router,
   Route,
   Switch,
+  Redirect,
 } from "react-router-dom";
+import { GoogleLogout} from 'react-google-login';
 import ReactNotifications from 'react-notifications-component';
 import axios from 'axios';
 import './App.css';
@@ -64,29 +66,58 @@ function App() {
       getImgs();
       getDoods();
       getFriends();
+    } else {
+      setImgs([]);
+      setDoods([]);
+      setFriends([]);
     }
   }, [user]);
-
-  
 
   return (
     <div className="App">
       <React.Fragment>
         <Router>
           <ReactNotifications/>
-          <NavigationBar user={user} imgs={imgs} getFriends={getFriends} />
+          <NavigationBar user={user} imgs={imgs} getFriends={getFriends} setUser={setUser} />
           <Switch>
-            <Route exact path="/" render={() => <Login setUser={setUser} />} />
+            <Route
+            exact path="/"
+            render={(props) => {
+              const { back } = props.location
+              if(!user.id) {
+              return <Login setUser={setUser} />
+              }
+              if(!back) {
+                return <Redirect to='/home' /> 
+              }
+              return <Redirect to={back} />
+            }
+            }
+           />
             <Route
               path="/upload"
-              render={() => ( 
-                <Upload user={user} getImgs={getImgs} setUser={setUser} />
-              )}
+              render={() => {
+                if(!user.id) {
+                  return <Redirect to={{
+                    pathname: '/',
+                    back: '/upload'
+                  }} />
+                }
+                return <Upload user={user} getImgs={getImgs} setUser={setUser} />
+              }}
             />
             <Route
               path="/profile"
               render={() => {
+                if(!user.id) {
+                  return <Redirect to={{
+                    pathname: '/',
+                    back: '/profile'
+                  }} />
+                }
+
                 return (
+                
                 <div>
                   <div className="imgheader">
                     <Row>
@@ -112,6 +143,12 @@ function App() {
             <Route
               path="/doodle"
               render={(props) => {
+                if(!user.id) {
+                  return <Redirect to={{
+                    pathname: '/',
+                    back: '/doodle'
+                  }} />
+                }
                 return (
                   <Canvas
                     user={user}
@@ -124,11 +161,27 @@ function App() {
             />
           <Route
             path="/home"
-            render={() => <Main user={user} imgs={imgs} getDoods={getDoods} doods={doods}/>}
+            render={() => {
+            if(!user.id) {
+              return <Redirect to={{
+                pathname: "/",
+                back: "/home"
+              }} />
+            }
+            return <Main user={user} imgs={imgs} getDoods={getDoods} doods={doods}/>
+          }}
             />
             <Route
               path="/search"
-              render={() => <Search user={user} getFriends={getFriends} />}
+              render={() => {
+                if(!user.id) {
+                  return <Redirect to={{
+                    pathname: '/',
+                    back: '/search'
+                  }} />
+                }
+                return <Search user={user} getFriends={getFriends} />
+            }}
             />
           </Switch>
         </Router>
