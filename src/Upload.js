@@ -29,7 +29,10 @@ function Upload(props) {
     const uploadOptions = {
       cloudName: 'dmxywbm74',
       tags: [tag, 'anImage'],
-      uploadPreset: "xutz4j2r"
+      uploadPreset: "wkyeuokl",
+      cropping: 'true',
+      croppingAspectRatio: 1,
+      croppingCoordinatesMode: 'custom'
     };
     openUploadWidget(uploadOptions, (error, photos) => {
       if (!error) {

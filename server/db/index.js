@@ -111,9 +111,8 @@ const getImageById = (req, res) => {
 
 const getUserDoodles = (req, res) => {
   const { id } = req.params;
-  return pool.query('SELECT * FROM doodles WHERE doodler_id = $1 ORDER BY created_at DESC', [id]);
+  return pool.query('SELECT doodles.*, users.name AS username, images.url AS original_url FROM doodles, users, images WHERE doodles.doodler_id = $1 AND users.id = $1 AND doodles.original_id = images.id ORDER BY created_at DESC', [id]);
 }
-
 
 module.exports = {
   getUsers,
