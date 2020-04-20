@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './Main.css';
 import { Link } from 'react-router-dom';
+const moment = require('moment');
 
 const LikeButton = () => {
   const [toggleState, setToggleState] = useState("off");
@@ -50,11 +51,8 @@ const orderDoods = () => {
                   {dood.username + ':'}
                 </Link>
               </p>
-              <p align="justify">
-                <font className="caption">
-                  {dood.caption}
-                </font>
-              </p>
+             <p align="justify"><font className="caption">{dood.caption}</font></p>
+             <p align="justify"><font className="createdAt">{moment(dood.created_at).startOf('minute').fromNow()}</font></p>
             </div>
           )
         })}  
