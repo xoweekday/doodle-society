@@ -10,7 +10,7 @@ import 'animate.css';
 let canvas;
 
 function Canvas(props) {
-const { url, original_id, user, getDoods } = props;
+const { url, original_id, user, getAllDoods } = props;
 const [caption, setCaption] = useState('');
 
 useEffect(() => {
@@ -54,7 +54,7 @@ useEffect(() => {
     const caption = document.getElementById('caption').value;
     axios.post('/api/doodles', { url: dataUrl, caption, original_id, doodler_id: user.id })
       .then(id => {
-        getDoods();
+        getAllDoods();
         setTimeout(function(){store.addNotification(options);},0);
         history.push('/profile');
       })

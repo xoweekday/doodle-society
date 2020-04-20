@@ -24,8 +24,19 @@ const renderRedirect = () => {
     return <Redirect to='/profile' />
   }
 }
+
+const orderDoods = () => {
+  const allDoods = [];
+  Object.values(doods).forEach(doodColl => {
+    doodColl.forEach(dood => allDoods.push(dood));
+  });
+  allDoods.sort((a, b) => a.created_at > b.created_at ? -1 : 1);
+  return allDoods;
+}
+
   return (
   <div className="Home">
+    {renderRedirect()}
     <div class="header">
         <a className="logo">Feed</a>
           <div class="header-right">
@@ -36,21 +47,21 @@ const renderRedirect = () => {
         <div class="side">
       </div>
       <div class="main">
-    {/* <div> */}
-      {doods.map(dood => {
+      {orderDoods().map(dood => {
+        console.log(dood);
           return (
             <div className="feed-doodle-container">
-              {renderRedirect()}
-            <img className="feed-doodle" src={dood[0].url} />
-            <img className="feed-bg-image" src={dood[1]} />
+            <img className="feed-doodle" src={dood.url} />
+            <img className="feed-bg-image" src={dood.original_url} />
             <LikeButton />
             <p align="justify"><font className="userName" onClick={() => 
               {
                 setRedirect(true);
               }
-              }>{user.name + ':'}</font></p>
-            <p align="justify"><font className="caption">{dood[0].caption}</font></p>
-            <p align="justify"><font className="createdAt">{moment(dood[0].created_at).startOf('minute').fromNow()}</font></p>
+              }>{dood.username + ':'}</font></p>
+            <p align="justify"><font className="caption">{dood.caption}</font></p>
+            <p align="justify"><font className="createdAt">{moment(dood.created_at).startOf('minute').fromNow()}</font></p>
+
             </div>
           )
         })}  

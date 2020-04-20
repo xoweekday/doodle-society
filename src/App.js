@@ -25,7 +25,8 @@ import { setRef } from '@material-ui/core';
 function App() {
   const [user, setUser] = useState({ id: null, name: 'Not logged in' });
   const [imgs, setImgs] = useState([]);
-  const [doods, setDoods] = useState([]);
+  const [doods, setDoods] = useState({});
+  const [doodsexp, setDoodsexp] = useState({});
   const [friends, setFriends] = useState([]);
   const [bgImage, setBGImage] = useState('');
 
@@ -37,18 +38,23 @@ function App() {
       .catch(err => console.error(err));
   }
 
-  const getDoods = () => {
-    axios.get(`/api/doodles/${user.id}`)
-      .then((doods) => {
-        doods = doods.data;
-        Promise.all(doods.map((dood, i) => {
-          return axios.get(`/api/originals/${dood.original_id}`)
-            .then((img) => {
-              doods[i] = [dood, img.data];
-            })
-        }))
-        .then(() => setDoods(doods));
+  const getDoods = (user) => {
+    return axios.get(`/api/doodles/${user.id}`);
+  }
 
+  const getAllDoods = () => {
+    const allUsers = [user].concat(friends);
+    return Promise.all(allUsers.map(user => getDoods(user)))
+      .then((allDoods) => {
+        const doodsCopy = {...doods};
+        allDoods
+        .map(userDoods => userDoods.data)
+        .forEach(userDoods => {
+          if(userDoods.length) {
+            doodsCopy[userDoods[0].doodler_id] = userDoods;
+          }
+        });
+        setDoods(doodsCopy);
       })
       .catch(err => console.error(err));
   }
@@ -62,13 +68,16 @@ function App() {
   }
 
   useEffect(() => {
+    getAllDoods();
+  }, [friends]);
+
+  useEffect(() => {
     if(user.id) {
       getImgs();
-      getDoods();
       getFriends();
     } else {
       setImgs([]);
-      setDoods([]);
+      setDoods({});
       setFriends([]);
     }
   }, [user]);
@@ -126,14 +135,14 @@ function App() {
                         <div><b>{user.name}</b></div>
                         <Image className="profileimgs" src={user.imageurl} rounded />
                         <div>{user.email}</div>
-                        <div>{user.id !== null ? `Total Doods: ${doods.length}` : null}</div>
+                        <div>{user.id !== null && doods[user.id] ? `Total Doods: ${doods[user.id].length}` : null}</div>
                       </Col>
                     </Row>
                   </div>
                   <SideNav friends={friends} />
                   <NormalImageFeed
                     imgs={imgs}
-                    getDoods={getDoods}
+                    getAllDoods={getAllDoods}
                     user={user}
                   />
                   <Doodlefeed doods={doods} user={user}/>
@@ -154,7 +163,7 @@ function App() {
                     user={user}
                     url={props.location.url}
                     original_id={props.location.original_id}
-                    getDoods={props.location.getDoods}
+                    getAllDoods={props.location.getAllDoods}
                   />
                 );
               }}
@@ -168,7 +177,7 @@ function App() {
                 back: "/home"
               }} />
             }
-            return <Main user={user} imgs={imgs} getDoods={getDoods} doods={doods}/>
+            return <Main user={user} imgs={imgs} doods={doods}/>
           }}
             />
             <Route
