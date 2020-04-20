@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import {useHistory} from 'react-router-dom';
 import './App.css';
 import { fabric } from 'fabric';
@@ -11,7 +11,6 @@ let canvas;
 
 function Canvas(props) {
 const { url, original_id, user, getAllDoods } = props;
-const [caption, setCaption] = useState('');
 
 useEffect(() => {
   canvas = new fabric.Canvas('canvas', {
@@ -22,7 +21,7 @@ useEffect(() => {
    });
    document.getElementById('canvas-container').style.backgroundImage = `url(${url})`;
 
-  }, []);
+  }, [url]);
 
   const options = {
     title: 'SUCCESS!',
@@ -71,7 +70,7 @@ useEffect(() => {
         </div>
         <div className="Doodle-caption">
         <b>Caption:</b>
-        <input id="caption" type="text" onChange={(e) => setCaption(e.target.value)} />
+        <input id="caption" type="text" />
         <button onClick={clearCanvas}>Clear</button>
         <button onClick={save} >Save</button>
         </div>
