@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './Main.css';
-import { Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const LikeButton = () => {
   const [toggleState, setToggleState] = useState("off");
@@ -11,18 +11,7 @@ const LikeButton = () => {
   return <div className={`switch ${toggleState}`} onClick={toggle} />;
 }
 
-const signOut = () => {
-  localStorage.removeItem('JWT_TOKEN');
-}
-
-const Home = ({user, doods }) => {
-  const [ redirect, setRedirect]  = useState(false);
-
-const renderRedirect = () => {
-  if (redirect) {
-    return <Redirect to='/profile' />
-  }
-}
+const Home = ({user, doods, friends }) => {
 
 const orderDoods = () => {
   const allDoods = [];
@@ -35,36 +24,42 @@ const orderDoods = () => {
 
   return (
   <div className="Home">
-    {renderRedirect()}
-    <div class="header">
-        <a className="logo">Feed</a>
-          <div class="header-right">
-            <img class="example" src={user.imageurl} />
+    <div className="header">
+        <div className="logo">Feed</div>
+          <div className="header-right">
+            <img className="example" src={user.imageurl} alt="" />
           </div>
       </div>
-      <div class="row">
-        <div class="side">
+      <div className="row">
+        <div className="side">
       </div>
-      <div class="main">
+      <div className="main">
       {orderDoods().map(dood => {
+          const doodler = dood.username === user.name ? user : 
+          friends.filter(friend => friend.name === dood.username)[0];
           return (
-            <div className="feed-doodle-container">
-            <img className="feed-doodle" src={dood.url} />
-            <img className="feed-bg-image" src={dood.original_url} />
-            <LikeButton />
-            <p align="justify"><font className="userName" onClick={() => 
-              {
-                setRedirect(true);
-              }
-              }>{dood.username + ':'}</font></p>
-            <p align="justify"><font className="caption">{dood.caption}</font></p>
+            <div className="feed-doodle-container" key={dood.username + dood.id}>
+              <img className="feed-doodle" src={dood.url} alt="" />
+              <img className="feed-bg-image" src={dood.original_url} alt="" />
+              <LikeButton />
+              <p align="justify">
+                <Link className="userName" to={{
+                  pathname: '/profile',
+                  user: doodler,
+                }}>
+                  {dood.username + ':'}
+                </Link>
+              </p>
+              <p align="justify">
+                <font className="caption">
+                  {dood.caption}
+                </font>
+              </p>
             </div>
           )
         })}  
       </div>
     </div>
-    <body>
-    </body>
   </div>
 
 )};
