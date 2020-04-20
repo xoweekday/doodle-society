@@ -8,6 +8,7 @@ import { store } from 'react-notifications-component';
 import 'react-notifications-component/dist/theme.css';
 import 'animate.css';
 import { Tooltip } from '@material-ui/core';
+import Button from 'react-bootstrap/Button';
 
 // function for handling upload widget for cloudinary
 function Upload(props) {
@@ -58,9 +59,9 @@ function Upload(props) {
     <header className="Upload-header">
         <CloudinaryContext cloudName='dmxywbm74'>
           {/* <LinkContainer to="/profile" delay={5000}> */}
-        <button onClick={() => {
+          <Button variant="info" onClick={() => {
           beginUpload("image");
-        }}>Upload Image</button>                         
+        }}>Upload Image</Button>{' '}
         {/* </LinkContainer> */}
         </CloudinaryContext>
     </header>
