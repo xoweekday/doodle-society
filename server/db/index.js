@@ -37,6 +37,16 @@ const getUserByToken = (req, res) => {
   return pool.query('SELECT * FROM users WHERE accessToken = $1', [token]);
 }
 
+const addComments = (req, res) => {
+  const { comment } = req.body;
+  return pool.query('INSERT INTO comments (comment) VALUES ($1)', [comment]);
+}
+
+const getComments = (req, res) => {
+  const { id } = req.body;
+  return pool.query('SELECT * from comments WHERE doodler_id = id', [id]);
+}
+
 //add a user to the db
 const createUser = (req, res) => {
   const { googleId, email, name, imageUrl, accessToken} = req.body;
@@ -130,4 +140,6 @@ module.exports = {
   getUserUploads,
   getUserDoodles,
   getImageById,
+  addComments,
+  getComments,
 }
