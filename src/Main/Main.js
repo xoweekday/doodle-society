@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './Main.css';
 import { Redirect } from 'react-router-dom';
+const moment = require('moment');
 
 const LikeButton = () => {
   const [toggleState, setToggleState] = useState("off");
@@ -28,7 +29,7 @@ const renderRedirect = () => {
     <div class="header">
         <a className="logo">Feed</a>
           <div class="header-right">
-            <img class="example" src={user.imageurl} />
+            <img class="example" onClick={() => {console.log(doods)}} src={user.imageurl} />
           </div>
       </div>
       <div class="row">
@@ -49,6 +50,7 @@ const renderRedirect = () => {
               }
               }>{user.name + ':'}</font></p>
             <p align="justify"><font className="caption">{dood[0].caption}</font></p>
+            <p align="justify"><font className="createdAt">{moment(dood[0].created_at).startOf('minute').fromNow()}</font></p>
             </div>
           )
         })}  
