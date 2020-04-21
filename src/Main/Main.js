@@ -1,12 +1,7 @@
 import React, { useState } from 'react';
 import './Main.css';
-<<<<<<< HEAD
-import { Redirect } from 'react-router-dom';
-import Search from '../Friends/Search'
-=======
 import { Link } from 'react-router-dom';
 const moment = require('moment');
->>>>>>> 346b3ff124c6bec24b74ffea10a26541295de1f0
 
 const LikeButton = () => {
   const [toggleState, setToggleState] = useState("off");
