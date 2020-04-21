@@ -28,16 +28,16 @@ const orderDoods = () => {
   <div className="Home">
     <div className="header">
         {/* <div className="logo">Feed</div> */}
-          <div className="header-right">
+          {/* <div className="header-right"> */}
             <img className="example" src={user.imageurl} alt="" />
-            </div>
-          <div className="header-left">
-            <a href="#searchbar"> <Search /></a>
-          </div>
+            {/* </div> */}
+          {/* <div className="header-left"> */}
+            <Search />
+          {/* </div> */}
       </div>
-      <div className="row">
+      {/* <div className="row">
         <div className="side">
-      </div>
+      </div> */}
       <div className="main">
       {orderDoods().map(dood => {
           const doodler = dood.username === user.name ? user : 
@@ -62,7 +62,7 @@ const orderDoods = () => {
         })}  
       </div>
     </div>
-  </div>
+  // </div>
 
 )};
 export default Home;
