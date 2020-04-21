@@ -27,10 +27,12 @@ const orderDoods = () => {
   return (
   <div className="Home">
     <div className="header">
-        <div className="logo">Feed</div>
+        {/* <div className="logo">Feed</div> */}
           <div className="header-right">
-            <a href="#searchbar"> <Search /></a>
             <img className="example" src={user.imageurl} alt="" />
+            </div>
+          <div className="header-left">
+            <a href="#searchbar"> <Search /></a>
           </div>
       </div>
       <div className="row">
