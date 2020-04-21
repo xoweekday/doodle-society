@@ -56,6 +56,10 @@ function App() {
     return axios.get(`/api/friends/${user.id}`);
   }
 
+  const getComments = doods => {
+    return axios.get(`/api/comments/${doods.id}`);
+  }
+
   useEffect(() => {
     if(fetchDoods) {
       clearInterval(fetchDoods);
@@ -197,6 +201,18 @@ function App() {
                 return <Search user={user} getFriends={getFriends} />
             }}
             />
+            <Route
+              path="/comments"
+              render={()=> {
+                if(!user.id){
+                  return <Redirect to={{
+                    pathname: '/',
+                    back: '/comments'
+                  }} />
+                }
+                return <Comment user={user} getComments={getComments} />
+              }}
+              />
           </Switch>
         </Router>
       </React.Fragment>
