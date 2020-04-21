@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './Main.css';
 import { Link } from 'react-router-dom';
+import Comments from '../Comments/CommentForm';
 const moment = require('moment');
 
 const LikeButton = () => {
@@ -53,6 +54,7 @@ const orderDoods = () => {
               </p>
              <p align="justify"><font className="caption">{dood.caption}</font></p>
              <p align="justify"><font className="createdAt">{moment(dood.created_at).startOf('minute').fromNow()}</font></p>
+             <Comments dood={dood} user={user}/>
             </div>
           )
         })}  
