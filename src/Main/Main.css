@@ -24,9 +24,9 @@
   float: left;
   color: black;
   text-align: center;
-  padding: 12px;
+  padding: 10px;
   text-decoration: none;
-  font-size: 18px;
+  font-size: 15px;
   line-height: 25px;
   border-radius: 4px;
 }
@@ -61,7 +61,7 @@
   display: -ms-flexbox;
   display: flex;
   width: 100%;
-  margin-bottom: 15px;
+  margin-bottom: 0px;
 }
 .icon {
   padding: 10px;
@@ -70,20 +70,23 @@
   min-width: 50px;
   text-align: center;
 }
+.css-g1d714-ValueContainer {
+width: 200px;
 
-.input-field {
+}
+.friendSearch {
   width: 100%;
   padding: 5px;
   outline: none;
 }
-.input-field:focus {
+.friendSearch {
   border: 2px solid #95D0CA;
 }
 
 /* placeholder photo: replace with profile images */
 .example {
-  height: 50px;
-  width: 50px;
+  height: 75px;
+  width: 75px;
 }
 /* Add media queries for responsiveness - when the screen is 500px wide or less, stack the links on top of each other */
 @media screen and (max-width: 500px) {
