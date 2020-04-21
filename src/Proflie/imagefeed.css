@@ -1,0 +1,38 @@
+
+
+.profile-img-container {
+  position: relative;
+  background-color: grey;
+  padding: 20px;
+  border: 2px solid #000000;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.normal-img {
+  background-color: white;
+  /* White background color */
+  border: 4px outset #98D4CD;
+  border-radius: 30px;
+  background-color: #7caaad;
+  padding: 20px;
+  margin: 0 auto;
+}
+.doodled-img {
+  background-color: white;
+  /* White background color */
+  border: 4px outset #98D4CD;
+  border-radius: 30px;
+  background-color: #7caaad;
+  padding: 20px;
+  margin: 0 auto;
+}
+
+.doodle-img-container {
+  position: relative;
+  background-color: grey;
+  padding: 20px;
+  border: 2px solid #000000;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
