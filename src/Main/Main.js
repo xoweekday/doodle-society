@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './Main.css';
 import { Link } from 'react-router-dom';
+import Search from '../Friends/Search';
 const moment = require('moment');
 
 const LikeButton = () => {
@@ -28,6 +29,7 @@ const orderDoods = () => {
     <div className="header">
         <div className="logo">Feed</div>
           <div className="header-right">
+            <a href="#searchbar"> <Search /></a>
             <img className="example" src={user.imageurl} alt="" />
           </div>
       </div>
