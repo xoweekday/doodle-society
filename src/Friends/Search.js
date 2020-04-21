@@ -33,7 +33,10 @@ const Search = ({ user, getFriends }) => {
   return (
     <div>
       {renderRedirect()}
-      <input type="text" onChange={handleChange} onKeyUp={handleKey} />
+      <div className="friendSearch">
+      <i class="fa fa-search icon" aria-hidden="true"></i>
+      <input class="input-field" type="text" placeholder="Find Friends" onChange={handleChange} onKeyUp={handleKey} />
+      </div>
       {result && <p onClick={addFriend}>{result.name}</p>}
     </div>
   )
