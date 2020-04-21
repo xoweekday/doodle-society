@@ -17,7 +17,6 @@ const Profile = ({ user, getAllDoods, doods, getImgs, getFriends }) => {
   }, [getImgs, getFriends, user]);
 
   return (
-                
     <div>
       <div className="imgheader">
         <Row>
@@ -35,8 +34,9 @@ const Profile = ({ user, getAllDoods, doods, getImgs, getFriends }) => {
         imgs={imgs}
         getAllDoods={getAllDoods}
         user={user}
+        doods={doods}
       />
-      <Doodlefeed doods={doods} user={user}/>
+      {/* <Doodlefeed doods={doods} user={user}/> */}
     </div>
   )
 }

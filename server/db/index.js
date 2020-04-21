@@ -25,10 +25,10 @@ const getUserById = (req, res) => {
   return pool.query('SELECT * FROM users WHERE id = $1', [id]);
 }
 
-const getUserByEmail = (req, res) => {
-  const { email } = req.params;
-
-  return pool.query('SELECT * FROM users WHERE email = $1', [email]);
+const getUserByName = (req, res) => {
+  let { name } = req.params;
+  name = `%${name}%`;
+  return pool.query('SELECT * FROM users WHERE name ILIKE $1 OR $1 % name ORDER BY SIMILARITY(name, $1) DESC LIMIT 8', [name]);
 }
 
 const getUserByToken = (req, res) => {
@@ -128,7 +128,7 @@ module.exports = {
   getUsers,
   getUserByGoogleId,
   getUserById,
-  getUserByEmail,
+  getUserByName,
   getUserByToken,
   createUser,
   addFriend,
