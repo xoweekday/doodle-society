@@ -1,29 +1,26 @@
 import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
+import AsyncSelect from 'react-select/async';
 import axios from 'axios';
 import _ from 'lodash';
 
 const Search = ({ user, getFriends }) => {
 
-  const [search, setSearch] = useState('');
-  const [result, setResult] = useState(null);
+  const [select, setSelect] = useState('');
   const [redirect, setRedirect] = useState(false);
 
-  const handleChange = (e) => {
-    setSearch(e.target.value);
-    handleSearch();
+  let handleSearch = (search) => {
+    return new Promise(resolve => {
+      axios.get(`/api/users/find/${search}`)
+        .then(users => resolve(users.data.map(user => {
+          return {
+            value: user,
+            label: user.name,
+          }
+        })));
+    }) ;
   }
 
-  const handleKey = (e) => {
-    if(e.key === 'Enter') {
-      handleSearch();
-    }
-  }
-
-  const handleSearch = _.debounce(() => {
-    axios.get(`/api/users/find/${search}`)
-      .then(users => setResult(users.data));
-  }, 500);
 
   const renderRedirect = () => {
     if(redirect) {
@@ -33,7 +30,7 @@ const Search = ({ user, getFriends }) => {
 
   const addFriend = (friend) => {
     axios.post('/api/friends', { user_id: user.id, friend_id: friend.id })
-      .then(() => getFriends())
+      .then(() => getFriends(user))
       .then(() => setRedirect(true))
       .catch(err => console.error(err));
   }
@@ -41,8 +38,8 @@ const Search = ({ user, getFriends }) => {
   return (
     <div>
       {renderRedirect()}
-      <input type="text" onChange={handleChange} onKeyUp={handleKey} />
-      {result && result.length > 0 && result.map(user => <p onClick={() => addFriend(user.id)}>{user.name}</p>)}
+      <AsyncSelect loadOptions={handleSearch} onChange={(e) => setSelect(e.value)}/>
+      <button onClick={() => addFriend(select)}>Add</button>
     </div>
   )
 }
