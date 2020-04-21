@@ -1,27 +1,51 @@
 import React from 'react';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import { Carousel } from 'react-bootstrap';
+import '../Proflie/imagefeed.css'
+const moment = require('moment');
 
-const NormalImageFeed = ({ imgs, getAllDoods, user }) => (
-    <div>
-      <div className="main">
-      {imgs.map(img => (
-        <div key={img.id}>
-        <h6><font color="black">Doodle</font></h6>
-        <p align="justify"><font size="3" color="black">{user.name}</font></p>
-            <Link to={{
-              pathname: '/doodle',
-              url: img.url,
-              original_id: img.id,
-              getAllDoods: getAllDoods
-            }}>
+
+const NormalImageFeed = ({ imgs, getAllDoods, user, doods }) => {
+  return (
+      <div>
+          <div className='normal-img' >
+          <h3>Uploads</h3>
+        <Carousel>
+          {imgs.map(img => (
+            <Carousel.Item>
+          <div className='profile-img-container' key={img.id}>
+              <Link to={{
+                pathname: '/doodle',
+                url: img.url,
+                original_id: img.id,
+                getAllDoods: getAllDoods
+              }}>
               <img className="gallery-img" src={img.url} alt="" />
-            </Link>
-      </div>
-          )
-        )
-      }
-      </div>
-  </div>
-)
+              </Link>
+        </div>
+    </Carousel.Item>
+      ))}
+    </Carousel>
+    </div>
 
+    <div className='doodled-img'>
+      <h3>Doodles</h3>
+    <Carousel>
+  {doods[user.id] && doods[user.id].map(dood => (
+    <Carousel.Item>
+      <div key={dood.id}>
+        <div className="doodle-img-container">
+          <p align="justify"><font size="3" color="black">{`#${dood.caption}`}</font></p>
+          <img className="doodle" src={dood.url} alt="" />
+          <img className="bg-img" src={dood.original_url} alt="" />
+          <p align="justify"><font className="createdAt">{moment(dood.created_at).startOf('minute').fromNow()}</font></p>
+        </div>
+      </div>
+    </Carousel.Item>
+    ))}
+  </Carousel>
+  </div>
+</div>
+)
+}
 export default NormalImageFeed;

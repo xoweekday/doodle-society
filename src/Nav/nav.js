@@ -17,7 +17,7 @@ const Styles = styled.div`
     }
   }
 `;
-const NavigationBar = ({ user, setUser, getAllDoods }) => {
+const NavigationBar = ({ user, setUser, setFriends, setDoods, getAllDoods }) => {
   return (
     <Styles>
       <Navbar expand="lg">
@@ -47,7 +47,11 @@ const NavigationBar = ({ user, setUser, getAllDoods }) => {
               <GoogleLogout
                 clientId="847322546124-r3jf05c1p89vlk3g6jbrbsv0632mh4go.apps.googleusercontent.com"
                 render={renderProps => <Link className="navlink" to="/" onClick={renderProps.onClick}>Logout</Link>}
-                onLogoutSuccess={() => setUser({id: null})}
+                onLogoutSuccess={() => {
+                  setUser({id: null});
+                  setFriends([]);
+                  setDoods({});
+                }}
               />
             </Nav.Item>
             }   
