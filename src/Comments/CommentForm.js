@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import { Button, Comment, Form, Header } from 'semantic-ui-react'
-import { components } from 'react-select';
 const moment = require('moment');
 
 const Comments = ({user, dood, getComment}) => {
@@ -12,12 +11,10 @@ const Comments = ({user, dood, getComment}) => {
         .then(result => setComments(result.data));
     },[]);
     
-
     const getComments = () => {
         return axios.get(`/api/comments/${dood.id}`);
     }
 
-    console.log(user);
     const addComments = () => {
         const comment = document.getElementById('comment').value;
         axios.post('/api/comments', {doodle_id: dood.id, comment: comment, user_id: user.id})
