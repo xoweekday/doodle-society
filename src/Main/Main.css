@@ -155,6 +155,17 @@
   color: blue;
 }
 
+.originalDoodle {
+  cursor: pointer;
+  margin-left: 10px;
+  font-size: xx-small;
+}
+
+.originalDoodle:hover {
+  text-decoration: underline;
+  color: blue;
+}
+
 .caption {
   color: rgb(0, 0, 0);
   margin-left: 10px;
