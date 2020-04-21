@@ -39,9 +39,9 @@ const NavigationBar = ({ user, setUser, setFriends, setDoods, getAllDoods }) => 
             <Nav.Item>
               <Link className="navlink" to="/upload">Upload</Link>
             </Nav.Item>
-            <Nav.Item>
+            {/* <Nav.Item>
               {user.id !== null ? <Link className="navlink" to="/search">Search</Link> : null}
-            </Nav.Item>
+            </Nav.Item> */}
             {user.id &&
             <Nav.Item>
               <GoogleLogout

@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 import { ListItem, ListItemText, List }  from '@material-ui/core'
 const SideNav = ({ friends }) => {
 
@@ -6,7 +7,14 @@ const SideNav = ({ friends }) => {
     <List disablePadding dense>
         <ListItem button>
         <ListItemText>Friends</ListItemText>
-        {friends.map(friend => <ListItemText key={friend.id}>{friend.name}</ListItemText>)}
+        {friends.map(friend => <ListItemText key={friend.id}>
+            <Link className="userName" to={{
+                  pathname: '/profile',
+                  user: friend,
+                }}>
+            {friend.name}
+            </Link>
+        </ListItemText>)}
         </ListItem>
     </List>
     );
