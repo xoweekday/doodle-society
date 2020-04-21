@@ -17,7 +17,7 @@ const Styles = styled.div`
     }
   }
 `;
-const NavigationBar = ({ imgs, user, setUser, getFriends }) => {
+const NavigationBar = ({ user, setUser, getAllDoods }) => {
   return (
     <Styles>
       <Navbar expand="lg">
@@ -25,46 +25,30 @@ const NavigationBar = ({ imgs, user, setUser, getFriends }) => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ml-auto">
             <Nav.Item>
-              <Nav.Link>
-                <Link to="/home">Home</Link>
-              </Nav.Link>
+              <Link className="navlink" to="/home" onClick={getAllDoods}>Home</Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link>
-                <Link
-                  onClick={() => {
-                    getFriends();
-                  }}
-                  to={{
-                    pathname: "/profile",
-                    imgs,
-                  }}
-                >
-                  Profile
-                </Link>
-              </Nav.Link>
+              <Link
+                className="navlink"
+                to={{
+                  pathname: "/profile",
+                  user,
+                }}
+              >Profile</Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link>
-                <Link to="/upload">Upload</Link>
-              </Nav.Link>
+              <Link className="navlink" to="/upload">Upload</Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link>
-                {user.id !== null ? <Link to="/search">Search</Link> : null}
-              </Nav.Link>
+              {user.id !== null ? <Link className="navlink" to="/search">Search</Link> : null}
             </Nav.Item>
             {user.id &&
             <Nav.Item>
-            <GoogleLogout
-                    clientId="847322546124-r3jf05c1p89vlk3g6jbrbsv0632mh4go.apps.googleusercontent.com"
-                    render={(renderProps) => (
-                      <Nav.Link>
-                        <Link to="/" onClick={renderProps.onClick}>Logout</Link>
-                      </Nav.Link>
-                    )}
-                    onLogoutSuccess={() => setUser({id: null})}
-                  />
+              <GoogleLogout
+                clientId="847322546124-r3jf05c1p89vlk3g6jbrbsv0632mh4go.apps.googleusercontent.com"
+                render={renderProps => <Link className="navlink" to="/" onClick={renderProps.onClick}>Logout</Link>}
+                onLogoutSuccess={() => setUser({id: null})}
+              />
             </Nav.Item>
             }   
           </Nav>

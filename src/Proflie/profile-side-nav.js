@@ -6,7 +6,7 @@ const SideNav = ({ friends }) => {
     <List disablePadding dense>
         <ListItem button>
         <ListItemText>Friends</ListItemText>
-        {friends.map(friend => <ListItemText>{friend.name}</ListItemText>)}
+        {friends.map(friend => <ListItemText key={friend.id}>{friend.name}</ListItemText>)}
         </ListItem>
     </List>
     );
