@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
-import { Button, Comment, Form, Header } from 'semantic-ui-react'
+import { Button, Comment, Form, Header, List } from 'semantic-ui-react'
 const moment = require('moment');
 
 const Comments = ({user, dood, getComment}) => {
@@ -27,18 +27,18 @@ const Comments = ({user, dood, getComment}) => {
 
     return(
         <Comment.Group>
-            <Header as='h3' dividing>
+            <List as='h3' dividing>
                 Comments
-            </Header>
+            </List>
             { comments.map((comment) => (
             <Comment>
                 <Comment.Avatar src={comment.avatar}/>
                 <Comment.Content>
                     <Comment.Author as='a'><b>{comment.username}</b></Comment.Author> 
                     <Comment.Metadata>
+                    <div><font className="createdAt">{moment(comment.created_at).startOf('minute').fromNow()}</font></div>
                     </Comment.Metadata>
                     <Comment.Text>{comment.comment}</Comment.Text>
-                    <div><font className="createdAt">{moment(comment.created_at).startOf('minute').fromNow()}</font></div>
                     <Comment.Actions>
                         <Comment.Action></Comment.Action>
                     </Comment.Actions>
