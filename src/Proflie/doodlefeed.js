@@ -15,9 +15,9 @@ const Doodlefeed = ({ doods, user }) => {
                 <p align="justify"><font className="createdAt">{moment(dood.created_at).startOf('minute').fromNow()}</font></p>
               </div>
             </div>
-           )
+          )
           })}  
-         </div>
+        </div>
       </div>
   )
 
