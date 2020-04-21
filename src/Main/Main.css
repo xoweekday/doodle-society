@@ -1,4 +1,6 @@
 @import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css");
+
 
 * {
   box-sizing: border-box;
@@ -17,12 +19,12 @@
   padding: 20px 10px;
 }
 
-/* Style the header links */
+/* Style the header links NO TOUCHY */
 .header a {
-  /* float: left; */
+  float: left;
   color: black;
-  /* text-align: center; */
-  /* padding: 12px; */
+  text-align: center;
+  padding: 12px;
   text-decoration: none;
   font-size: 18px;
   line-height: 25px;
@@ -53,6 +55,29 @@
 /* Float the link section to the right */
 .header-right {
   float: right;
+}
+/* search bar */
+.friendSearch {
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  margin-bottom: 15px;
+}
+.icon {
+  padding: 10px;
+  background: #95D0CA;
+  color: white;
+  min-width: 50px;
+  text-align: center;
+}
+
+.input-field {
+  width: 100%;
+  padding: 5px;
+  outline: none;
+}
+.input-field:focus {
+  border: 2px solid #95D0CA;
 }
 
 /* placeholder photo: replace with profile images */
