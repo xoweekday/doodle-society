@@ -25,20 +25,6 @@ const orderDoods = () => {
 
   return (
   <div className="Home">
-<<<<<<< HEAD
-    <div class="header">
-        <a href="#default" className="logo">Doodle Society</a>
-          <div class="header-right">
-            <a className="active" href="/Home">Home</a>
-            {/* need to add user image somehow */}
-            <a href="#signout">Sign Out</a> 
-            <img class="example" src={user.imageurl} />
-          </div>
-      </div>
-      <h2>Feed</h2>
-      <div class="row">
-        <div class="side">
-=======
     <div className="header">
         <div className="logo">Feed</div>
           <div className="header-right">
@@ -47,7 +33,6 @@ const orderDoods = () => {
       </div>
       <div className="row">
         <div className="side">
->>>>>>> 80f2c5b41b9770bc0c5f08b90e31ba0b8eb54a2d
       </div>
       <div className="main">
       {orderDoods().map(dood => {
