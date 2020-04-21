@@ -6,7 +6,6 @@ const moment = require('moment');
 
 
 const NormalImageFeed = ({ imgs, getAllDoods, user, doods }) => {
-  console.log('doods', doods, 'user', user);
   return (
       <div>
           <div className='normal-img' >

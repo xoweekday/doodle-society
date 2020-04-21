@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './Main.css';
 import { Link } from 'react-router-dom';
 import Comments from '../Comments/CommentForm';
+import Search from '../Friends/Search';
 const moment = require('moment');
 
 const LikeButton = () => {
@@ -27,14 +28,17 @@ const orderDoods = () => {
   return (
   <div className="Home">
     <div className="header">
-        <div className="logo">Feed</div>
-          <div className="header-right">
+        {/* <div className="logo">Feed</div> */}
+          {/* <div className="header-right"> */}
             <img className="example" src={user.imageurl} alt="" />
-          </div>
+            {/* </div> */}
+          {/* <div className="header-left"> */}
+            <Search />
+          {/* </div> */}
       </div>
-      <div className="row">
+      {/* <div className="row">
         <div className="side">
-      </div>
+      </div> */}
       <div className="main">
       {orderDoods().map(dood => {
           const doodler = dood.username === user.name ? user : 
@@ -60,7 +64,7 @@ const orderDoods = () => {
         })}  
       </div>
     </div>
-  </div>
+  // </div>
 
 )};
 export default Home;
