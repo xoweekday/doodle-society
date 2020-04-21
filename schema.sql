@@ -8,8 +8,7 @@ CREATE TABLE users (
   googleId VARCHAR (50) UNIQUE NOT NULL,
   email VARCHAR (50) NOT NULL,
   name VARCHAR (50) NOT NULL,
-  imageUrl VARCHAR (255) NOT NULL,
-  accessToken VARCHAR (255) NOT NULL
+  imageUrl VARCHAR (255) NOT NULL
 );
 
 CREATE TABLE friends (

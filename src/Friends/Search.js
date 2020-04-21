@@ -33,7 +33,7 @@ const Search = ({ user, getFriends, setFriends }) => {
       .then(() => {
         getFriends(user)
           .then(results => setFriends(results.data))
-          .catch(err => console.error(err));
+          .catch(err => console.error(err))
       })
       .then(() => setRedirect(true))
       .catch(err => console.error(err));
