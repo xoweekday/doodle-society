@@ -7,7 +7,6 @@ import {
 } from "react-router-dom";
 import ReactNotifications from 'react-notifications-component';
 import axios from 'axios';
-import _ from 'lodash';
 import './App.css';
 import Login from './Login/log-in.js'
 import Upload from './Upload';
@@ -71,19 +70,15 @@ function App() {
 
   useEffect(() => {
     if(user.id) {
-      getFriends(user)
-        .then(results => setFriends(results.data))
+        getFriends(user)
+        .then(results => {
+          setFriends(results.data);
+          })
         .catch(err => console.error(err));
-
-        setInterval(() => {
-          getFriends(user)
-            .then(results => {
-              if (!_.isEqual(friends, results.data)) {
-                setFriends(results.data);
-              }
-            })
-            .catch(err => console.error(err));
-        }, 10000)
+    } else {
+      setImgs([]);
+      setDoods({});
+      setFriends([]);
     }
   }, [user]);
 
@@ -92,13 +87,7 @@ function App() {
       <React.Fragment>
         <Router>
           <ReactNotifications/>
-          <NavigationBar
-            user={user}
-            setUser={setUser}
-            setFriends={setFriends}
-            setDoods={setDoods}
-            getAllDoods={getAllDoods}
-          />
+          <NavigationBar user={user} setUser={setUser} getAllDoods={getAllDoods} />
           <Switch>
             <Route
             exact path="/"
@@ -143,6 +132,30 @@ function App() {
                           getImgs={getImgs}
                           getFriends={getFriends}
                         />
+
+              //   return (
+                
+              //   <div>
+              //     <div className="imgheader">
+              //       <Row>
+              //         <Col>
+              //           <div></div>
+              //           <div><b>{user.name}</b></div>
+              //           <Image className="profileimgs" src={user.imageurl} rounded />
+              //           <div>{user.email}</div>
+              //           <div>{user.id !== null && doods[user.id] ? `Total Doods: ${doods[user.id].length}` : null}</div>
+              //         </Col>
+              //       </Row>
+              //     </div>
+              //     <SideNav friends={friends} />
+              //     <NormalImageFeed
+              //       imgs={imgs}
+              //       getAllDoods={getAllDoods}
+              //       user={user}
+              //     />
+              //     <Doodlefeed doods={doods} user={user}/>
+              //   </div>
+              // )}
               }}
             />
             <Route
@@ -197,7 +210,7 @@ function App() {
                     back: '/comments'
                   }} />
                 }
-                return <Comment user={user} getComments={getComments} />
+                return <Comment user={user} getComments={getComments} /> 
               }}
               />
           </Switch>
