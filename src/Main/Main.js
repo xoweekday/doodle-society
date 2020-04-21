@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './Main.css';
 import { Redirect } from 'react-router-dom';
+import Search from '../Friends/Search'
 
 const LikeButton = () => {
   const [toggleState, setToggleState] = useState("off");
@@ -39,7 +40,8 @@ const orderDoods = () => {
     <div class="header">
         <a className="logo">Feed</a>
           <div class="header-right">
-            <img class="example" src={user.imageurl} />
+            <a href="#searchbar"> <Search /></a>
+            <img class="example" src={user.imageurl} alt="profilePic"/>
           </div>
       </div>
       <div class="row">
