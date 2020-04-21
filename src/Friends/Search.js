@@ -3,6 +3,7 @@ import { Redirect } from 'react-router-dom';
 import AsyncSelect from 'react-select/async';
 import axios from 'axios';
 import _ from 'lodash';
+import Button from 'react-bootstrap/Button';
 
 const Search = ({ user, getFriends, setFriends }) => {
 
@@ -40,11 +41,12 @@ const Search = ({ user, getFriends, setFriends }) => {
   }
 
   return (
-    <div>
-      {renderRedirect()}
+    <div className="friendSearch">
+    {renderRedirect()}
+      <i class="fa fa-search icon" aria-hidden="true"></i>
       <AsyncSelect loadOptions={handleSearch} onChange={(e) => setSelect(e.value)}/>
-      <button onClick={() => addFriend(select)}>Add</button>
-    </div>
+      {!!select && <Button variant="info" onClick={() => addFriend(select)}>Add </Button>}
+      </div>
   )
 }
 
