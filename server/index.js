@@ -59,9 +59,9 @@ fastify.get('/api/users/:id', (req, res) => {
     })
 });
 
-fastify.get('/api/users/find/:email', (req, res) => {
-  db.getUserByEmail(req, res)
-  .then(user => res.status(200).send(user.rows[0]))
+fastify.get('/api/users/find/:name', (req, res) => {
+  db.getUserByName(req, res)
+  .then(users => res.status(200).send(users.rows))
   .catch((err) => {
     console.error(err);
     res.status(500).send();
