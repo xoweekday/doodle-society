@@ -38,6 +38,7 @@ CREATE TABLE doodles (
 CREATE TABLE comments (
   id serial PRIMARY KEY,
   comment VARCHAR(500),
-  doodler_id int NOT NULL,
+  doodle_id int NOT NULL,
+  user_id int NOT NULL,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 )
