@@ -38,13 +38,13 @@ const getUserByToken = (req, res) => {
 }
 
 const addComments = (req, res) => {
-  const { comment } = req.body;
-  return pool.query('INSERT INTO comments (comment) VALUES ($1)', [comment]);
+  const { comment, doodle_id, user_id } = req.body;
+  return pool.query('INSERT INTO comments (comment, doodle_id, user_id) VALUES ($1, $2, $3) RETURNING id', [comment, doodle_id, user_id]);
 }
 
 const getComments = (req, res) => {
-  const { id } = req.body;
-  return pool.query('SELECT * from comments WHERE doodler_id = id', [id]);
+  const { doodle_id } = req.params;
+  return pool.query('SELECT comments.*, users.name AS username, users.imageUrl AS avatar FROM comments, users WHERE comments.doodle_id = $1 AND comments.user_id = users.id', [doodle_id]);
 }
 
 //add a user to the db
