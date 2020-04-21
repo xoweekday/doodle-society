@@ -56,10 +56,6 @@ function App() {
     return axios.get(`/api/friends/${user.id}`);
   }
 
-  const getComments = doods => {
-    return axios.get(`/api/comments/${doods.id}`);
-  }
-
   useEffect(() => {
     if(fetchDoods) {
       clearInterval(fetchDoods);
@@ -201,7 +197,7 @@ function App() {
                 return <Search user={user} getFriends={getFriends} />
             }}
             />
-            <Route
+            {/* <Route
               path="/comments"
               render={()=> {
                 if(!user.id){
@@ -210,7 +206,12 @@ function App() {
                     back: '/comments'
                   }} />
                 }
-                return <Comment user={user} getComments={getComments} /> 
+                return <Comments 
+                  user={user}
+                  setComments={setComments} 
+                  getComments={getComments}
+                  doods={doods}
+                   />  */}
               }}
               />
           </Switch>
