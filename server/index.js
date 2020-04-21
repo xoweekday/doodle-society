@@ -142,13 +142,9 @@ fastify.get('/api/friends/:id', (req, res) => {
     });
 });
 
-fastify.get('/*', function (req, res) {
-  res.sendFile('index.html');
-});
-
-fastify.get('/api/comments/:doodler_id', (req, res) => {
+fastify.get('/api/comments/:doodle_id', (req, res) => {
   db.getComments(req, res)
-  .then(result => res.status(200).send(result.rows[0]))
+  .then(result => res.status(200).send(result.rows))
   .catch(err => {
     console.error(err);
     res.status(500).send('Unable to retrieve comments');
@@ -163,3 +159,7 @@ fastify.post('/api/comments', (req, res) => {
     res.status(500).send('Unable to post Comments');
   })
 })
+
+fastify.get('/*', function (req, res) {
+  res.sendFile('index.html');
+});
