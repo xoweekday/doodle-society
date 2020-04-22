@@ -5,18 +5,27 @@ const moment = require('moment');
 
 const Comments = ({user, dood, getComment}) => {
     const[comments, setComments] = useState([]);
+    const[comment, setComment] = useState("");
+    const[showComments,setShowComments ] = useState(3);
 
     useEffect(() => {
         getComments()
         .then(result => setComments(result.data));
     },[]);
     
+    useEffect(() => {
+        console.log(showComments);
+    })
+
+
     const getComments = () => {
         return axios.get(`/api/comments/${dood.id}`);
     }
 
     const addComments = () => {
-        const comment = document.getElementById('comment').value;
+        if(!comment){
+            return;
+        }
         axios.post('/api/comments', {doodle_id: dood.id, comment: comment, user_id: user.id})
         .then(() => {
          return getComments()   
@@ -27,10 +36,12 @@ const Comments = ({user, dood, getComment}) => {
 
     return(
         <Comment.Group>
-            <List as='h3' dividing>
-                Comments
+            <List>
+                <b>Comments</b>
+                <hr></hr>
             </List>
-            { comments.map((comment) => (
+            {!!showComments && <div className ='hideComments' onClick={() => setShowComments(0)}>hide comments</div>}
+            {comments.slice(0, showComments).map((comment) => (
             <Comment>
                 <Comment.Avatar src={comment.avatar}/>
                 <Comment.Content>
@@ -47,10 +58,14 @@ const Comments = ({user, dood, getComment}) => {
             </Comment>
             ))
             }
+            {!!comments.length && comments.length > showComments && <div className="headComment" dividing onClick={() => setShowComments(showComments + 3)}>
+                 Show More Comments 
+            </div>}
             <Form reply>
-                <Form.TextArea id='comment'/>
-                <Button  onClick={() => addComments()} content='Reply' labelPosition='left' icon='edit' primary />
+                <Form.TextArea id='comment' onChange={(e) =>{setComment(e.target.value)}}/>
+                <Button onClick={() => addComments()} content='Reply' labelPosition='left' primary />
             </Form>
+            
         </Comment.Group>
     )
 };
