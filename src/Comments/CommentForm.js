@@ -7,19 +7,20 @@ const Comments = ({user, dood, getComment}) => {
     const[comments, setComments] = useState([]);
     const[comment, setComment] = useState("");
     const[showComments,setShowComments ] = useState(3);
+    const [fetchComments, setFetch] = useState();
 
     useEffect(() => {
-        getComments()
-        .then(result => setComments(result.data));
+        if(fetchComments) {
+            clearInterval(fetchComments);
+        }
+        getComments();
+        setFetch(setInterval(getComments, 5000));
     },[]);
     
-    useEffect(() => {
-        console.log(showComments);
-    })
-
-
     const getComments = () => {
-        return axios.get(`/api/comments/${dood.id}`);
+        return axios.get(`/api/comments/${dood.id}`)
+        .then((results) => setComments(results.data))
+        .catch(err => console.error(err));
     }
 
     const addComments = () => {
@@ -28,19 +29,22 @@ const Comments = ({user, dood, getComment}) => {
         }
         axios.post('/api/comments', {doodle_id: dood.id, comment: comment, user_id: user.id})
         .then(() => {
-         return getComments()   
+            if (comments.length > 2) {
+                setShowComments(comments.length + 1);
+            }
+            return getComments();   
         })
-        .then((results) => setComments(results.data))
         .catch(err => console.error(err));
     }
 
     return(
         <Comment.Group>
             <List>
-                <b>Comments</b>
+                {!!comments.length && <b>Comments ({comments.length})</b>}
                 <hr></hr>
             </List>
-            {!!showComments && <div className ='hideComments' onClick={() => setShowComments(0)}>hide comments</div>}
+            {!!showComments && !!comments.length && 
+            <div className ='hideComments' onClick={() => setShowComments(0)}>hide comments</div>}
             {comments.slice(0, showComments).map((comment) => (
             <Comment>
                 <Comment.Avatar src={comment.avatar}/>

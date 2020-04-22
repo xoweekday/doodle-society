@@ -70,16 +70,8 @@ function App() {
   }
 
   useEffect(() => {
-    if(fetchDoods) {
-      clearInterval(fetchDoods);
-    }
-    if (fetchRequests) {
-      clearInterval(fetchRequests);
-    }
     getAllDoods();
     getRequests();
-    setFetchDoods(setInterval(getAllDoods, 5000));
-    setFetchRequests(setInterval(getRequests, 5000));
   }, [friends]);
 
   useEffect(() => {
@@ -89,10 +81,14 @@ function App() {
           setFriends(results.data);
           })
         .catch(err => console.error(err));
-    } else {
-      setImgs([]);
-      setDoods({});
-      setFriends([]);
+
+        setInterval(() => {
+          getFriends(user)
+          .then(results => {
+            setFriends(results.data)
+          })
+          .catch(err => console.error(err));
+        }, 5000);
     }
   }, [user]);
 
@@ -139,7 +135,7 @@ function App() {
                   }} />
                 }
                 const profUser = props.location.user || user;
-                if (!friends.some(friend => friend.id === profUser.id) && profUser !== user) {
+                if (!friends.some(friend => friend.id === profUser.id) && profUser.id !== user.id) {
                   alert(`You are not yet friends with ${profUser.name}. Please add them first.`);
                   return <Redirect to="/home" />
                 }
@@ -191,7 +187,7 @@ function App() {
                     user={user}
                     url={props.location.url}
                     original_id={props.location.original_id}
-                    getAllDoods={props.location.getAllDoods}
+                    getAllDoods={getAllDoods}
                   />
                 );
               }}
