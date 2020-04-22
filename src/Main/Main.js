@@ -13,7 +13,7 @@ const LikeButton = () => {
   return <div className={`switch ${toggleState}`} onClick={toggle} />;
 }
 
-const Home = ({user, doods, friends }) => {
+const Home = ({user, doods, friends, getFriends, setFriends }) => {
 
 const orderDoods = () => {
   const allDoods = [];
@@ -32,7 +32,11 @@ const orderDoods = () => {
             <img className="example" src={user.imageurl} alt="" />
             {/* </div> */}
           {/* <div className="header-left"> */}
-            <Search />
+            <Search
+              user={user}
+              getFriends={getFriends}
+              setFriends={setFriends}
+            />
           {/* </div> */}
       </div>
       {/* <div className="row">

@@ -169,7 +169,14 @@ function App() {
                 back: "/home"
               }} />
             }
-            return <Main user={user} imgs={imgs} doods={doods} friends={friends}/>
+            return <Main
+                      user={user}
+                      imgs={imgs}
+                      doods={doods}
+                      friends={friends}
+                      getFriends={getFriends}
+                      setFriends={setFriends}
+                    />
           }}
             />
             <Route
