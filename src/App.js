@@ -23,6 +23,7 @@ function App() {
   const [imgs, setImgs] = useState([]);
   const [doods, setDoods] = useState({});
   const [friends, setFriends] = useState([]);
+  const [requests, setRequests] = useState([]);
   const [fetchDoods, setFetch] = useState();
 
   const getDoods = (user) => {
@@ -57,6 +58,15 @@ function App() {
     return axios.get(`/api/friends/${user.id}`);
   }
 
+  const getRequests = () => {
+    axios.get(`/api/friends/requests/${user.id}`)
+      .then((requests) => setRequests(requests.data.filter(request => {
+        console.log(request);
+        return !friends.some(friend => friend.id === request.id);
+      })))
+      .catch(err => console.error(err));
+  }
+
   useEffect(() => {
     if(fetchDoods) {
       clearInterval(fetchDoods);
@@ -69,6 +79,7 @@ function App() {
     if(user.id) {
       getFriends(user)
         .then(results => setFriends(results.data))
+        .then(() => getRequests())
         .catch(err => console.error(err));
 
         setInterval(() => {
@@ -78,6 +89,7 @@ function App() {
                 setFriends(results.data);
               }
             })
+            .then(() => getRequests())
             .catch(err => console.error(err));
         }, 10000)
     }

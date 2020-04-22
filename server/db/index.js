@@ -74,7 +74,7 @@ const getFriends = (req, res) => {
 //  requests
 const getFriendRequests = (req, res) => {
   const { id } = req.params;
-  return pool.query('SELECT users.id, users.name FROM friends, users WHERE friends.friend_id = $1 AND friends.user_id = users.id', [id]);
+  return pool.query('SELECT users.* FROM friends, users WHERE friends.friend_id = $1 AND friends.user_id = users.id', [id]);
 }
 
 const removeFriend = (req, res) => {
