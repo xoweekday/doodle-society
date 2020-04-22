@@ -155,7 +155,7 @@ function App() {
                     user={user}
                     url={props.location.url}
                     original_id={props.location.original_id}
-                    getAllDoods={props.location.getAllDoods}
+                    getAllDoods={getAllDoods}
                   />
                 );
               }}
