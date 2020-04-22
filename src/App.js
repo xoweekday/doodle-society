@@ -70,16 +70,8 @@ function App() {
   }
 
   useEffect(() => {
-    // if(fetchDoods) {
-    //   clearInterval(fetchDoods);
-    // }
-    // if (fetchRequests) {
-    //   clearInterval(fetchRequests);
-    // }
     getAllDoods();
     getRequests();
-    // setFetchDoods(setInterval(getAllDoods, 5000));
-    // setFetchRequests(setInterval(getRequests, 5000));
   }, [friends]);
 
   useEffect(() => {
