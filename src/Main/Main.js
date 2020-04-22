@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './Main.css';
 import { Link } from 'react-router-dom';
+import Comments from '../Comments/CommentForm';
 import Search from '../Friends/Search';
 const moment = require('moment');
 
@@ -62,6 +63,7 @@ const orderDoods = () => {
               </p>
              <p align="justify"><font className="caption">{dood.caption}</font></p>
              <p align="justify"><font className="createdAt">{moment(dood.created_at).startOf('minute').fromNow()}</font></p>
+             <Comments dood={dood} user={user}/>
             </div>
           )
         })}  

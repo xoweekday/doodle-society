@@ -142,6 +142,24 @@ fastify.get('/api/friends/:id', (req, res) => {
     });
 });
 
+fastify.get('/api/comments/:doodle_id', (req, res) => {
+  db.getComments(req, res)
+  .then(result => res.status(200).send(result.rows))
+  .catch(err => {
+    console.error(err);
+    res.status(500).send('Unable to retrieve comments');
+  });
+})
+
+fastify.post('/api/comments', (req, res) => {
+  db.addComments(req, res)
+  .then(result => res.status(201).send(result.rows[0].id))
+  .catch(err => {
+    console.error(err);
+    res.status(500).send('Unable to post Comments');
+  })
+})
+
 fastify.get('/api/friends/requests/:id', (req, res) => {
   db.getFriendRequests(req, res)
     .then(requests => res.status(200).send(requests.rows))
