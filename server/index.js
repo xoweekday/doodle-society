@@ -142,6 +142,15 @@ fastify.get('/api/friends/:id', (req, res) => {
     });
 });
 
+fastify.get('/api/friends/requests/:id', (req, res) => {
+  db.getFriendRequests(req, res)
+    .then(requests => res.status(200).send(requests.rows))
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send();
+    });
+});
+
 fastify.get('/*', function (req, res) {
   res.sendFile('index.html');
 });
