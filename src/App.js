@@ -150,6 +150,10 @@ function App() {
                   }} />
                 }
                 const profUser = props.location.user || user;
+                if (!friends.some(friend => friend.id === profUser.id) && profUser !== user) {
+                  alert(`You are not yet friends with ${profUser.name}. Please add them first.`);
+                  return <Redirect to="/home" />
+                }
                 return <Profile
                           user={profUser}
                           doods={doods} 

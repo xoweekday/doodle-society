@@ -33,9 +33,15 @@ const Search = ({ user, friends, getFriends, setFriends }) => {
 
   const addFriend = (friend) => {
     axios.post('/api/friends', { user_id: user.id, friend_id: friend.id })
-      .then(() => {
-        getFriends(user)
-          .then(results => setFriends(results.data))
+      .then((result) => {
+        if (result.data === 'exists') {
+          alert("You've already sent a friend request to this user.");
+          return Promise.reject('Friend request already sent.');
+        }
+        return getFriends(user)
+          .then(results => {
+              setFriends(results.data);
+          })
           .catch(err => console.error(err))
       })
       .then(() => setRedirect(true))

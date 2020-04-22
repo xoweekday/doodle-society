@@ -42,8 +42,14 @@ const createUser = (req, res) => {
 //  only reciprocal relationships will be true friends
 const addFriend = (req, res) => {
   const {user_id, friend_id} = req.body;
-
-  return pool.query('INSERT INTO friends (user_id, friend_id) VALUES ($1, $2)', [user_id, friend_id]);
+  return pool.query('SELECT FROM friends WHERE user_id = $1 AND friend_id = $2', [user_id, friend_id])
+    .then((result) => {
+      if (result.rowCount) {
+        return Promise.resolve('exists')
+      }
+      return pool.query('INSERT INTO friends (user_id, friend_id) VALUES ($1, $2)', [user_id, friend_id]);
+    });
+  
 }
 
 //  get all friends associated with an id that have added that id back
