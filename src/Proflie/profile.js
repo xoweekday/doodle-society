@@ -5,7 +5,7 @@ import NormalImageFeed from './imagesfeed';
 import Doodlefeed from './doodlefeed.js'
 
 
-const Profile = ({ user, getAllDoods, doods, getImgs, getFriends }) => {
+const Profile = ({ user, getAllDoods, doods, getImgs, getFriends, requests }) => {
   const [imgs, setImgs] = useState([]);
   const [friends, setFriends] = useState([]);
 
@@ -29,7 +29,13 @@ const Profile = ({ user, getAllDoods, doods, getImgs, getFriends }) => {
           </Col>
         </Row>
       </div>
-      <SideNav friends={friends} />
+      <SideNav
+        user={user}
+        friends={friends}
+        requests={requests || null}
+        getFriends={getFriends}
+        setFriends={setFriends}
+      />
       <NormalImageFeed
         imgs={imgs}
         getAllDoods={getAllDoods}

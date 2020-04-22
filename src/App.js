@@ -24,7 +24,8 @@ function App() {
   const [doods, setDoods] = useState({});
   const [friends, setFriends] = useState([]);
   const [requests, setRequests] = useState([]);
-  const [fetchDoods, setFetch] = useState();
+  const [fetchDoods, setFetchDoods] = useState();
+  const [fetchRequests, setFetchRequests] = useState();
 
   const getDoods = (user) => {
     return axios.get(`/api/doodles/${user.id}`);
@@ -59,9 +60,11 @@ function App() {
   }
 
   const getRequests = () => {
+    if (!user.id) {
+      return;
+    }
     axios.get(`/api/friends/requests/${user.id}`)
       .then((requests) => setRequests(requests.data.filter(request => {
-        console.log(request);
         return !friends.some(friend => friend.id === request.id);
       })))
       .catch(err => console.error(err));
@@ -71,15 +74,19 @@ function App() {
     if(fetchDoods) {
       clearInterval(fetchDoods);
     }
+    if (fetchRequests) {
+      clearInterval(fetchRequests);
+    }
     getAllDoods();
-    setFetch(setInterval(getAllDoods, 5000));
+    getRequests();
+    setFetchDoods(setInterval(getAllDoods, 5000));
+    setFetchRequests(setInterval(getRequests, 5000));
   }, [friends]);
 
   useEffect(() => {
     if(user.id) {
       getFriends(user)
         .then(results => setFriends(results.data))
-        .then(() => getRequests())
         .catch(err => console.error(err));
 
         setInterval(() => {
@@ -89,7 +96,6 @@ function App() {
                 setFriends(results.data);
               }
             })
-            .then(() => getRequests())
             .catch(err => console.error(err));
         }, 10000)
     }
@@ -150,6 +156,7 @@ function App() {
                           getAllDoods={getAllDoods}
                           getImgs={getImgs}
                           getFriends={getFriends}
+                          requests={profUser.id === user.id && requests}
                         />
               }}
             />
