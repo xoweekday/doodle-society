@@ -158,6 +158,16 @@
   font-size: small;
 }
 
+.headComment:hover {
+  color: Blue;
+  cursor: pointer;
+}
+
+.hideComments:hover {
+  color: Blue;
+  cursor: pointer;
+}
+
 .avatar {
   float: left;
   margin-left: initial;
