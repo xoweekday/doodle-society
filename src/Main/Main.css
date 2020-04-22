@@ -158,6 +158,21 @@
   font-size: small;
 }
 
+.clear-heart:hover {
+  opacity: 0.75;
+  color: red;
+}
+.red-heart {
+  color: red;
+  will-change: font-size;
+  animation: heart 1s cubic-bezier(.17, .89, .32, 1.49);
+}
+
+
+@keyframes heart { 0%, 17.5% { font-size: 0; } }
+
+
+
 /* Responsive layout - when the screen is less than 700px wide, make the two columns stack on top of each other instead of next to each other */
 /* @media screen and (max-width: 700px) {
   .row {   

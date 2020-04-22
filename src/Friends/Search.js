@@ -43,7 +43,7 @@ const Search = ({ user, getFriends, setFriends }) => {
   return (
     <div className="friendSearch">
     {renderRedirect()}
-      <i class="fa fa-search icon" aria-hidden="true"></i>
+      <i className="fa fa-search icon" aria-hidden="true"></i>
       <AsyncSelect loadOptions={handleSearch} onChange={(e) => setSelect(e.value)}/>
       {!!select && <Button variant="info" onClick={() => addFriend(select)}>Add </Button>}
       </div>

@@ -2,6 +2,7 @@ DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS friends;
 DROP TABLE IF EXISTS images;
 DROP TABLE IF EXISTS doodles;
+DROP TABLE IF EXISTS likes;
 
 CREATE TABLE users (
   id serial PRIMARY KEY,
@@ -33,3 +34,9 @@ CREATE TABLE doodles (
   doodler_id int NOT NULL,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE TABLE likes (
+  id serial PRIMARY KEY,
+  user_id int NOT NULL,
+  doodle_id int NOT NULL
+)

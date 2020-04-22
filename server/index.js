@@ -79,6 +79,17 @@ fastify.post('/api/users/token', (req, res) => {
     });
 });
 
+fastify.post('/api/doodles/likes/:userId/:doodleId', (req, res) => {
+  db.addLikedDoodle(req, res)
+  .then(doodle => {
+    res.status(200).send(doodle.rows)
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status.send();
+  })
+})
+
 fastify.post('/api/images', (req, res) => {
   db.addImage(req, res)
     .then(image => res.status(201).send(image))

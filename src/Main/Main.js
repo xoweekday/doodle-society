@@ -2,19 +2,24 @@ import React, { useState } from 'react';
 import './Main.css';
 import { Link } from 'react-router-dom';
 import Search from '../Friends/Search';
+import { FaHeart } from 'react-icons/fa'
+import { IconContext } from "react-icons";
+import axios from 'axios';
 const moment = require('moment');
 
-const LikeButton = () => {
-  const [toggleState, setToggleState] = useState("off");
 
-  function toggle() {
-    setToggleState(toggleState === "off" ? "on" : "off");
-  }
-  return <div className={`switch ${toggleState}`} onClick={toggle} />;
-}
+
+
 
 const Home = ({user, doods, friends }) => {
+  
+  const toggleLike = (e) => {
+    console.log(doods, user);
+    (e.currentTarget.className.baseVal === 'clear-heart') ? e.currentTarget.className.baseVal = 'red-heart': e.currentTarget.className.baseVal = 'clear-heart';
+  }
 
+  // const addLikedDood = () => axios.post('/api/doodles/likes/:userId/:doodleId');
+  
 const orderDoods = () => {
   const allDoods = [];
   Object.values(doods).forEach(doodColl => {
@@ -39,14 +44,13 @@ const orderDoods = () => {
         <div className="side">
       </div> */}
       <div className="main">
-      {orderDoods().map(dood => {
+      {orderDoods().map((dood, index) => {
           const doodler = dood.username === user.name ? user : 
           friends.filter(friend => friend.name === dood.username)[0];
           return (
             <div className="feed-doodle-container" key={dood.username + dood.id}>
               <img className="feed-doodle" src={dood.url} alt="" />
               <img className="feed-bg-image" src={dood.original_url} alt="" />
-              <LikeButton />
               <p align="justify">
                 <Link className="userName" to={{
                   pathname: '/profile',
@@ -55,8 +59,11 @@ const orderDoods = () => {
                   {dood.username + ':'}
                 </Link>
               </p>
-             <p align="justify"><font className="caption">{dood.caption}</font></p>
-             <p align="justify"><font className="createdAt">{moment(dood.created_at).startOf('minute').fromNow()}</font></p>
+            <p align="justify"><font className="caption">{dood.caption}</font></p>
+            <p align="justify"><font className="createdAt">{moment(dood.created_at).startOf('minute').fromNow()}</font></p>
+            <div>
+            <FaHeart size='2em'  className={`clear-heart`} onClick={toggleLike} /> 
+            </div>
             </div>
           )
         })}  

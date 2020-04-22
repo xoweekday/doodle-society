@@ -99,6 +99,13 @@ const addDoodle = (req, res) => {
   [url, caption, original_id, doodler_id]);
 }
 
+
+const addLikedDoodle = (req, res) => {
+  const { user_id, doodler_id } = req.body;
+
+  return pool.query('INSERT INTO likes (user_id, doodle_id) VALUES ($1, $2) RETURNING id', [user_id, doodler_id]);
+}
+
 const getUserUploads = (req, res) => {
   const { id } = req.params;
   return pool.query('SELECT * FROM images WHERE uploader_id = $1 ORDER BY created_at DESC', [id]);
@@ -130,4 +137,5 @@ module.exports = {
   getUserUploads,
   getUserDoodles,
   getImageById,
+  addLikedDoodle,
 }

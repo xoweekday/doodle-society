@@ -109,7 +109,7 @@ function App() {
               return <Redirect to={back} />
             }
             }
-           />
+  />
             <Route
               path="/upload"
               render={() => {
