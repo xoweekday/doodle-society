@@ -89,10 +89,14 @@ function App() {
           setFriends(results.data);
           })
         .catch(err => console.error(err));
-    } else {
-      setImgs([]);
-      setDoods({});
-      setFriends([]);
+
+        setInterval(() => {
+          getFriends(user)
+          .then(results => {
+            setFriends(results.data)
+          })
+          .catch(err => console.error(err));
+        }, 10000);
     }
   }, [user]);
 
@@ -139,7 +143,7 @@ function App() {
                   }} />
                 }
                 const profUser = props.location.user || user;
-                if (!friends.some(friend => friend.id === profUser.id) && profUser !== user) {
+                if (!friends.some(friend => friend.id === profUser.id) && profUser.id !== user.id) {
                   alert(`You are not yet friends with ${profUser.name}. Please add them first.`);
                   return <Redirect to="/home" />
                 }
