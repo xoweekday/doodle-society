@@ -10,8 +10,7 @@ const Login = ({ setUser }) => {
     const responseGoogle = (response) => {
         setName(response.profileObj.name);
         setUrl(response.profileObj.imageUrl);
-        const {accessToken} = response;
-        axios.post('/api/users', Object.assign(response.profileObj, {accessToken}))
+        axios.post('/api/users', response.profileObj)
             .then(id => {
                 return axios.get(`/api/users/${id.data}`);
             })

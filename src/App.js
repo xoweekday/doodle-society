@@ -23,7 +23,9 @@ function App() {
   const [imgs, setImgs] = useState([]);
   const [doods, setDoods] = useState({});
   const [friends, setFriends] = useState([]);
-  const [fetchDoods, setFetch] = useState();
+  const [requests, setRequests] = useState([]);
+  const [fetchDoods, setFetchDoods] = useState();
+  const [fetchRequests, setFetchRequests] = useState();
 
   const getDoods = (user) => {
     return axios.get(`/api/doodles/${user.id}`);
@@ -57,12 +59,28 @@ function App() {
     return axios.get(`/api/friends/${user.id}`);
   }
 
+  const getRequests = () => {
+    if (!user.id) {
+      return;
+    }
+    axios.get(`/api/friends/requests/${user.id}`)
+      .then((requests) => setRequests(requests.data.filter(request => {
+        return !friends.some(friend => friend.id === request.id);
+      })))
+      .catch(err => console.error(err));
+  }
+
   useEffect(() => {
     if(fetchDoods) {
       clearInterval(fetchDoods);
     }
+    if (fetchRequests) {
+      clearInterval(fetchRequests);
+    }
     getAllDoods();
-    setFetch(setInterval(getAllDoods, 5000));
+    getRequests();
+    setFetchDoods(setInterval(getAllDoods, 5000));
+    setFetchRequests(setInterval(getRequests, 5000));
   }, [friends]);
 
   useEffect(() => {
@@ -138,6 +156,7 @@ function App() {
                           getAllDoods={getAllDoods}
                           getImgs={getImgs}
                           getFriends={getFriends}
+                          requests={profUser.id === user.id && requests}
                         />
               }}
             />
@@ -169,7 +188,14 @@ function App() {
                 back: "/home"
               }} />
             }
-            return <Main user={user} imgs={imgs} doods={doods} friends={friends}/>
+            return <Main
+                      user={user}
+                      imgs={imgs}
+                      doods={doods}
+                      friends={friends}
+                      getFriends={getFriends}
+                      setFriends={setFriends}
+                    />
           }}
             />
             <Route

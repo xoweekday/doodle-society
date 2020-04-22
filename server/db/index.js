@@ -31,17 +31,11 @@ const getUserByName = (req, res) => {
   return pool.query('SELECT * FROM users WHERE name ILIKE $1 OR $1 % name ORDER BY SIMILARITY(name, $1) DESC LIMIT 8', [name]);
 }
 
-const getUserByToken = (req, res) => {
-  const { token } = req.body;
-  
-  return pool.query('SELECT * FROM users WHERE accessToken = $1', [token]);
-}
-
 //add a user to the db
 const createUser = (req, res) => {
-  const { googleId, email, name, imageUrl, accessToken} = req.body;
-  return pool.query('INSERT INTO users (googleId, email, name, imageUrl, accessToken) VALUES ($1, $2, $3, $4, $5) RETURNING id', 
-  [googleId, email, name, imageUrl, accessToken]);
+  const { googleId, email, name, imageUrl } = req.body;
+  return pool.query('INSERT INTO users (googleId, email, name, imageUrl) VALUES ($1, $2, $3, $4) RETURNING id', 
+  [googleId, email, name, imageUrl]);
 }
 
 //  add a friend relation to the db
@@ -80,7 +74,7 @@ const getFriends = (req, res) => {
 //  requests
 const getFriendRequests = (req, res) => {
   const { id } = req.params;
-  return pool.query('SELECT user_id FROM friends WHERE friend_id = $1', [id]);
+  return pool.query('SELECT users.* FROM friends, users WHERE friends.friend_id = $1 AND friends.user_id = users.id', [id]);
 }
 
 const removeFriend = (req, res) => {
@@ -119,7 +113,6 @@ module.exports = {
   getUserByGoogleId,
   getUserById,
   getUserByName,
-  getUserByToken,
   createUser,
   addFriend,
   getFriends,
