@@ -34,6 +34,7 @@ const orderDoods = () => {
           {/* <div className="header-left"> */}
             <Search
               user={user}
+              friends={friends}
               getFriends={getFriends}
               setFriends={setFriends}
             />

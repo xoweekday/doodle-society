@@ -1,22 +1,24 @@
 import React, { useState } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
 import AsyncSelect from 'react-select/async';
 import axios from 'axios';
 import _ from 'lodash';
 import Button from 'react-bootstrap/Button';
 
-const Search = ({ user, getFriends, setFriends }) => {
+const Search = ({ user, friends, getFriends, setFriends }) => {
 
   const [select, setSelect] = useState('');
   const [redirect, setRedirect] = useState(false);
+  const history = useHistory();
 
   let handleSearch = (search) => {
     return new Promise(resolve => {
       axios.get(`/api/users/find/${search}`)
         .then(users => resolve(users.data.map(user => {
+          const youAreFriends = friends.some(friend => friend.id === user.id) ? ' (friend)' : '';
           return {
             value: user,
-            label: user.name,
+            label: user.name + youAreFriends,
           }
         })));
     }) ;
@@ -45,7 +47,16 @@ const Search = ({ user, getFriends, setFriends }) => {
     {renderRedirect()}
       <i class="fa fa-search icon" aria-hidden="true"></i>
       <AsyncSelect loadOptions={handleSearch} onChange={(e) => setSelect(e.value)}/>
-      {!!select && <Button variant="info" onClick={() => addFriend(select)}>Add </Button>}
+      {!!select &&
+        !friends.some(friend => friend.id === select.id) &&
+        select.id !== user.id &&
+        <Button variant="info" onClick={() => addFriend(select)}>Add</Button>}
+      {!!select &&
+        (friends.some(friend => friend.id === select.id) || select.id === user.id) && 
+        <Button variant="info" onClick={() => history.push({
+          pathname: '/profile',
+          user: select
+        })}>Visit</Button>}
       </div>
   )
 }
