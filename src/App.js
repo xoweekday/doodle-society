@@ -70,16 +70,16 @@ function App() {
   }
 
   useEffect(() => {
-    if(fetchDoods) {
-      clearInterval(fetchDoods);
-    }
-    if (fetchRequests) {
-      clearInterval(fetchRequests);
-    }
+    // if(fetchDoods) {
+    //   clearInterval(fetchDoods);
+    // }
+    // if (fetchRequests) {
+    //   clearInterval(fetchRequests);
+    // }
     getAllDoods();
     getRequests();
-    setFetchDoods(setInterval(getAllDoods, 5000));
-    setFetchRequests(setInterval(getRequests, 5000));
+    // setFetchDoods(setInterval(getAllDoods, 5000));
+    // setFetchRequests(setInterval(getRequests, 5000));
   }, [friends]);
 
   useEffect(() => {
@@ -96,7 +96,7 @@ function App() {
             setFriends(results.data)
           })
           .catch(err => console.error(err));
-        }, 10000);
+        }, 5000);
     }
   }, [user]);
 
