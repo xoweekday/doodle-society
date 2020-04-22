@@ -52,7 +52,7 @@ const Search = ({ user, friends, getFriends, setFriends }) => {
     <div className="friendSearch">
     {renderRedirect()}
       <i class="fa fa-search icon" aria-hidden="true"></i>
-      <AsyncSelect loadOptions={handleSearch} onChange={(e) => setSelect(e.value)}/>
+      <AsyncSelect className="react-select-container" classNamePrefix="react-select" loadOptions={handleSearch} onChange={(e) => setSelect(e.value)} placeholder="Find Friends"/>
       {!!select &&
         !friends.some(friend => friend.id === select.id) &&
         select.id !== user.id &&
