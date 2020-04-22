@@ -126,7 +126,7 @@ fastify.get('/api/originals/:id', (req, res) => {
 
 fastify.post('/api/friends', (req, res) => {
   db.addFriend(req, res)
-    .then(result => res.status(201).send(result.rowCount))
+    .then(result => res.status(201).send(result))
     .catch((err) => {
       console.error(err);
       res.status(500).send();
