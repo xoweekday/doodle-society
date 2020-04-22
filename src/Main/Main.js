@@ -30,6 +30,7 @@ const orderDoods = () => {
         {/* <div className="logo">Feed</div> */}
           {/* <div className="header-right"> */}
             <img className="example" src={user.imageurl} alt="" />
+            <div className="test">{user.name}</div>
             {/* </div> */}
           {/* <div className="header-left"> */}
             <Search />
