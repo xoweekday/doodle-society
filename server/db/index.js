@@ -31,12 +31,6 @@ const getUserByName = (req, res) => {
   return pool.query('SELECT * FROM users WHERE name ILIKE $1 OR $1 % name ORDER BY SIMILARITY(name, $1) DESC LIMIT 8', [name]);
 }
 
-const getUserByToken = (req, res) => {
-  const { token } = req.body;
-  
-  return pool.query('SELECT * FROM users WHERE accessToken = $1', [token]);
-}
-
 const addComments = (req, res) => {
   const { comment, doodle_id, user_id } = req.body;
   return pool.query('INSERT INTO comments (comment, doodle_id, user_id) VALUES ($1, $2, $3) RETURNING id', [comment, doodle_id, user_id]);
@@ -49,17 +43,23 @@ const getComments = (req, res) => {
 
 //add a user to the db
 const createUser = (req, res) => {
-  const { googleId, email, name, imageUrl, accessToken} = req.body;
-  return pool.query('INSERT INTO users (googleId, email, name, imageUrl, accessToken) VALUES ($1, $2, $3, $4, $5) RETURNING id', 
-  [googleId, email, name, imageUrl, accessToken]);
+  const { googleId, email, name, imageUrl } = req.body;
+  return pool.query('INSERT INTO users (googleId, email, name, imageUrl) VALUES ($1, $2, $3, $4) RETURNING id', 
+  [googleId, email, name, imageUrl]);
 }
 
 //  add a friend relation to the db
 //  only reciprocal relationships will be true friends
 const addFriend = (req, res) => {
   const {user_id, friend_id} = req.body;
-
-  return pool.query('INSERT INTO friends (user_id, friend_id) VALUES ($1, $2)', [user_id, friend_id]);
+  return pool.query('SELECT FROM friends WHERE user_id = $1 AND friend_id = $2', [user_id, friend_id])
+    .then((result) => {
+      if (result.rowCount) {
+        return Promise.resolve('exists')
+      }
+      return pool.query('INSERT INTO friends (user_id, friend_id) VALUES ($1, $2)', [user_id, friend_id]);
+    });
+  
 }
 
 //  get all friends associated with an id that have added that id back
@@ -90,7 +90,7 @@ const getFriends = (req, res) => {
 //  requests
 const getFriendRequests = (req, res) => {
   const { id } = req.params;
-  return pool.query('SELECT user_id FROM friends WHERE friend_id = $1', [id]);
+  return pool.query('SELECT users.* FROM friends, users WHERE friends.friend_id = $1 AND friends.user_id = users.id', [id]);
 }
 
 const removeFriend = (req, res) => {
@@ -129,7 +129,6 @@ module.exports = {
   getUserByGoogleId,
   getUserById,
   getUserByName,
-  getUserByToken,
   createUser,
   addFriend,
   getFriends,

@@ -126,7 +126,7 @@ fastify.get('/api/originals/:id', (req, res) => {
 
 fastify.post('/api/friends', (req, res) => {
   db.addFriend(req, res)
-    .then(result => res.status(201).send(result.rowCount))
+    .then(result => res.status(201).send(result))
     .catch((err) => {
       console.error(err);
       res.status(500).send();
@@ -159,6 +159,15 @@ fastify.post('/api/comments', (req, res) => {
     res.status(500).send('Unable to post Comments');
   })
 })
+
+fastify.get('/api/friends/requests/:id', (req, res) => {
+  db.getFriendRequests(req, res)
+    .then(requests => res.status(200).send(requests.rows))
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send();
+    });
+});
 
 fastify.get('/*', function (req, res) {
   res.sendFile('index.html');
