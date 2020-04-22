@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './Main.css';
 import { Link } from 'react-router-dom';
+import Comments from '../Comments/CommentForm';
 import Search from '../Friends/Search';
 const moment = require('moment');
 
@@ -13,7 +14,7 @@ const LikeButton = () => {
   return <div className={`switch ${toggleState}`} onClick={toggle} />;
 }
 
-const Home = ({user, doods, friends }) => {
+const Home = ({user, doods, friends, getFriends, setFriends }) => {
 
 const orderDoods = () => {
   const allDoods = [];
@@ -33,7 +34,12 @@ const orderDoods = () => {
             <div className="test">{user.name}</div>
             {/* </div> */}
           {/* <div className="header-left"> */}
-            <Search />
+            <Search
+              user={user}
+              friends={friends}
+              getFriends={getFriends}
+              setFriends={setFriends}
+            />
           {/* </div> */}
       </div>
       {/* <div className="row">
@@ -58,6 +64,7 @@ const orderDoods = () => {
               </p>
              <p align="justify"><font className="caption">{dood.caption}</font></p>
              <p align="justify"><font className="createdAt">{moment(dood.created_at).startOf('minute').fromNow()}</font></p>
+             <Comments dood={dood} user={user}/>
             </div>
           )
         })}  
