@@ -64,6 +64,15 @@ const orderDoods = () => {
               </p>
              <p align="justify"><font className="caption">{dood.caption}</font></p>
              <p align="justify"><font className="createdAt">{moment(dood.created_at).startOf('minute').fromNow()}</font></p>
+             <p align="justify"><font className="originalDoodle">
+             <Link to={{
+                pathname: '/doodle',
+                url: dood.original_url,
+                original_id: dood.original_id,
+              }}>
+               Doodle Original Image
+               </Link>
+               </font></p>
              <Comments dood={dood} user={user}/>
             </div>
           )
