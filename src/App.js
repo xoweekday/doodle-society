@@ -25,6 +25,10 @@ function App() {
   const [requests, setRequests] = useState([]);
   const [fetchDoods, setFetchDoods] = useState();
   const [fetchRequests, setFetchRequests] = useState();
+  const [likedDoods, setLikedDoods] = useState([]);
+
+
+
 
   const getDoods = (user) => {
     return axios.get(`/api/doodles/${user.id}`);
@@ -32,6 +36,13 @@ function App() {
 
   const getImgs = (user) => {
     return axios.get(`/api/images/${user.id}`);
+  }
+
+  const getLikedDoods = (user) => {
+    return axios.get(`/api/doodles/likes/${user.id}`)
+    .then((likedDoods) => {
+      setLikedDoods(likedDoods.data);
+    })
   }
 
   const getAllDoods = () => {
@@ -72,6 +83,7 @@ function App() {
   useEffect(() => {
     getAllDoods();
     getRequests();
+    getLikedDoods(user);
   }, [friends]);
 
   useEffect(() => {
@@ -91,6 +103,8 @@ function App() {
         }, 5000);
     }
   }, [user]);
+
+  
 
   return (
     <div className="App">
@@ -112,7 +126,7 @@ function App() {
               return <Redirect to={back} />
             }
             }
-           />
+  />
             <Route
               path="/upload"
               render={() => {
@@ -186,6 +200,7 @@ function App() {
                       friends={friends}
                       getFriends={getFriends}
                       setFriends={setFriends}
+                      likedDoods={likedDoods}
                     />
           }}
             />

@@ -198,6 +198,33 @@
   font-size: small;
 }
 
+.iconContainer {
+  display: flex;
+  flex-direction: row-reverse;
+  padding-right: 24px;
+}
+
+.countContainer {
+  display: flex;
+  flex-direction: row-reverse;
+  padding-right: 24px;
+}
+
+.clear-heart:hover {
+  display: flex;
+  opacity: 0.75;
+  color: red;
+}
+.red-heart {
+  color: red;
+  will-change: font-size;
+  animation: heart 1s cubic-bezier(.17, .89, .32, 1.49);
+}
+
+
+@keyframes heart { 0%, 17.5% { font-size: 0; } }
+
+
 .headComment:hover {
   color: Blue;
   cursor: pointer;

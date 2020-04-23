@@ -79,6 +79,42 @@ fastify.post('/api/users/token', (req, res) => {
     });
 });
 
+fastify.post('/api/doodles/likes/:userId/:doodleId', (req, res) => {
+  db.addLikedDoodle(req, res)
+  .then(doodle => {
+    res.status(200).send(doodle.rows)
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status.send();
+  })
+})
+
+fastify.get('/api/doodles/likes/:userId', (req, res) => {
+  db.getLikedDoodles(req, res)
+  .then(likedDoods => {
+    console.log(likedDoods);
+    res.status(200).send(likedDoods.map((dood) => {
+      return dood.rows[0];
+    }))
+  })
+  .catch((err) => {
+    console.log(err);
+    res.status.send();
+  })
+})
+
+fastify.patch('/api/doodles/likes/:userId/:doodleId', (req, res) => {
+  db.unLikedDoodle(req, res)
+  .then(doodle => {
+    res.status(200).send(doodle.rows)
+  })
+  .catch((err) => {
+    console.error(err)
+    res.status(500).send()
+  })
+})
+
 fastify.post('/api/images', (req, res) => {
   db.addImage(req, res)
     .then(image => res.status(201).send(image))

@@ -1,31 +1,47 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Main.css';
 import { Link } from 'react-router-dom';
 import Comments from '../Comments/CommentForm';
 import Search from '../Friends/Search';
+import { FaHeart } from 'react-icons/fa'
+import { IconContext } from "react-icons";
+import axios from 'axios';
 import Upload from '../Upload';
 const moment = require('moment');
 
-const LikeButton = () => {
-  const [toggleState, setToggleState] = useState("off");
 
-  function toggle() {
-    setToggleState(toggleState === "off" ? "on" : "off");
+
+
+
+const Home = ({user, doods, friends, getFriends, setFriends, likedDoods }) => {
+  
+  // const [userId] = useState(user.id)
+  // const [doodCount, setDoodCount] = useState();
+
+  const toggleLike = (e) => {
+    (e.currentTarget.className.baseVal === 'clear-heart') ? e.currentTarget.className.baseVal = 'red-heart': e.currentTarget.className.baseVal = 'clear-heart';
   }
-  return <div className={`switch ${toggleState}`} onClick={toggle} />;
-}
 
-const Home = ({user, doods, friends, getFriends, setFriends }) => {
+  const addLikedDood = (user_id, doodler_id) => axios.post(`/api/doodles/likes/${user_id}/${doodler_id}`);
+  const unLikeDood = (user_id, doodler_id) => axios.patch(`/api/doodles/likes/${user_id}/${doodler_id}`)
 
-const orderDoods = () => {
-  const allDoods = [];
-  Object.values(doods).forEach(doodColl => {
-    doodColl.forEach(dood => allDoods.push(dood));
-  });
-  allDoods.sort((a, b) => a.created_at > b.created_at ? -1 : 1);
-  return allDoods;
-}
+  const isLiked = (dood) => {
+    return likedDoods.some((likedDood) => {
+      return likedDood.id === dood.id
+    })
+  }
 
+
+
+  const orderDoods = () => {
+    const allDoods = [];
+    Object.values(doods).forEach(doodColl => {
+      doodColl.forEach(dood => allDoods.push(dood));
+    });
+    allDoods.sort((a, b) => a.created_at > b.created_at ? -1 : 1);
+    return allDoods;
+  }
+  
   return (
   <div className="Home">
     <div className="header text-left">
@@ -45,14 +61,13 @@ const orderDoods = () => {
           </div>
       </div>
       <div className="main">
-      {orderDoods().map(dood => {
+      {orderDoods().map((dood, index) => {
           const doodler = dood.username === user.name ? user : 
           friends.filter(friend => friend.name === dood.username)[0];
           return (
             <div className="feed-doodle-container" key={dood.username + dood.id}>
               <img className="feed-doodle" src={dood.url} alt="" />
               <img className="feed-bg-image" src={dood.original_url} alt="" />
-              <LikeButton />
               <p align="justify">
                 <Link className="userName" to={{
                   pathname: '/profile',
@@ -60,19 +75,31 @@ const orderDoods = () => {
                 }}>
                   {dood.username + ':'}
                 </Link>
+                <div className='iconContainer'>
+            <FaHeart size='2em' className={isLiked(dood) ? 'red-heart' : 'clear-heart'} 
+            onClick={(e) => { 
+              toggleLike(e);
+              e.currentTarget.className.baseVal === 'clear-heart' ?
+              unLikeDood(user.id, dood.id) :
+              addLikedDood(user.id, dood.id)
+            }} /> 
+                </div>
+                <div className='countContainer'>
+                <p>{<b>Total Likes: {dood.count}</b>}</p>
+                </div>
               </p>
-             <p align="justify"><font className="caption">{dood.caption}</font></p>
-             <p align="justify"><font className="createdAt">{moment(dood.created_at).startOf('minute').fromNow()}</font></p>
-             <p align="justify"><font className="originalDoodle">
-             <Link to={{
+            <p align="justify"><font className="caption">{dood.caption}</font></p>
+            <p align="justify"><font className="createdAt">{moment(dood.created_at).startOf('minute').fromNow()}</font></p>
+            <p align="justify"><font className="originalDoodle">
+            <Link to={{
                 pathname: '/doodle',
                 url: dood.original_url,
                 original_id: dood.original_id,
               }}>
-               Doodle Original Image
-               </Link>
-               </font></p>
-             <Comments dood={dood} user={user}/>
+              Doodle Original Image
+              </Link>
+              </font></p>
+            <Comments dood={dood} user={user}/>
             </div>
           )
         })}
