@@ -32,7 +32,8 @@ CREATE TABLE doodles (
   caption VARCHAR(255),
   original_id int NOT NULL,
   doodler_id int NOT NULL,
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+  count int DEFAULT 0 NOT NULL 
 );
 
 CREATE TABLE likes (
