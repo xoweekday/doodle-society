@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './Main.css';
 import { Link } from 'react-router-dom';
+import Comments from '../Comments/CommentForm';
 import Search from '../Friends/Search';
 import Upload from '../Upload';
 const moment = require('moment');
@@ -14,7 +15,7 @@ const LikeButton = () => {
   return <div className={`switch ${toggleState}`} onClick={toggle} />;
 }
 
-const Home = ({user, doods, friends }) => {
+const Home = ({user, doods, friends, getFriends, setFriends }) => {
 
 const orderDoods = () => {
   const allDoods = [];
@@ -28,17 +29,21 @@ const orderDoods = () => {
   return (
   <div className="Home">
     <div className="header text-left">
-      <div className="col-sm-3 well">
       <div className="flex-grid">
         <div className="well">
-            <div className="col"><img className="example" src={user.imageurl} alt="" /></div>
+            <img className="col" src={user.imageurl} alt="" />
             <div className="col">{user.name}</div>
-        </div>
-            <Upload user={user}/>
             </div>
-            <div className="col"><Search /></div>
-    </div>
-    </div>
+            <Upload user={user} />
+            </div>
+            <div className="col"><Search
+              user={user}
+              friends={friends}
+              getFriends={getFriends}
+              setFriends={setFriends}
+            />
+          </div>
+      </div>
       <div className="main">
       {orderDoods().map(dood => {
           const doodler = dood.username === user.name ? user : 
@@ -58,6 +63,7 @@ const orderDoods = () => {
               </p>
              <p align="justify"><font className="caption">{dood.caption}</font></p>
              <p align="justify"><font className="createdAt">{moment(dood.created_at).startOf('minute').fromNow()}</font></p>
+             <Comments dood={dood} user={user}/>
             </div>
           )
         })}
