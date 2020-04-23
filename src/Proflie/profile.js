@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Row, Col, Image } from 'react-bootstrap';
 import SideNav from './profile-side-nav.js';
 import NormalImageFeed from './imagesfeed';
-import Doodlefeed from './doodlefeed.js'
+import Bio from './Bio';
 
 
-const Profile = ({ user, doods, getImgs, getFriends, requests }) => {
+const Profile = ({ user, doods, getImgs, getFriends, requests, allowEditBio }) => {
   const [imgs, setImgs] = useState([]);
   const [friends, setFriends] = useState([]);
 
@@ -26,6 +26,11 @@ const Profile = ({ user, doods, getImgs, getFriends, requests }) => {
             <Image className="profileimgs" src={user.imageurl} rounded />
             <div>{user.email}</div>
             <div>{user.id !== null && doods[user.id] ? `Total Doods: ${doods[user.id].length}` : null}</div>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <Bio user={user} allowEditBio={allowEditBio} />
           </Col>
         </Row>
       </div>
