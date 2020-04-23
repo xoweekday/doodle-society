@@ -3,6 +3,7 @@ import './Main.css';
 import { Link } from 'react-router-dom';
 import Comments from '../Comments/CommentForm';
 import Search from '../Friends/Search';
+import Upload from '../Upload';
 const moment = require('moment');
 
 const LikeButton = () => {
@@ -27,24 +28,22 @@ const orderDoods = () => {
 
   return (
   <div className="Home">
-    <div className="header">
-        {/* <div className="logo">Feed</div> */}
-          {/* <div className="header-right"> */}
-            <img className="example" src={user.imageurl} alt="" />
-            <div className="test">{user.name}</div>
-            {/* </div> */}
-          {/* <div className="header-left"> */}
-            <Search
+    <div className="header text-left">
+      <div className="flex-grid">
+        <div className="well">
+            <img className="col" src={user.imageurl} alt="" />
+            <div className="col">{user.name}</div>
+            </div>
+            <Upload user={user} />
+            </div>
+            <div className="col"><Search
               user={user}
               friends={friends}
               getFriends={getFriends}
               setFriends={setFriends}
             />
-          {/* </div> */}
+          </div>
       </div>
-      {/* <div className="row">
-        <div className="side">
-      </div> */}
       <div className="main">
       {orderDoods().map(dood => {
           const doodler = dood.username === user.name ? user : 
@@ -76,10 +75,9 @@ const orderDoods = () => {
              <Comments dood={dood} user={user}/>
             </div>
           )
-        })}  
+        })}
       </div>
-    </div>
-  // </div>
+  </div>
 
 )};
 export default Home;
