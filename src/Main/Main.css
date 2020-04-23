@@ -204,6 +204,12 @@
   padding-right: 24px;
 }
 
+.countContainer {
+  display: flex;
+  flex-direction: row-reverse;
+  padding-right: 24px;
+}
+
 .clear-heart:hover {
   display: flex;
   opacity: 0.75;

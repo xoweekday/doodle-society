@@ -13,10 +13,10 @@ const moment = require('moment');
 
 
 
-const Home = ({user, doods, friends, getFriends, setFriends }) => {
+const Home = ({user, doods, friends, getFriends, setFriends, likedDoods }) => {
   
-  const [likedDoods, setLikedDoods] = useState([]);
-  const [userId] = useState(user.id)
+  // const [userId] = useState(user.id)
+  // const [doodCount, setDoodCount] = useState();
 
   const toggleLike = (e) => {
     (e.currentTarget.className.baseVal === 'clear-heart') ? e.currentTarget.className.baseVal = 'red-heart': e.currentTarget.className.baseVal = 'clear-heart';
@@ -25,23 +25,14 @@ const Home = ({user, doods, friends, getFriends, setFriends }) => {
   const addLikedDood = (user_id, doodler_id) => axios.post(`/api/doodles/likes/${user_id}/${doodler_id}`);
   const unLikeDood = (user_id, doodler_id) => axios.patch(`/api/doodles/likes/${user_id}/${doodler_id}`)
 
-  // const getLikedDoods = (user_id) => {
-  //   return axios.get(`/api/doodles/likes/${user_id}`)
-  //   .then((likedDoods) => {
-  //     console.log(likedDoods)
-  //     // setLikedDoods(likedDoods);
-  //   })
-  // }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(async () => {
-      const response = await axios.get(`/api/doodles/likes/${userId}`)
-    console.log(response);
-    // setLikedDoods(result.data)
-  }, [likedDoods])
-  
-  
-  
-  
+  const isLiked = (dood) => {
+    return likedDoods.some((likedDood) => {
+      return likedDood.id === dood.id
+    })
+  }
+
+
+
   const orderDoods = () => {
     const allDoods = [];
     Object.values(doods).forEach(doodColl => {
@@ -85,14 +76,16 @@ const Home = ({user, doods, friends, getFriends, setFriends }) => {
                   {dood.username + ':'}
                 </Link>
                 <div className='iconContainer'>
-            <FaHeart size='2em' className={`clear-heart`} 
+            <FaHeart size='2em' className={isLiked(dood) ? 'red-heart' : 'clear-heart'} 
             onClick={(e) => { 
               toggleLike(e);
               e.currentTarget.className.baseVal === 'clear-heart' ?
               unLikeDood(user.id, dood.id) :
               addLikedDood(user.id, dood.id)
-              getLikedDoods()
             }} /> 
+                </div>
+                <div className='countContainer'>
+                <p>{<b>Total Likes: {dood.count}</b>}</p>
                 </div>
               </p>
             <p align="justify"><font className="caption">{dood.caption}</font></p>
