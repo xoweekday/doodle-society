@@ -130,7 +130,7 @@ const unLikedDoodle = (req, res) => {
     return pool.query('UPDATE doodles set count = $1 WHERE id = $2', [doodCount.rows[0].count - 1, doodleId])
   })
   .then(() => {
-    return pool.query('DELETE FROM likes WHERE doodle_id = $1', [doodleId]);
+    return pool.query('DELETE FROM likes WHERE doodle_id = $1 AND user_id = $2', [doodleId, userId]);
   })
 }
 
