@@ -38,7 +38,14 @@ const addComments = (req, res) => {
 
 const getComments = (req, res) => {
   const { doodle_id } = req.params;
-  return pool.query('SELECT comments.*, users.name AS username, users.imageUrl AS avatar FROM comments, users WHERE comments.doodle_id = $1 AND comments.user_id = users.id', [doodle_id]);
+  return pool.query('SELECT comments.*, users.name AS username, users.imageUrl AS avatar FROM comments, users WHERE comments.doodle_id = $1 AND comments.user_id = users.id', [doodle_id])
+    .then((comments) => {
+      return Promise.all(comments.rows.map(comment => pool.query('SELECT * FROM users WHERE id = $1', [comment.user_id])))
+        .then((users) => {
+          users = users.map(user => user.rows[0]);
+          return comments.rows.map((comment, i) => [comment, users[i]]);
+        });
+    });
 }
 
 //add a user to the db
