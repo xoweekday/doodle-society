@@ -180,7 +180,7 @@ fastify.get('/api/friends/:id', (req, res) => {
 
 fastify.get('/api/comments/:doodle_id', (req, res) => {
   db.getComments(req, res)
-  .then(result => res.status(200).send(result.rows))
+  .then(result => res.status(200).send(result))
   .catch(err => {
     console.error(err);
     res.status(500).send('Unable to retrieve comments');
