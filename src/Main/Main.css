@@ -158,6 +158,7 @@
   z-index: 3;
 }
 
+
 .feed-bg-image {
   height: 30vmax;
   width: 30vmax;
@@ -186,6 +187,18 @@
 .originalDoodle:hover {
   text-decoration: underline;
   color: blue;
+}
+
+.gear {
+  position: absolute;
+  max-width: 15px;
+  max-height: 15px;
+  z-index: 5;
+  /* background-color: red; */
+}
+
+.gear:hover {
+  cursor: pointer;
 }
 
 .caption {

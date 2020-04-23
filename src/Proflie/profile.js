@@ -5,7 +5,7 @@ import NormalImageFeed from './imagesfeed';
 import Bio from './Bio';
 
 
-const Profile = ({ user, doods, getImgs, getFriends, requests, allowEditBio }) => {
+const Profile = ({ user, doods, getImgs, getFriends, requests, allowEditBio, getAllDoods, allowDeletePicture }) => {
   const [imgs, setImgs] = useState([]);
   const [friends, setFriends] = useState([]);
 
@@ -45,6 +45,8 @@ const Profile = ({ user, doods, getImgs, getFriends, requests, allowEditBio }) =
         imgs={imgs}
         user={user}
         doods={doods}
+        getAllDoods={getAllDoods}
+        allowDeletePicture={allowDeletePicture}
       />
       {/* <Doodlefeed doods={doods} user={user}/> */}
     </div>
