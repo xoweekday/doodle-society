@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './Main.css';
 import { Link } from 'react-router-dom';
 import Search from '../Friends/Search';
+import Upload from '../Upload';
 const moment = require('moment');
 
 const LikeButton = () => {
@@ -26,19 +27,18 @@ const orderDoods = () => {
 
   return (
   <div className="Home">
-    <div className="header">
-        {/* <div className="logo">Feed</div> */}
-          {/* <div className="header-right"> */}
-            <img className="example" src={user.imageurl} alt="" />
-            <div className="test">{user.name}</div>
-            {/* </div> */}
-          {/* <div className="header-left"> */}
-            <Search />
-          {/* </div> */}
-      </div>
-      {/* <div className="row">
-        <div className="side">
-      </div> */}
+    <div className="header text-left">
+      <div className="col-sm-3 well">
+      <div className="flex-grid">
+        <div className="well">
+            <div className="col"><img className="example" src={user.imageurl} alt="" /></div>
+            <div className="col">{user.name}</div>
+        </div>
+            <Upload user={user}/>
+            </div>
+            <div className="col"><Search /></div>
+    </div>
+    </div>
       <div className="main">
       {orderDoods().map(dood => {
           const doodler = dood.username === user.name ? user : 
@@ -60,10 +60,9 @@ const orderDoods = () => {
              <p align="justify"><font className="createdAt">{moment(dood.created_at).startOf('minute').fromNow()}</font></p>
             </div>
           )
-        })}  
+        })}
       </div>
-    </div>
-  // </div>
+  </div>
 
 )};
 export default Home;
