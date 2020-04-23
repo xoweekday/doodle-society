@@ -52,8 +52,8 @@ function Upload({ user }) {
 
   return (
     <div className="Upload">
-    <h1><b>Upload your Photo here!</b></h1>
-    <header className="Upload-header">
+    {/* <h6><b>Upload your Photo here!</b></h6> */}
+    <div className="Upload-header">
         <CloudinaryContext cloudName='dmxywbm74'>
           {/* <LinkContainer to="/profile" delay={5000}> */}
           <Button variant="info" onClick={() => {
@@ -61,7 +61,7 @@ function Upload({ user }) {
         }}>Upload Image</Button>{' '}
         {/* </LinkContainer> */}
         </CloudinaryContext>
-    </header>
+    </div>
   </div>
   );
 }
