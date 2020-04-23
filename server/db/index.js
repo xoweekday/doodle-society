@@ -124,6 +124,23 @@ const getUserDoodles = (req, res) => {
   return pool.query('SELECT doodles.*, users.name AS username, images.url AS original_url FROM doodles, users, images WHERE doodles.doodler_id = $1 AND users.id = $1 AND doodles.original_id = images.id ORDER BY created_at DESC', [id]);
 }
 
+const addBio = (req, res) => {
+  const { user_id, bio } = req.body;
+  return pool.query('SELECT id FROM bios WHERE user_id = $1', [user_id])
+    .then((result) => {
+      if (result.rowCount) {
+        return pool.query('UPDATE bios SET bio = $1 WHERE user_id = $2', [bio, user_id]);
+      }
+
+      return pool.query('INSERT INTO bios (bio, user_id) VALUES ($1, $2)', [bio, user_id]);
+    });
+}
+
+const getBio = (req, res) => {
+  const { userId } = req.params;
+  return pool.query('SELECT * FROM bios WHERE user_id = $1', [userId]);
+}
+
 module.exports = {
   getUsers,
   getUserByGoogleId,
@@ -141,4 +158,6 @@ module.exports = {
   getImageById,
   addComments,
   getComments,
+  addBio,
+  getBio,
 }

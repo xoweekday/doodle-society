@@ -3,6 +3,7 @@ DROP TABLE IF EXISTS friends;
 DROP TABLE IF EXISTS images;
 DROP TABLE IF EXISTS doodles;
 DROP TABLE IF EXISTS comments;
+DROP TABLE IF EXISTS bios;
 
 CREATE TABLE users (
   id serial PRIMARY KEY,
@@ -40,4 +41,10 @@ CREATE TABLE comments (
   doodle_id int NOT NULL,
   user_id int NOT NULL,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
-)
+);
+
+CREATE TABLE bios (
+  id serial PRIMARY KEY,
+  bio VARCHAR(500),
+  user_id int NOT NULL
+);

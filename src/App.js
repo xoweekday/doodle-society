@@ -135,6 +135,7 @@ function App() {
                   }} />
                 }
                 const profUser = props.location.user || user;
+                const allowEditBio = profUser.id === user.id;
                 if (!friends.some(friend => friend.id === profUser.id) && profUser.id !== user.id) {
                   alert(`You are not yet friends with ${profUser.name}. Please add them first.`);
                   return <Redirect to="/home" />
@@ -146,31 +147,8 @@ function App() {
                           getImgs={getImgs}
                           getFriends={getFriends}
                           requests={profUser.id === user.id && requests}
+                          allowEditBio={allowEditBio}
                         />
-
-              //   return (
-                
-              //   <div>
-              //     <div className="imgheader">
-              //       <Row>
-              //         <Col>
-              //           <div></div>
-              //           <div><b>{user.name}</b></div>
-              //           <Image className="profileimgs" src={user.imageurl} rounded />
-              //           <div>{user.email}</div>
-              //           <div>{user.id !== null && doods[user.id] ? `Total Doods: ${doods[user.id].length}` : null}</div>
-              //         </Col>
-              //       </Row>
-              //     </div>
-              //     <SideNav friends={friends} />
-              //     <NormalImageFeed
-              //       imgs={imgs}
-              //       getAllDoods={getAllDoods}
-              //       user={user}
-              //     />
-              //     <Doodlefeed doods={doods} user={user}/>
-              //   </div>
-              // )}
               }}
             />
             <Route

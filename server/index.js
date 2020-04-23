@@ -169,6 +169,30 @@ fastify.get('/api/friends/requests/:id', (req, res) => {
     });
 });
 
+fastify.post('/api/bios', (req, res) => {
+  db.addBio(req, res)
+    .then(() => res.status(201).send())
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send();
+    });
+});
+
+fastify.get('/api/bios/:userId', (req, res) => {
+  db.getBio(req, res)
+    .then((bio) => {
+      if (bio.rowCount) {
+        res.status(200).send(bio.rows[0].bio);
+      } else {
+        res.status(200).send('');
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send();
+    });
+});
+
 fastify.get('/*', function (req, res) {
   res.sendFile('index.html');
 });
