@@ -5,7 +5,7 @@ import '../Proflie/imagefeed.css'
 const moment = require('moment');
 
 
-const NormalImageFeed = ({ imgs, getAllDoods, user, doods }) => {
+const NormalImageFeed = ({ imgs, user, doods }) => {
   return (
       <div>
           <div className='normal-img' >
@@ -18,7 +18,6 @@ const NormalImageFeed = ({ imgs, getAllDoods, user, doods }) => {
                 pathname: '/doodle',
                 url: img.url,
                 original_id: img.id,
-                getAllDoods: getAllDoods
               }}>
               <img className="gallery-img" src={img.url} alt="" />
               </Link>

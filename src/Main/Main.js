@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import './Main.css';
 import { Link } from 'react-router-dom';
+import Comments from '../Comments/CommentForm';
 import Search from '../Friends/Search';
 import { FaHeart } from 'react-icons/fa'
 import { IconContext } from "react-icons";
 import axios from 'axios';
+import Upload from '../Upload';
 const moment = require('moment');
 
 
 
 
 
-const Home = ({user, doods, friends }) => {
+const Home = ({user, doods, friends, getFriends, setFriends }) => {
   
   const [likedDoods, setLikedDoods] = useState([]);
   const [userId] = useState(user.id)
@@ -50,19 +52,23 @@ const Home = ({user, doods, friends }) => {
   }
   
   return (
-    <div className="Home">
-    <div className="header">
-        {/* <div className="logo">Feed</div> */}
-          {/* <div className="header-right"> */}
-            <img className="example" src={user.imageurl} alt="" />
-            {/* </div> */}
-          {/* <div className="header-left"> */}
-            <Search />
-          {/* </div> */}
+  <div className="Home">
+    <div className="header text-left">
+      <div className="flex-grid">
+        <div className="well">
+            <img className="col" src={user.imageurl} alt="" />
+            <div className="col">{user.name}</div>
+            </div>
+            <Upload user={user} />
+            </div>
+            <div className="col"><Search
+              user={user}
+              friends={friends}
+              getFriends={getFriends}
+              setFriends={setFriends}
+            />
+          </div>
       </div>
-      {/* <div className="row">
-        <div className="side">
-      </div> */}
       <div className="main">
       {orderDoods().map((dood, index) => {
           const doodler = dood.username === user.name ? user : 
@@ -91,14 +97,21 @@ const Home = ({user, doods, friends }) => {
               </p>
             <p align="justify"><font className="caption">{dood.caption}</font></p>
             <p align="justify"><font className="createdAt">{moment(dood.created_at).startOf('minute').fromNow()}</font></p>
-            <div>
-            </div>
+            <p align="justify"><font className="originalDoodle">
+            <Link to={{
+                pathname: '/doodle',
+                url: dood.original_url,
+                original_id: dood.original_id,
+              }}>
+              Doodle Original Image
+              </Link>
+              </font></p>
+            <Comments dood={dood} user={user}/>
             </div>
           )
-        })}  
+        })}
       </div>
-    </div>
-  // </div>
+  </div>
 
 )};
 export default Home;
