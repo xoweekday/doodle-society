@@ -201,6 +201,7 @@ function App() {
                       getFriends={getFriends}
                       setFriends={setFriends}
                       likedDoods={likedDoods}
+                      getLikedDoods={getLikedDoods}
                     />
           }}
             />

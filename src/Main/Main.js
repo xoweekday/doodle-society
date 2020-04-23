@@ -13,7 +13,7 @@ const moment = require('moment');
 
 
 
-const Home = ({user, doods, friends, getFriends, setFriends, likedDoods }) => {
+const Home = ({user, doods, friends, getFriends, setFriends, likedDoods, getLikedDoods }) => {
   
   // const [userId] = useState(user.id)
   // const [doodCount, setDoodCount] = useState();
@@ -22,8 +22,18 @@ const Home = ({user, doods, friends, getFriends, setFriends, likedDoods }) => {
     (e.currentTarget.className.baseVal === 'clear-heart') ? e.currentTarget.className.baseVal = 'red-heart': e.currentTarget.className.baseVal = 'clear-heart';
   }
 
-  const addLikedDood = (user_id, doodler_id) => axios.post(`/api/doodles/likes/${user_id}/${doodler_id}`);
-  const unLikeDood = (user_id, doodler_id) => axios.patch(`/api/doodles/likes/${user_id}/${doodler_id}`)
+  const addLikedDood = (user_id, doodler_id) => {
+    axios.post(`/api/doodles/likes/${user_id}/${doodler_id}`)
+    .then(() => {
+      getLikedDoods(user);
+    })
+  }
+  const unLikeDood = (user_id, doodler_id) => {
+    axios.patch(`/api/doodles/likes/${user_id}/${doodler_id}`)
+    .then(() => {
+      getLikedDoods(user);
+    })
+  }
 
   const isLiked = (dood) => {
     return likedDoods.some((likedDood) => {
