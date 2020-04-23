@@ -216,21 +216,6 @@ function App() {
                 return <Search user={user} getFriends={getFriends} />
             }}
             />
-            {/* <Route
-              path="/comments"
-              render={()=> {
-                if(!user.id){
-                  return <Redirect to={{
-                    pathname: '/',
-                    back: '/comments'
-                  }} />
-                }
-                return <Comments 
-                  user={user}
-                  setComments={setComments} 
-                  getComments={getComments}
-                  doods={doods}
-                   />  */}
               }}
               />
           </Switch>
