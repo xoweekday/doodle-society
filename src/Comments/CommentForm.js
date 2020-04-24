@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
-import { Button, Comment, Form, Header, List } from 'semantic-ui-react'
+import { Button, Comment, Form, Segment, List } from 'semantic-ui-react'
+import { Link } from 'react-router-dom';
 const moment = require('moment');
 
 const Comments = ({user, dood, getComment}) => {
@@ -45,15 +46,18 @@ const Comments = ({user, dood, getComment}) => {
             </List>
             {!!showComments && !!comments.length && 
             <div className ='hideComments' onClick={() => setShowComments(0)}>hide comments</div>}
+            <Segment.Group piled style={{overflow: 'auto', maxHeight: 550}}>
             {comments.slice(0, showComments).map((comment) => (
             <Comment>
-                <Comment.Avatar src={comment.avatar}/>
+                <Comment.Avatar src={comment[0].avatar}/>
                 <Comment.Content>
-                    <Comment.Author as='a'><b>{comment.username}</b></Comment.Author> 
+                <Link className="userName" to={{pathname: '/profile', user: comment[1]}}> {comment.name}
+                    <Comment.Author as='a'><b>{comment[0].username}</b></Comment.Author> 
+                    </Link>
                     <Comment.Metadata>
-                    <div><font className="createdAt">{moment(comment.created_at).startOf('minute').fromNow()}</font></div>
+                    <div><font className="createdAt">{moment(comment[0].created_at).startOf('minute').fromNow()}</font></div>
                     </Comment.Metadata>
-                    <Comment.Text>{comment.comment}</Comment.Text>
+                    <Comment.Text>{comment[0].comment}</Comment.Text>
                     <Comment.Actions>
                         <Comment.Action></Comment.Action>
                     </Comment.Actions>
@@ -62,7 +66,8 @@ const Comments = ({user, dood, getComment}) => {
             </Comment>
             ))
             }
-            {!!comments.length && comments.length > showComments && <div className="headComment" dividing onClick={() => setShowComments(showComments + 3)}>
+            </Segment.Group>
+            {!!comments.length && comments.length > showComments && <div className="headComment" dividing onClick={() => setShowComments(showComments + comments.length)}>
                  Show More Comments 
             </div>}
             <Form reply>

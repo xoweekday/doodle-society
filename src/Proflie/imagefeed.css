@@ -2,9 +2,9 @@
 
 .profile-img-container {
   position: relative;
-  background-color: grey;
+  background-color: #1974d2;
   padding: 20px;
-  border: 2px solid #000000;
+  border: 2px solid #fff000;
   border-radius: 5px;
   margin-bottom: 20px;
 }
@@ -12,27 +12,54 @@
 .normal-img {
   background-color: white;
   /* White background color */
-  border: 4px outset #98D4CD;
+  border: 4px outset #66ff00;
   border-radius: 30px;
-  background-color: #7caaad;
+  background-color: #ff007f;
   padding: 20px;
   margin: 0 auto;
+  width: 60vmax;
 }
 .doodled-img {
   background-color: white;
   /* White background color */
-  border: 4px outset #98D4CD;
+  border: 4px outset #66ff00;
   border-radius: 30px;
-  background-color: #7caaad;
+  background-color: #ff007f;
   padding: 20px;
   margin: 0 auto;
+  width: 60vmax;
 }
 
 .doodle-img-container {
   position: relative;
-  background-color: grey;
+  background-color: #1974d2;
   padding: 20px;
-  border: 2px solid #000000;
+  border: 2px solid #fff000;
   border-radius: 5px;
   margin-bottom: 20px;
+}
+
+.profile-info.col {
+  background-color: #6732C8;
+  height: 100%;
+  /* width: 10vw; */
+  border-radius: 15px;
+  padding: 2vmin 2vmin;
+  border: 4px solid #A91794;
+  /* padding: 2vmin 2vmin; */
+  margin: 25px 50px 75px 100px;
+}
+
+.profile-feed {
+/* padding: 2vmin; */
+margin: 25px 50px 75px 100px;
+}
+
+@media screen and (max-width: 767px) {
+  .profile-info.col {
+    height: auto;
+    padding: 15px;
+  }
+  .profile-feed {height: auto;} 
+
 }

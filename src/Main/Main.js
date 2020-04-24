@@ -15,25 +15,34 @@ const moment = require('moment');
 
 const Home = ({user, doods, friends, getFriends, setFriends, likedDoods, getLikedDoods }) => {
   
-  // const [userId] = useState(user.id)
-  // const [doodCount, setDoodCount] = useState();
+  const [likes, setLikes] = useState({});
+  const [load, setLoad] = useState(false);
+
+
 
   const toggleLike = (e) => {
     (e.currentTarget.className.baseVal === 'clear-heart') ? e.currentTarget.className.baseVal = 'red-heart': e.currentTarget.className.baseVal = 'clear-heart';
   }
 
-  const addLikedDood = (user_id, doodler_id) => {
-    axios.post(`/api/doodles/likes/${user_id}/${doodler_id}`)
-    .then(() => {
-      getLikedDoods(user);
-    })
+  const addLikedDood = (user_id, doodle_id) => {
+    setLoad(true);
+    const updateLikes = {...likes};
+    updateLikes[doodle_id] ? updateLikes[doodle_id]++ : updateLikes[doodle_id] = 1;
+    setLikes(updateLikes);
+    axios.post(`/api/doodles/likes/${user_id}/${doodle_id}`);
   }
-  const unLikeDood = (user_id, doodler_id) => {
-    axios.patch(`/api/doodles/likes/${user_id}/${doodler_id}`)
-    .then(() => {
-      getLikedDoods(user);
-    })
+  const unLikeDood = (user_id, doodle_id) => {
+    setLoad(true);
+    const updateLikes = {...likes};
+    updateLikes[doodle_id] ? updateLikes[doodle_id]-- : updateLikes[doodle_id] = -1;
+    setLikes(updateLikes);
+    axios.patch(`/api/doodles/likes/${user_id}/${doodle_id}`);
   }
+
+  useEffect(() => {
+    setLoad(false);
+    setLikes({});
+  }, [doods]);
 
   const isLiked = (dood) => {
     return likedDoods.some((likedDood) => {
@@ -95,7 +104,7 @@ const Home = ({user, doods, friends, getFriends, setFriends, likedDoods, getLike
             }} /> 
                 </div>
                 <div className='countContainer'>
-                <p>{<b>Total Likes: {dood.count}</b>}</p>
+                <p>{<b>Total Likes: {dood.count + (load && likes[dood.id])}</b>}</p>
                 </div>
               </p>
             <p align="justify"><font className="caption">{dood.caption}</font></p>
