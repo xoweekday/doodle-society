@@ -16,7 +16,7 @@ const SideNav = ({ user, friends, setFriends, getFriends, requests }) => {
     return (
     <List disablePadding dense>
         <ListItem button>
-        <ListItemText>Friends</ListItemText>
+        <ListItemText style={{color:'#FFF64F'}}><b>Friends</b></ListItemText>
         {friends.map(friend => <ListItemText key={friend.id}>
             <Link className="userName" to={{
                   pathname: '/profile',
@@ -27,9 +27,9 @@ const SideNav = ({ user, friends, setFriends, getFriends, requests }) => {
         </ListItemText>)}
         </ListItem>
         <ListItem button>
-            {!!requests && !!requests.length && <ListItemText>Friend Requests:</ListItemText>}
+            {!!requests && !!requests.length && <ListItemText style={{color:'#FFAA1D'}}>Friend Requests:</ListItemText>}
             {!!requests && 
-            requests.map(request => <ListItemText key={request.id} onClick={() => addFriend(request)}>
+            requests.map(request => <ListItemText style={{color:'#FFAA1D'}} key={request.id} onClick={() => addFriend(request)}>
                 {request.name}
             </ListItemText>)}
         </ListItem>
