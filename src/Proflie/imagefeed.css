@@ -29,7 +29,6 @@
   margin: 0 auto;
   width: 60vmax;
 }
-
 .doodle-img-container {
   position: relative;
   background-color: #1974d2;
@@ -53,6 +52,10 @@
 .profile-feed {
 /* padding: 2vmin; */
 margin: 25px 50px 75px 100px;
+}
+
+.gear {
+  background-color:rgba(245, 245, 245, 0.555);
 }
 
 @media screen and (max-width: 767px) {
