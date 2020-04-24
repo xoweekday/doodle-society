@@ -15,6 +15,10 @@ const NormalImageFeed = ({ imgs, user, doods, getAllDoods, allowDeletePicture}) 
     })
   }
 
+  const deleteImage = (id) => {
+    return axios.delete(`/api/images/${id}`);
+  }
+
   const history = useHistory();
 
   return (
@@ -24,7 +28,20 @@ const NormalImageFeed = ({ imgs, user, doods, getAllDoods, allowDeletePicture}) 
         <Carousel>
           {imgs.map(img => (
             <Carousel.Item>
-          <div className='profile-img-container' key={img.id}>
+          <div className='profile-img-container' key={img.id}>{
+            allowDeletePicture &&
+          <img className='gear' onClick={() => {
+            if(window.confirm('WARNING: Deleting an image will delete all of the doodles associated with it. Are you sure you would like to delete this image?')){
+              deleteImage(img.id);
+              // history.push({
+              //   pathname: '/profile',
+              //   user: user
+              // }) 
+            } 
+          }}
+            src='https://www.freeiconspng.com/uploads/trash-can-icon-27.png'>
+          </img>
+          }
               <Link to={{
                 pathname: '/doodle',
                 url: img.url,

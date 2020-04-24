@@ -30,6 +30,11 @@ const deleteDoodle = (req, res) => {
   return pool.query(`DELETE FROM doodles WHERE id = ${doodleid}`)
 };
 
+const deleteImage = (req, res) => {
+  const { imageId } = req.params;
+  return pool.query(`DELETE FROM images WHERE id = ${imageId}`)
+};
+
 const getUserByName = (req, res) => {
   let { name } = req.params;
   name = `%${name}%`;
@@ -212,5 +217,6 @@ module.exports = {
   getComments,
   addBio,
   getBio,
-  deleteDoodle
+  deleteDoodle,
+  deleteImage
 }
