@@ -4,6 +4,7 @@ import './App.css';
 import { fabric } from 'fabric';
 import axios from 'axios';
 import { store } from 'react-notifications-component';
+import Button from 'react-bootstrap/Button';
 import 'react-notifications-component/dist/theme.css';
 import 'animate.css';
 import 'fabric-history';
@@ -77,13 +78,15 @@ useEffect(() => {
         <input type='color' name='color' onChange={handleChange}/>
         <input type="range" name='width' min="5" max="50" onChange={handleChange}></input>
         </div>
+        <div className="canvasButtons">
+        <Button variant="danger" onClick={clearCanvas}>Clear</Button>
+        <Button variant="primary"onClick={undo}>Undo</Button>
+        <Button variant="warning"onClick={redo}>Redo</Button>
+        </div>
         <div className="Doodle-caption">
         <b>Caption:</b>
         <input id="caption" type="text" />
-        <button onClick={clearCanvas}>Clear</button>
-        <button onClick={undo}>Undo</button>
-        <button onClick={redo}>Redo</button>
-        <button onClick={save} >Save</button>
+        <Button variant="success" onClick={save} >Save</Button>
         </div>
       </div>
       <div className="canvas-container" id="canvas-container">

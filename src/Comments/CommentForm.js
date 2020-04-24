@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
-import { Button, Comment, Form, Header, List } from 'semantic-ui-react'
+import { Button, Comment, Form, Segment, List } from 'semantic-ui-react'
 import { Link } from 'react-router-dom';
 const moment = require('moment');
 
@@ -46,6 +46,7 @@ const Comments = ({user, dood, getComment}) => {
             </List>
             {!!showComments && !!comments.length && 
             <div className ='hideComments' onClick={() => setShowComments(0)}>hide comments</div>}
+            <Segment.Group piled style={{overflow: 'auto', maxHeight: 550}}>
             {comments.slice(0, showComments).map((comment) => (
             <Comment>
                 <Comment.Avatar src={comment[0].avatar}/>
@@ -65,7 +66,8 @@ const Comments = ({user, dood, getComment}) => {
             </Comment>
             ))
             }
-            {!!comments.length && comments.length > showComments && <div className="headComment" dividing onClick={() => setShowComments(showComments + 3)}>
+            </Segment.Group>
+            {!!comments.length && comments.length > showComments && <div className="headComment" dividing onClick={() => setShowComments(showComments + comments.length)}>
                  Show More Comments 
             </div>}
             <Form reply>
