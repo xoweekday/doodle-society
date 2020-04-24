@@ -84,7 +84,6 @@ useEffect(() => {
         <Button variant="warning"onClick={redo}>Redo</Button>
         </div>
         <div className="Doodle-caption">
-          <div> </div>
         <b>Caption:</b>
         <input id="caption" type="text" />
         <Button variant="success" onClick={save} >Save</Button>
