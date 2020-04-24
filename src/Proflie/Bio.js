@@ -39,7 +39,7 @@ const Bio = ({ user, allowEditBio }) => {
   }, [user]);
 
   return (
-    <div style={{color:"#FF2372"}}>
+    <div className="Bio-box" style={{color:"#FF2372"}}>
       {loadBio && bio}
     {loadBio && allowEditBio && !editBio && <p><Button variant="primary" onClick={() => setEditBio(!editBio)}>{!!bio && 'Edit Bio' || 'Add Bio'}</Button></p>}
     {editBio && 
