@@ -1,11 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
-<<<<<<< HEAD
 import { Button, Comment, Form, Segment, List } from 'semantic-ui-react'
-=======
-import { Button, Comment, Form, Header, List } from 'semantic-ui-react'
 import { Link } from 'react-router-dom';
->>>>>>> c679eb92af116a25d6d2328a4bb605a84d577285
 const moment = require('moment');
 
 const Comments = ({user, dood, getComment}) => {
