@@ -4,6 +4,7 @@ import './App.css';
 import { fabric } from 'fabric';
 import axios from 'axios';
 import { store } from 'react-notifications-component';
+import Button from 'react-bootstrap/Button';
 import 'react-notifications-component/dist/theme.css';
 import 'animate.css';
 import 'fabric-history';
@@ -12,15 +13,18 @@ let canvas;
 
 function Canvas(props) {
 const { url, original_id, user, getAllDoods } = props;
-const [stamp, setStamp] = useState('');
-
+const [brushColor, setBrushColor] = useState('blue');
 useEffect(() => {
   canvas = new fabric.Canvas('canvas', {
     isDrawingMode: true,
+    selection: true,
     hoverCursor: 'pointer',
     height: 375,
     width: 375,
    });
+   canvas.on('mouse:up', () => canvas.item(canvas._objects.length - 1).selectable = false);
+   canvas.freeDrawingBrush.width = 25;
+   canvas.freeDrawingBrush.color = 'blue';
    document.getElementById('canvas-container').style.backgroundImage = `url(${url})`;
    
   }, [url]);
@@ -44,6 +48,9 @@ useEffect(() => {
       value = Number(value);
     }
     canvas.freeDrawingBrush[event.target.name] = value;
+    if(event.target.name === 'color') {
+      setBrushColor(value);
+    }
   };
 
   const clearCanvas = () => {
@@ -71,14 +78,20 @@ useEffect(() => {
   }
 
   const useStamp = (event) => {
+    canvas.__eventListeners["mouse:down"] = [];
     canvas.isDrawingMode = false;
     const src = event.target.src
     canvas.on('mouse:down', (e) => {
       fabric.Image.fromURL(src, (img) => {
-        const posImg = img.set({ left: e.absolutePointer.x, top: e.absolutePointer.y });
+        const posImg = img.set({ left: e.absolutePointer.x - 24, top: e.absolutePointer.y - 24 });
        canvas.add(posImg);
       })  
    });
+  }
+
+  const freeDraw = () => {
+    canvas.isDrawingMode = true;
+    canvas.__eventListeners["mouse:down"] = [];
   }
 
   return (
@@ -86,19 +99,34 @@ useEffect(() => {
       <h2>Doodle Page</h2>
       <div className="Doodle-header">
         <div className="Doodle-tools">
-        <input type='color' name='color' onChange={handleChange}/>
-        <input type="range" name='width' min="5" max="50" onChange={handleChange}></input>
+        <Button style={{borderColor: brushColor, backgroundColor: brushColor}} onClick={freeDraw}>
+          <img src={process.env.PUBLIC_URL + '/icons8-paint-brush-48.png'} style={{height: 24, width: 24}} />
+        </Button>
+        <input type='color' name='color' defaultValue="#0000FF" onChange={handleChange} onClick={freeDraw}/>
+        <input type="range" name='width' min="5" max="50" defaultValue="25" onChange={handleChange} onClick={freeDraw}></input>
+        <div className="stamps">
+        <Button variant="success" src='/icons8-birthday-clown-48.png' onClick={useStamp}>
+          <img src={process.env.PUBLIC_URL + '/icons8-birthday-clown-48.png'} style={{height: 24, width: 24}}/>
+        </Button>
+        <Button variant="success" src='/icons8-skull-48.png' onClick={useStamp}>
+          <img src={process.env.PUBLIC_URL + '/icons8-skull-48.png'} style={{height: 24, width: 24}}/>
+        </Button>
+        <Button variant="success" src='/icons8-moon-and-stars-48.png' onClick={useStamp}>
+          <img src={process.env.PUBLIC_URL + '/icons8-moon-and-stars-48.png'} style={{height: 24, width: 24}}/>
+        </Button>
+        <Button variant="success" src='/icons8-prawn-48.png' onClick={useStamp}>
+          <img src={process.env.PUBLIC_URL + '/icons8-prawn-48.png'} style={{height: 24, width: 24}}/>
+        </Button>
+        </div>
+        </div>
+        <div className="canvasButtons">
+        <Button variant="danger" onClick={clearCanvas}>Clear</Button>
+        <Button variant="primary"onClick={undo}>Undo</Button>
+        <Button variant="warning"onClick={redo}>Redo</Button>
         </div>
         <div className="Doodle-caption">
-        <b>Caption:</b>
-        <input id="caption" type="text" />
-        <button onClick={clearCanvas}>Clear</button>
-        <button onClick={undo}>Undo</button>
-        <button onClick={redo}>Redo</button>
-        <button onClick={save} >Save</button>
-        <button src='/icons8-birthday-clown-48.png' onClick={useStamp}>
-          <img src={process.env.PUBLIC_URL + '/icons8-birthday-clown-48.png'}/>
-        </button>
+        <input id="caption" type="text" placeholder="Caption your doodle!"/>
+        <Button variant="success" onClick={save} >Save</Button>
         </div>
       </div>
       <div className="canvas-container" id="canvas-container">
