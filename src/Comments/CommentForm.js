@@ -43,9 +43,9 @@ const Comments = ({user, dood, getComment}) => {
                 {!!comments.length && <b>Comments ({comments.length})</b>}
                 <hr></hr>
             </List>
-            <Segment.Group piled style={{overflow: 'auto', maxHeight: 550}}>
             {!!showComments && !!comments.length && 
             <div className ='hideComments' onClick={() => setShowComments(0)}>hide comments</div>}
+            <Segment.Group piled style={{overflow: 'auto', maxHeight: 550}}>
             {comments.slice(0, showComments).map((comment) => (
             <Comment>
                 <Comment.Avatar src={comment[0].avatar}/>
