@@ -7,7 +7,7 @@ const moment = require('moment');
 
 const NormalImageFeed = ({ imgs, user, doods }) => {
   return (
-      <div>
+      <div className="profile-feed">
           <div className='normal-img' >
           <h3>Uploads</h3>
         <Carousel>
