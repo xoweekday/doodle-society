@@ -45,7 +45,8 @@ const NormalImageFeed = ({ imgs, user, doods, getAllDoods, allowDeletePicture}) 
     <Carousel.Item>
       <div key={dood.id}>
         <div className="doodle-img-container">
-          <p align="justify"><font size="3" color="black">{`#${dood.caption}`}</font></p>
+          <p align="justify"><font size="3" color="black">{`#${dood.caption}`}</font></p>{
+            allowDeletePicture && 
           <img className='gear' onClick={() => {
             if(window.confirm('Are you sure you would like to delete this doodle?')){
               deleteDoodle(dood.id);
@@ -57,6 +58,7 @@ const NormalImageFeed = ({ imgs, user, doods, getAllDoods, allowDeletePicture}) 
           }}
             src='https://www.freeiconspng.com/uploads/trash-can-icon-27.png'>
           </img>
+          }
           <img className="doodle" src={dood.url} alt="" />
           <img className="bg-img" src={dood.original_url} alt="" />
           <p align="justify"><font className="createdAt">{moment(dood.created_at).startOf('minute').fromNow()}</font></p>
