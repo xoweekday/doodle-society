@@ -71,6 +71,7 @@ useEffect(() => {
   }
 
   const useStamp = (event) => {
+    canvas.isDrawingMode = false;
     const src = event.target.src
     canvas.on('mouse:down', (e) => {
       fabric.Image.fromURL(src, (img) => {
