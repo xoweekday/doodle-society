@@ -20,20 +20,13 @@ const Profile = ({ user, doods, getImgs, getFriends, requests, allowEditBio, get
     <div>
       <div className="imgheader">
         <Row>
-          <Col>
+          <Col className="profile-info">
             <div></div>
-            <div><b>{user.name}</b></div>
+            <div style={{color:"#FF2372"}}><b>{user.name}</b></div>
             <Image className="profileimgs" src={user.imageurl} rounded />
-            <div>{user.email}</div>
-            <div>{user.id !== null && doods[user.id] ? `Total Doods: ${doods[user.id].length}` : null}</div>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
+            <div style={{color:"#46E4C1"}}>{user.email}</div>
+            <div style={{color:"#FFF64F"}}>{user.id !== null && doods[user.id] ? `Total Doods: ${doods[user.id].length}` : null}</div>
             <Bio user={user} allowEditBio={allowEditBio} />
-          </Col>
-        </Row>
-      </div>
       <SideNav
         user={user}
         friends={friends}
@@ -41,6 +34,8 @@ const Profile = ({ user, doods, getImgs, getFriends, requests, allowEditBio, get
         getFriends={getFriends}
         setFriends={setFriends}
       />
+          </Col>
+          <Col>
       <NormalImageFeed
         imgs={imgs}
         user={user}
@@ -48,6 +43,9 @@ const Profile = ({ user, doods, getImgs, getFriends, requests, allowEditBio, get
         getAllDoods={getAllDoods}
         allowDeletePicture={allowDeletePicture}
       />
+          </Col>
+        </Row>
+      </div>
       {/* <Doodlefeed doods={doods} user={user}/> */}
     </div>
   )

@@ -18,7 +18,7 @@ const NormalImageFeed = ({ imgs, user, doods, getAllDoods, allowDeletePicture}) 
   const history = useHistory();
 
   return (
-      <div>
+      <div className="profile-feed">
           <div className='normal-img' >
           <h3>Uploads</h3>
         <Carousel>

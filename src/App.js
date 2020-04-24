@@ -26,6 +26,7 @@ function App() {
   const [fetchDoods, setFetchDoods] = useState();
   const [fetchRequests, setFetchRequests] = useState();
   const [likedDoods, setLikedDoods] = useState([]);
+  const [loadingDoods, setLoading] = useState(true);
 
 
 
@@ -61,6 +62,7 @@ function App() {
           }
         });
         setDoods(newDoods);
+        setLoading(false);
       })
       .catch(err => console.error(err));
   }
@@ -195,7 +197,8 @@ function App() {
                 back: "/home"
               }} />
             }
-            return <Main
+            return loadingDoods ? <div>...loading doods...</div> :
+                    <Main
                       user={user}
                       imgs={imgs}
                       doods={doods}
