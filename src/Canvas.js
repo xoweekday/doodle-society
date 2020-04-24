@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {useHistory} from 'react-router-dom';
 import './App.css';
 import { fabric } from 'fabric';
@@ -12,6 +12,7 @@ let canvas;
 
 function Canvas(props) {
 const { url, original_id, user, getAllDoods } = props;
+const [stamp, setStamp] = useState('');
 
 useEffect(() => {
   canvas = new fabric.Canvas('canvas', {
@@ -21,7 +22,7 @@ useEffect(() => {
     width: 375,
    });
    document.getElementById('canvas-container').style.backgroundImage = `url(${url})`;
-
+   
   }, [url]);
 
   const options = {
@@ -69,6 +70,16 @@ useEffect(() => {
       .catch(err => console.error(err));
   }
 
+  const useStamp = (event) => {
+    const src = event.target.src
+    canvas.on('mouse:down', (e) => {
+      fabric.Image.fromURL(src, (img) => {
+        const posImg = img.set({ left: e.absolutePointer.x, top: e.absolutePointer.y });
+       canvas.add(posImg);
+      })  
+   });
+  }
+
   return (
     <div className="Doodle">
       <h2>Doodle Page</h2>
@@ -84,6 +95,9 @@ useEffect(() => {
         <button onClick={undo}>Undo</button>
         <button onClick={redo}>Redo</button>
         <button onClick={save} >Save</button>
+        <button src='/icons8-birthday-clown-48.png' onClick={useStamp}>
+          <img src={process.env.PUBLIC_URL + '/icons8-birthday-clown-48.png'}/>
+        </button>
         </div>
       </div>
       <div className="canvas-container" id="canvas-container">
