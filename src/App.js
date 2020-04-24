@@ -25,6 +25,11 @@ function App() {
   const [requests, setRequests] = useState([]);
   const [fetchDoods, setFetchDoods] = useState();
   const [fetchRequests, setFetchRequests] = useState();
+  const [likedDoods, setLikedDoods] = useState([]);
+  const [loadingDoods, setLoading] = useState(true);
+
+
+
 
   const getDoods = (user) => {
     return axios.get(`/api/doodles/${user.id}`);
@@ -32,6 +37,13 @@ function App() {
 
   const getImgs = (user) => {
     return axios.get(`/api/images/${user.id}`);
+  }
+
+  const getLikedDoods = (user) => {
+    return axios.get(`/api/doodles/likes/${user.id}`)
+    .then((likedDoods) => {
+      setLikedDoods(likedDoods.data);
+    })
   }
 
   const getAllDoods = () => {
@@ -50,6 +62,7 @@ function App() {
           }
         });
         setDoods(doodsCopy);
+        setLoading(false);
       })
       .catch(err => console.error(err));
   }
@@ -72,6 +85,7 @@ function App() {
   useEffect(() => {
     getAllDoods();
     getRequests();
+    getLikedDoods(user);
   }, [friends]);
 
   useEffect(() => {
@@ -91,6 +105,8 @@ function App() {
         }, 5000);
     }
   }, [user]);
+
+  
 
   return (
     <div className="App">
@@ -112,7 +128,7 @@ function App() {
               return <Redirect to={back} />
             }
             }
-           />
+  />
             <Route
               path="/upload"
               render={() => {
@@ -135,6 +151,7 @@ function App() {
                   }} />
                 }
                 const profUser = props.location.user || user;
+                const allowEditBio = profUser.id === user.id;
                 if (!friends.some(friend => friend.id === profUser.id) && profUser.id !== user.id) {
                   alert(`You are not yet friends with ${profUser.name}. Please add them first.`);
                   return <Redirect to="/home" />
@@ -146,31 +163,8 @@ function App() {
                           getImgs={getImgs}
                           getFriends={getFriends}
                           requests={profUser.id === user.id && requests}
+                          allowEditBio={allowEditBio}
                         />
-
-              //   return (
-                
-              //   <div>
-              //     <div className="imgheader">
-              //       <Row>
-              //         <Col>
-              //           <div></div>
-              //           <div><b>{user.name}</b></div>
-              //           <Image className="profileimgs" src={user.imageurl} rounded />
-              //           <div>{user.email}</div>
-              //           <div>{user.id !== null && doods[user.id] ? `Total Doods: ${doods[user.id].length}` : null}</div>
-              //         </Col>
-              //       </Row>
-              //     </div>
-              //     <SideNav friends={friends} />
-              //     <NormalImageFeed
-              //       imgs={imgs}
-              //       getAllDoods={getAllDoods}
-              //       user={user}
-              //     />
-              //     <Doodlefeed doods={doods} user={user}/>
-              //   </div>
-              // )}
               }}
             />
             <Route
@@ -201,13 +195,15 @@ function App() {
                 back: "/home"
               }} />
             }
-            return <Main
+            return loadingDoods ? <div>...loading doods...</div> :
+                    <Main
                       user={user}
                       imgs={imgs}
                       doods={doods}
                       friends={friends}
                       getFriends={getFriends}
                       setFriends={setFriends}
+                      likedDoods={likedDoods}
                     />
           }}
             />

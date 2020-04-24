@@ -47,13 +47,13 @@ const Comments = ({user, dood, getComment}) => {
             <div className ='hideComments' onClick={() => setShowComments(0)}>hide comments</div>}
             {comments.slice(0, showComments).map((comment) => (
             <Comment>
-                <Comment.Avatar src={comment.avatar}/>
+                <Comment.Avatar src={comment[0].avatar}/>
                 <Comment.Content>
-                    <Comment.Author as='a'><b>{comment.username}</b></Comment.Author> 
+                    <Comment.Author as='a'><b>{comment[0].username}</b></Comment.Author> 
                     <Comment.Metadata>
-                    <div><font className="createdAt">{moment(comment.created_at).startOf('minute').fromNow()}</font></div>
+                    <div><font className="createdAt">{moment(comment[0].created_at).startOf('minute').fromNow()}</font></div>
                     </Comment.Metadata>
-                    <Comment.Text>{comment.comment}</Comment.Text>
+                    <Comment.Text>{comment[0].comment}</Comment.Text>
                     <Comment.Actions>
                         <Comment.Action></Comment.Action>
                     </Comment.Actions>

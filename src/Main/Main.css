@@ -20,15 +20,27 @@
   padding: 2vmin 2vmin;
   height: auto;
   /* position: absolute; */
-  width: 35vw;
+  width: 34vw;
   float: left;
 }
-
+.flex-grid {
+  display: flex;
+  justify-content: left;
+  align-items: baseline;
+}
+.flex-grid .col {
+  flex: 1;
+  padding: 0px;
+  justify-content: left;
+}
+.col {
+  padding: 0px;
+}
 /* search bar */
 .friendSearch {
   /* display: -ms-flexbox; */
   display: flex;
-  justify-content: left;
+  /* justify-content: left; */
   /* align-items: ; */
   margin-bottom: 10px;
   height: 5.5vh;
@@ -39,7 +51,7 @@
   padding: 10px;
   background: #95D0CA;
   color: white;
-  height: 4.3vh;
+  height: 4.4vh;
   min-width: 2.5vw;
   text-align: center;
 }
@@ -54,7 +66,7 @@
   z-index: 4;
   overflow: visible; */
   /* width: 100%; */
-  padding: 5px;
+  margin-top: 5px;
   outline: none;
 }
 
@@ -62,11 +74,6 @@
 .example {
   height: 12vmin;
   width: 12vmin;
-}
-
-.test {
-  float: left;
-  justify-content: left;
 }
 
 /* Ensure proper sizing */
@@ -104,8 +111,25 @@
     margin-left: 10;
   }
 }
-
-
+@media only screen and (max-width: 768px) {
+  .icon {
+    justify-content: center;
+    min-width: 6vw;
+    margin-left: 30px;
+    height: 4.5vh;
+    padding: 10px;
+    text-align: center;
+    }
+}
+@media (max-width: 400px) {
+  .flex-grid {
+    display: block;
+    .col {
+      width: 100%;
+      margin: 0 0 10px 0;
+    }
+  }
+}
 /* Column container */
 /* .row {
   display: -ms-flexbox;
@@ -153,6 +177,17 @@
   color: blue;
 }
 
+.originalDoodle {
+  cursor: pointer;
+  margin-left: 10px;
+  font-size: xx-small;
+}
+
+.originalDoodle:hover {
+  text-decoration: underline;
+  color: blue;
+}
+
 .caption {
   color: rgb(0, 0, 0);
   margin-left: 10px;
@@ -162,6 +197,33 @@
   margin-left: 10px;
   font-size: small;
 }
+
+.iconContainer {
+  display: flex;
+  flex-direction: row-reverse;
+  padding-right: 24px;
+}
+
+.countContainer {
+  display: flex;
+  flex-direction: row-reverse;
+  padding-right: 24px;
+}
+
+.clear-heart:hover {
+  display: flex;
+  opacity: 0.75;
+  color: red;
+}
+.red-heart {
+  color: red;
+  will-change: font-size;
+  animation: heart 1s cubic-bezier(.17, .89, .32, 1.49);
+}
+
+
+@keyframes heart { 0%, 17.5% { font-size: 0; } }
+
 
 .headComment:hover {
   color: Blue;

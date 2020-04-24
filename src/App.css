@@ -59,9 +59,8 @@
 }
 /* Upload Button */
 .Upload-header {
-  position: absolute;
-  left: 0;
-  top: 30%;
+  margin-left: 30px;
+  top: 10%;
   width: 100%;
   text-align: center;
   font-size: 18px;

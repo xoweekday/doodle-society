@@ -79,6 +79,42 @@ fastify.post('/api/users/token', (req, res) => {
     });
 });
 
+fastify.post('/api/doodles/likes/:userId/:doodleId', (req, res) => {
+  db.addLikedDoodle(req, res)
+  .then(doodle => {
+    res.status(200).send(doodle.rows)
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status.send();
+  })
+})
+
+fastify.get('/api/doodles/likes/:userId', (req, res) => {
+  db.getLikedDoodles(req, res)
+  .then(likedDoods => {
+    console.log(likedDoods);
+    res.status(200).send(likedDoods.map((dood) => {
+      return dood.rows[0];
+    }))
+  })
+  .catch((err) => {
+    console.log(err);
+    res.status.send();
+  })
+})
+
+fastify.patch('/api/doodles/likes/:userId/:doodleId', (req, res) => {
+  db.unLikedDoodle(req, res)
+  .then(doodle => {
+    res.status(200).send(doodle.rows)
+  })
+  .catch((err) => {
+    console.error(err)
+    res.status(500).send()
+  })
+})
+
 fastify.post('/api/images', (req, res) => {
   db.addImage(req, res)
     .then(image => res.status(201).send(image))
@@ -144,7 +180,7 @@ fastify.get('/api/friends/:id', (req, res) => {
 
 fastify.get('/api/comments/:doodle_id', (req, res) => {
   db.getComments(req, res)
-  .then(result => res.status(200).send(result.rows))
+  .then(result => res.status(200).send(result))
   .catch(err => {
     console.error(err);
     res.status(500).send('Unable to retrieve comments');
@@ -163,6 +199,30 @@ fastify.post('/api/comments', (req, res) => {
 fastify.get('/api/friends/requests/:id', (req, res) => {
   db.getFriendRequests(req, res)
     .then(requests => res.status(200).send(requests.rows))
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send();
+    });
+});
+
+fastify.post('/api/bios', (req, res) => {
+  db.addBio(req, res)
+    .then(() => res.status(201).send())
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send();
+    });
+});
+
+fastify.get('/api/bios/:userId', (req, res) => {
+  db.getBio(req, res)
+    .then((bio) => {
+      if (bio.rowCount) {
+        res.status(200).send(bio.rows[0].bio);
+      } else {
+        res.status(200).send('');
+      }
+    })
     .catch((err) => {
       console.error(err);
       res.status(500).send();

@@ -38,7 +38,14 @@ const addComments = (req, res) => {
 
 const getComments = (req, res) => {
   const { doodle_id } = req.params;
-  return pool.query('SELECT comments.*, users.name AS username, users.imageUrl AS avatar FROM comments, users WHERE comments.doodle_id = $1 AND comments.user_id = users.id', [doodle_id]);
+  return pool.query('SELECT comments.*, users.name AS username, users.imageUrl AS avatar FROM comments, users WHERE comments.doodle_id = $1 AND comments.user_id = users.id', [doodle_id])
+    .then((comments) => {
+      return Promise.all(comments.rows.map(comment => pool.query('SELECT * FROM users WHERE id = $1', [comment.user_id])))
+        .then((users) => {
+          users = users.map(user => user.rows[0]);
+          return comments.rows.map((comment, i) => [comment, users[i]]);
+        });
+    });
 }
 
 //add a user to the db
@@ -109,6 +116,43 @@ const addDoodle = (req, res) => {
   [url, caption, original_id, doodler_id]);
 }
 
+
+const addLikedDoodle = (req, res) => {
+  const { userId, doodleId } = req.params;
+  
+  return pool.query('SELECT count FROM doodles WHERE id = $1', [doodleId])
+  .then(doodCount => {
+    return pool.query('UPDATE doodles set count = $1 WHERE id = $2', [doodCount.rows[0].count + 1, doodleId])
+  })
+  .then(() => {
+    return pool.query('INSERT INTO likes (user_id, doodle_id) VALUES ($1, $2) RETURNING id', [userId, doodleId]);
+  })
+}
+
+const unLikedDoodle = (req, res) => {
+  const { userId, doodleId } = req.params;
+  
+  return pool.query('SELECT count FROM doodles WHERE id = $1', [doodleId])
+  .then(doodCount => {
+    return pool.query('UPDATE doodles set count = $1 WHERE id = $2', [doodCount.rows[0].count - 1, doodleId])
+  })
+  .then(() => {
+    return pool.query('DELETE FROM likes WHERE doodle_id = $1 AND user_id = $2', [doodleId, userId]);
+  })
+}
+
+const getLikedDoodles = (req, res) => {
+  const { userId } = req.params;
+
+  return pool.query('SELECT doodle_id FROM likes WHERE user_id = $1', [userId])
+    .then((doodleId) => {
+      console.log(doodleId.rows);
+      return Promise.all(doodleId.rows.map((id) => {
+         return pool.query('SELECT * from doodles WHERE id = $1', [id.doodle_id])
+      }))
+    })
+}
+
 const getUserUploads = (req, res) => {
   const { id } = req.params;
   return pool.query('SELECT * FROM images WHERE uploader_id = $1 ORDER BY created_at DESC', [id]);
@@ -122,6 +166,23 @@ const getImageById = (req, res) => {
 const getUserDoodles = (req, res) => {
   const { id } = req.params;
   return pool.query('SELECT doodles.*, users.name AS username, images.url AS original_url FROM doodles, users, images WHERE doodles.doodler_id = $1 AND users.id = $1 AND doodles.original_id = images.id ORDER BY created_at DESC', [id]);
+}
+
+const addBio = (req, res) => {
+  const { user_id, bio } = req.body;
+  return pool.query('SELECT id FROM bios WHERE user_id = $1', [user_id])
+    .then((result) => {
+      if (result.rowCount) {
+        return pool.query('UPDATE bios SET bio = $1 WHERE user_id = $2', [bio, user_id]);
+      }
+
+      return pool.query('INSERT INTO bios (bio, user_id) VALUES ($1, $2)', [bio, user_id]);
+    });
+}
+
+const getBio = (req, res) => {
+  const { userId } = req.params;
+  return pool.query('SELECT * FROM bios WHERE user_id = $1', [userId]);
 }
 
 module.exports = {
@@ -139,6 +200,11 @@ module.exports = {
   getUserUploads,
   getUserDoodles,
   getImageById,
+  addLikedDoodle,
+  getLikedDoodles,
+  unLikedDoodle,
   addComments,
   getComments,
+  addBio,
+  getBio,
 }
