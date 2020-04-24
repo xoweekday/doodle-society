@@ -1,11 +1,22 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { Carousel } from 'react-bootstrap';
+import axios from 'axios';
 import '../Proflie/imagefeed.css'
 const moment = require('moment');
 
 
-const NormalImageFeed = ({ imgs, user, doods }) => {
+const NormalImageFeed = ({ imgs, user, doods, getAllDoods, allowDeletePicture}) => {
+
+  const deleteDoodle = (id) => {
+    return axios.delete(`/api/doodles/${id}`)
+    .then(() => {
+      getAllDoods();
+    })
+  }
+
+  const history = useHistory();
+
   return (
       <div className="profile-feed">
           <div className='normal-img' >
@@ -34,7 +45,20 @@ const NormalImageFeed = ({ imgs, user, doods }) => {
     <Carousel.Item>
       <div key={dood.id}>
         <div className="doodle-img-container">
-          <p align="justify"><font size="3" color="black">{`#${dood.caption}`}</font></p>
+          <p align="justify"><font size="3" color="black">{`#${dood.caption}`}</font></p>{
+            allowDeletePicture && 
+          <img className='gear' onClick={() => {
+            if(window.confirm('Are you sure you would like to delete this doodle?')){
+              deleteDoodle(dood.id);
+              history.push({
+                pathname: '/profile',
+                user: user
+              }) 
+            } 
+          }}
+            src='https://www.freeiconspng.com/uploads/trash-can-icon-27.png'>
+          </img>
+          }
           <img className="doodle" src={dood.url} alt="" />
           <img className="bg-img" src={dood.original_url} alt="" />
           <p align="justify"><font className="createdAt">{moment(dood.created_at).startOf('minute').fromNow()}</font></p>

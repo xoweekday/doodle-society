@@ -53,15 +53,15 @@ function App() {
     const allUsers = [user].concat(friends);
     return Promise.all(allUsers.map(user => getDoods(user)))
       .then((allDoods) => {
-        const doodsCopy = {...doods};
+        const newDoods = {};
         allDoods
         .map(userDoods => userDoods.data)
         .forEach(userDoods => {
           if(userDoods.length) {
-            doodsCopy[userDoods[0].doodler_id] = userDoods;
+            newDoods[userDoods[0].doodler_id] = userDoods;
           }
         });
-        setDoods(doodsCopy);
+        setDoods(newDoods);
         setLoading(false);
       })
       .catch(err => console.error(err));
@@ -152,6 +152,7 @@ function App() {
                 }
                 const profUser = props.location.user || user;
                 const allowEditBio = profUser.id === user.id;
+                const allowDeletePicture = profUser.id === user.id;
                 if (!friends.some(friend => friend.id === profUser.id) && profUser.id !== user.id) {
                   alert(`You are not yet friends with ${profUser.name}. Please add them first.`);
                   return <Redirect to="/home" />
@@ -164,6 +165,7 @@ function App() {
                           getFriends={getFriends}
                           requests={profUser.id === user.id && requests}
                           allowEditBio={allowEditBio}
+                          allowDeletePicture={allowDeletePicture}
                         />
               }}
             />
@@ -204,7 +206,7 @@ function App() {
                       getFriends={getFriends}
                       setFriends={setFriends}
                       likedDoods={likedDoods}
-                      getLikedDoods={getLikedDoods}
+                      getAllDoods={getAllDoods}
                     />
           }}
             />
