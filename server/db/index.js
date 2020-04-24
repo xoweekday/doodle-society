@@ -28,6 +28,7 @@ const getUserById = (req, res) => {
 const deleteDoodle = (req, res) => {
   const { doodleid } = req.params;
   return pool.query(`DELETE FROM doodles WHERE id = ${doodleid}`)
+    .then(() => pool.query(`DELETE FROM likes WHERE doodle_id = ${doodleid}`));
 };
 
 const getUserByName = (req, res) => {

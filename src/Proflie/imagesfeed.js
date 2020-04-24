@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { Carousel } from 'react-bootstrap';
 import axios from 'axios';
@@ -7,12 +7,23 @@ const moment = require('moment');
 
 
 const NormalImageFeed = ({ imgs, user, doods, getAllDoods, allowDeletePicture}) => {
-
+  const [imgIndex, setImgIndex] = useState(0);
+  const [doodIndex, setDoodIndex] = useState(0);
+  
   const deleteDoodle = (id) => {
+    setDoodIndex(0);
     return axios.delete(`/api/doodles/${id}`)
     .then(() => {
       getAllDoods();
     })
+  }
+
+  const handleSelect = (i, e) => {
+    if(e && e.target.id === 'imgs') {
+      setImgIndex(i);
+    } else {
+      setDoodIndex(i);
+    }
   }
 
   const history = useHistory();
@@ -21,7 +32,7 @@ const NormalImageFeed = ({ imgs, user, doods, getAllDoods, allowDeletePicture}) 
       <div className="profile-feed">
           <div className='normal-img' >
           <h3>Uploads</h3>
-        <Carousel>
+        <Carousel id="imgs" activeIndex={imgIndex} onSelect={handleSelect}>
           {imgs.map(img => (
             <Carousel.Item>
           <div className='profile-img-container' key={img.id}>
@@ -40,7 +51,7 @@ const NormalImageFeed = ({ imgs, user, doods, getAllDoods, allowDeletePicture}) 
 
     <div className='doodled-img'>
       <h3>Doodles</h3>
-    <Carousel>
+    <Carousel id="doodles" activeIndex={doodIndex} onSelect={handleSelect}>
   {doods[user.id] && doods[user.id].map(dood => (
     <Carousel.Item>
       <div key={dood.id}>
