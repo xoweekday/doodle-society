@@ -25,6 +25,11 @@ const getUserById = (req, res) => {
   return pool.query('SELECT * FROM users WHERE id = $1', [id]);
 }
 
+const deleteDoodle = (req, res) => {
+  const { doodleid } = req.params;
+  return pool.query(`DELETE FROM doodles WHERE id = ${doodleid}`)
+};
+
 const getUserByName = (req, res) => {
   let { name } = req.params;
   name = `%${name}%`;
@@ -207,4 +212,5 @@ module.exports = {
   getComments,
   addBio,
   getBio,
+  deleteDoodle
 }

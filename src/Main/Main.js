@@ -13,7 +13,7 @@ const moment = require('moment');
 
 
 
-const Home = ({user, doods, friends, getFriends, setFriends, likedDoods }) => {
+const Home = ({user, doods, friends, getFriends, setFriends, likedDoods, getAllDoods }) => {
   
   const [likes, setLikes] = useState({});
   const [load, setLoad] = useState(false);
