@@ -6,6 +6,7 @@ import axios from 'axios';
 import { store } from 'react-notifications-component';
 import 'react-notifications-component/dist/theme.css';
 import 'animate.css';
+import 'fabric-history';
 
 let canvas;
 
@@ -48,6 +49,14 @@ useEffect(() => {
     canvas.clear();
   };
 
+  const undo = () => {
+    canvas.undo();
+  }
+
+  const redo = () => {
+    canvas.redo();
+  }
+
   const save = () => {
     const dataUrl = document.getElementById('canvas').toDataURL();
     const caption = document.getElementById('caption').value;
@@ -72,6 +81,8 @@ useEffect(() => {
         <b>Caption:</b>
         <input id="caption" type="text" />
         <button onClick={clearCanvas}>Clear</button>
+        <button onClick={undo}>Undo</button>
+        <button onClick={redo}>Redo</button>
         <button onClick={save} >Save</button>
         </div>
       </div>
