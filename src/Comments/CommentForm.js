@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import { Button, Comment, Form, Header, List } from 'semantic-ui-react'
+import { Link } from 'react-router-dom';
 const moment = require('moment');
 
 const Comments = ({user, dood, getComment}) => {
@@ -49,7 +50,9 @@ const Comments = ({user, dood, getComment}) => {
             <Comment>
                 <Comment.Avatar src={comment[0].avatar}/>
                 <Comment.Content>
+                <Link className="userName" to={{pathname: '/profile', user: comment[1]}}> {comment.name}
                     <Comment.Author as='a'><b>{comment[0].username}</b></Comment.Author> 
+                    </Link>
                     <Comment.Metadata>
                     <div><font className="createdAt">{moment(comment[0].created_at).startOf('minute').fromNow()}</font></div>
                     </Comment.Metadata>

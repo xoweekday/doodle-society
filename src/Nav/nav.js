@@ -6,7 +6,7 @@ import { GoogleLogout } from 'react-google-login';
 
 const Styles = styled.div`
   .navbar {
-    background-color: #008080;
+    background-color: #08e8de;
   }
   a,
   .navbar-brand,
