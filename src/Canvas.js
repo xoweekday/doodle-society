@@ -34,6 +34,7 @@ function Canvas(props) {
     canvas.freeDrawingBrush.width = 25;
     canvas.freeDrawingBrush.color = 'blue';
     document.getElementById('canvas-container').style.backgroundImage = `url(${url})`;
+
   }, [url]);
 
   const options = {
@@ -73,6 +74,7 @@ function Canvas(props) {
   };
 
   const save = () => {
+    setSaving(true);
     const dataUrl = document.getElementById('canvas').toDataURL();
     const caption = document.getElementById('caption').value;
     axios.post('/api/doodles', {
@@ -134,8 +136,11 @@ function Canvas(props) {
           <Button variant="warning" onClick={redo}>Redo</Button>
         </div>
         <div className="Doodle-caption">
-          <input id="caption" type="text" placeholder="Caption your doodle!" />
-          <Button variant="success" onClick={save}>Save</Button>
+        <input id="caption" type="text" placeholder="Caption your doodle!"/>
+        {saving && 
+          <img src={process.env.PUBLIC_URL + '/spinner.gif'} className="spinner" /> ||
+          <Button variant="success" onClick={save} >Save</Button>
+        }   
         </div>
       </div>
       <div className="canvas-container" id="canvas-container">
