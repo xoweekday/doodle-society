@@ -16,7 +16,7 @@ const moment = require('moment');
 const Home = ({user, doods, friends, getFriends, setFriends, likedDoods, getAllDoods }) => {
   
   const [likes, setLikes] = useState({});
-  const [load, setLoad] = useState(false);
+  const [load, setLoad] = useState({});
 
 
 
@@ -25,14 +25,18 @@ const Home = ({user, doods, friends, getFriends, setFriends, likedDoods, getAllD
   }
 
   const addLikedDood = (user_id, doodle_id) => {
-    setLoad(true);
+    const updateLoad = {...load};
+    updateLoad[doodle_id] = true;
+    setLoad(updateLoad);
     const updateLikes = {...likes};
     updateLikes[doodle_id] ? updateLikes[doodle_id]++ : updateLikes[doodle_id] = 1;
     setLikes(updateLikes);
     axios.post(`/api/doodles/likes/${user_id}/${doodle_id}`);
   }
   const unLikeDood = (user_id, doodle_id) => {
-    setLoad(true);
+    const updateLoad = {...load};
+    updateLoad[doodle_id] = true;
+    setLoad(updateLoad);
     const updateLikes = {...likes};
     updateLikes[doodle_id] ? updateLikes[doodle_id]-- : updateLikes[doodle_id] = -1;
     setLikes(updateLikes);
@@ -40,7 +44,7 @@ const Home = ({user, doods, friends, getFriends, setFriends, likedDoods, getAllD
   }
 
   useEffect(() => {
-    setLoad(false);
+    setLoad({});
     setLikes({});
   }, [doods]);
 
@@ -104,7 +108,7 @@ const Home = ({user, doods, friends, getFriends, setFriends, likedDoods, getAllD
             }} /> 
                 </div>
                 <div className='countContainer'>
-                <p>{<b>Total Likes: {dood.count + (load && likes[dood.id])}</b>}</p>
+                <p>{<b>Total Likes: {dood.count + ((load[dood.id] && likes[dood.id]) || 0)}</b>}</p>
                 </div>
               </p>
             <p align="justify"><font className="caption">{dood.caption}</font></p>

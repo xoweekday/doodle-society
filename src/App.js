@@ -222,7 +222,6 @@ function App() {
                 return <Search user={user} getFriends={getFriends} />
             }}
             />
-              }}
               />
           </Switch>
         </Router>
@@ -230,4 +229,5 @@ function App() {
     </div>
   );
 }
+
 export default App;
