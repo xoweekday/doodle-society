@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import './log-in.css'
-import {GoogleLogin} from 'react-google-login';
+import { GoogleLogin } from 'react-google-login';
 import axios from 'axios';
 
 const Login = ({ setUser }) => {
-    const [ name, setName] = useState("");
-    const [ url, setUrl] = useState("");
+    const [name, setName] = useState("");
+    const [url, setUrl] = useState("");
 
     const responseGoogle = (response) => {
         setName(response.profileObj.name);
