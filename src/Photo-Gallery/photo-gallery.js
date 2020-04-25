@@ -2,10 +2,11 @@ import React, { useEffect, useState, useCallback } from 'react';
 import Gallery from "react-photo-gallery";
 import Carousel, { Modal, ModalGateway } from "react-images";
 
-const PhotoGallery = ({ likedDoods }) => {
+
+const PhotoGallery = () => {
   const [currentImage, setCurrentImage] = useState(0);
   const [viewerIsOpen, setViewerIsOpen] = useState(false);
-  const [photo, setPhotos] = useState(likedDoods);
+  // const [photo, setPhotos] = useState(likedDoods);
   
   
   const openLightbox = useCallback((event, { photo, index }) => {
@@ -28,7 +29,7 @@ const PhotoGallery = ({ likedDoods }) => {
   //   })
   // }
 
-    console.log(photo)
+    // console.log(photo)
   // useEffect(() => {
   //   photo.map((dood) => {
   //     return {
@@ -41,7 +42,8 @@ const PhotoGallery = ({ likedDoods }) => {
 
   return (
     <div>
-      {/* <Gallery photos={photo}  onClick={openLightbox}/>
+      <h1>hi</h1>
+      <Gallery photos={photo}  onClick={openLightbox}/>
       <ModalGateway>
         {viewerIsOpen ? (
           <Modal onClose={closeLightbox}>
@@ -55,7 +57,7 @@ const PhotoGallery = ({ likedDoods }) => {
             />
           </Modal>
         ) : null}
-      </ModalGateway>  */}
+      </ModalGateway> 
     </div>
   );
 }

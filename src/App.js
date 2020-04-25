@@ -15,6 +15,7 @@ import NavigationBar from './Nav/nav.js'
 import Main from './Main/Main';
 import Search from './Friends/Search';
 import Profile from './Proflie/profile'
+import PhotoGallery from './Photo-Gallery/photo-gallery'
 
 
 function App() {
@@ -220,6 +221,12 @@ function App() {
                   }} />
                 }
                 return <Search user={user} getFriends={getFriends} />
+            }}
+            />
+            <Route
+              path="/photogallery"
+              render={() => {
+                return <PhotoGallery />
             }}
             />
               />

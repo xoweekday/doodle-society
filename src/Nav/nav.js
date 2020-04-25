@@ -36,9 +36,9 @@ const NavigationBar = ({ user, setUser, setFriends, setDoods, getAllDoods }) => 
                 }}
               >Profile</Link>
             </Nav.Item>
-            {/* <Nav.Item>
-              <Link className="navlink" to="/upload">Upload</Link>
-            </Nav.Item> */}
+            <Nav.Item>
+              <Link className="navlink" to="/photogallery">Upload</Link>
+            </Nav.Item> 
             {/* <Nav.Item>
               {user.id !== null ? <Link className="navlink" to="/search">Search</Link> : null}
             </Nav.Item> */}

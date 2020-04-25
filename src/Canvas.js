@@ -84,9 +84,9 @@ useEffect(() => {
     canvas.on('mouse:down', (e) => {
       fabric.Image.fromURL(src, (img) => {
         const posImg = img.set({ left: e.absolutePointer.x - 24, top: e.absolutePointer.y - 24 });
-       canvas.add(posImg);
+      canvas.add(posImg);
       })  
-   });
+  });
   }
 
   const freeDraw = () => {
