@@ -70,3 +70,12 @@
   padding: 10px;
 }
 
+.box {
+  width: 400px;
+  background-color: #ff007f;
+  border: 4px solid #fff000;
+  border-radius: 15px;
+  padding: 2vmin 2vmin;
+  height: 150px;
+  margin: auto;
+}

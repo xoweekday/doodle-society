@@ -92,6 +92,7 @@ useEffect(() => {
       <div className="canvas-container" id="canvas-container">
         <canvas className="canvas" id="canvas" />
       </div>
+      <div className="box"></div>
     </div>
   );
 }

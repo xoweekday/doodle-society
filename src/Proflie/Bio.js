@@ -39,12 +39,12 @@ const Bio = ({ user, allowEditBio }) => {
   }, [user]);
 
   return (
-    <div style={{color:"#FF2372"}}>
+    <div className="Bio-box" style={{color:"#FF2372"}}>
       {loadBio && bio}
     {loadBio && allowEditBio && !editBio && <p><Button variant="primary" onClick={() => setEditBio(!editBio)}>{!!bio && 'Edit Bio' || 'Add Bio'}</Button></p>}
     {editBio && 
     <div>
-    <p><textarea id="bio" /></p>
+    <p><textarea className ="Bio-input" input type="text" id="bio" maxlength="200" /></p>
     <p><Button variant="primary" onClick={addBio}>Save</Button>{' '}</p>
     </div>
     }
