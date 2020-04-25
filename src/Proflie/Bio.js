@@ -1,6 +1,6 @@
-import Button from 'react-bootstrap/Button'
-import axios from 'axios';
 import React, { useState, useEffect} from 'react';
+import axios from 'axios';
+import Button from 'react-bootstrap/Button'
 
 const Bio = ({ user, allowEditBio }) => {
   const [bio, setBio] = useState('');
@@ -10,8 +10,8 @@ const Bio = ({ user, allowEditBio }) => {
 
   const getBio = () => {
     axios.get(`/api/bios/${user.id}`)
-      .then((result) => {
-        setBio(result.data);
+      .then((bio) => {
+        setBio(bio.data);
         setLoad(true);
       })
       .catch(err => console.error(err)); 
