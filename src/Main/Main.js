@@ -111,7 +111,7 @@ const Home = ({
                   <p>
                     <b>
                       Total Likes:
-                      {dood.count + (load && likes[dood.id])}
+                      {dood.count + (load[dood.id] && likes[dood.id] || 0)}
                     </b>
                   </p>
                 </div>
