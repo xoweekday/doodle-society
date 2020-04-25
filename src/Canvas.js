@@ -13,7 +13,10 @@ let canvas;
 
 function Canvas(props) {
 const { url, original_id, user, getAllDoods } = props;
+
 const [brushColor, setBrushColor] = useState('blue');
+const [saving, setSaving] = useState(false);
+
 useEffect(() => {
   canvas = new fabric.Canvas('canvas', {
     isDrawingMode: true,
@@ -66,6 +69,7 @@ useEffect(() => {
   }
 
   const save = () => {
+    setSaving(true);
     const dataUrl = document.getElementById('canvas').toDataURL();
     const caption = document.getElementById('caption').value;
     axios.post('/api/doodles', { url: dataUrl, caption, original_id, doodler_id: user.id })
@@ -126,7 +130,10 @@ useEffect(() => {
         </div>
         <div className="Doodle-caption">
         <input id="caption" type="text" placeholder="Caption your doodle!"/>
-        <Button variant="success" onClick={save} >Save</Button>
+        {saving && 
+          <img src={process.env.PUBLIC_URL + '/spinner.gif'} className="spinner" /> ||
+          <Button variant="success" onClick={save} >Save</Button>
+        }   
         </div>
       </div>
       <div className="canvas-container" id="canvas-container">
