@@ -7,38 +7,39 @@ import Button from 'react-bootstrap/Button';
 
 const Search = ({ user, friends, getFriends, setFriends }) => {
 
-  const [select, setSelect] = useState('');
-  const [redirect, setRedirect] = useState(false);
-  const history = useHistory();
+    const [select, setSelect] = useState('');
+    const [redirect, setRedirect] = useState(false);
+    const history = useHistory();
 
-  let handleSearch = (search) => {
-    return new Promise(resolve => {
-      axios.get(`/api/users/find/${search}`)
+    const handleSearch = (search) => {
+        return new Promise(resolve => {
+            axios.get(`/api/users/find/${search}`)
         .then(users => resolve(users.data.map(user => {
-          const youAreFriends = friends.some(friend => friend.id === user.id) ? ' (friend)' : '';
-          return {
-            value: user,
-            label: user.name + youAreFriends,
-          }
+            const youAreFriends = friends.some(friend => friend.id === user.id) ? ' (friend)' : '';
+            return {
+                value: user,
+                label: user.name + youAreFriends
+            }
         })));
-    }) ;
-  }
-
-
-  const renderRedirect = () => {
-    if(redirect) {
-      return <Redirect to='/profile' />
+        });
     }
-  }
 
-  const addFriend = (friend) => {
-    axios.post('/api/friends', { user_id: user.id, friend_id: friend.id })
-      .then((result) => {
-        if (result.data === 'exists') {
-          alert("You've already sent a friend request to this user.");
-          return Promise.reject('Friend request already sent.');
+
+    const renderRedirect = () => {
+        if(redirect) {
+            return <Redirect to='/profile' />
         }
-        return getFriends(user)
+        return <Redirect to='/home' />
+    }
+
+    const addFriend = (friend) => {
+        axios.post('/api/friends', { user_id: user.id, friend_id: friend.id })
+      .then((result) => {
+          if (result.data === 'exists') {
+              alert("You've already sent a friend request to this user.");
+              return Promise.reject('Friend request already sent.');
+          }
+          return getFriends(user)
           .then(results => {
               setFriends(results.data);
           })
@@ -46,9 +47,9 @@ const Search = ({ user, friends, getFriends, setFriends }) => {
       })
       .then(() => setRedirect(true))
       .catch(err => console.error(err));
-  }
+    }
 
-  return (
+    return (
     <div className="friendSearch">
     {renderRedirect()}
       <i class="fa fa-search icon" aria-hidden="true"></i>
@@ -60,11 +61,11 @@ const Search = ({ user, friends, getFriends, setFriends }) => {
       {!!select &&
         (friends.some(friend => friend.id === select.id) || select.id === user.id) && 
         <Button variant="info" onClick={() => history.push({
-          pathname: '/profile',
-          user: select
+            pathname: '/profile',
+            user: select
         })}>Visit</Button>}
       </div>
-  )
+    )
 }
 
 
