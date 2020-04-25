@@ -22,6 +22,8 @@ function Canvas(props) {
     url, original_id, user, getAllDoods,
   } = props;
   const [brushColor, setBrushColor] = useState('blue');
+  const [saving, setSaving] = useState(false);
+  
   useEffect(() => {
     canvas = new fabric.Canvas('canvas', {
       isDrawingMode: true,
