@@ -124,10 +124,10 @@
 @media (max-width: 400px) {
   .flex-grid {
     display: block;
-    .col {
+    /* .col {
       width: 100%;
       margin: 0 0 10px 0;
-    }
+    } */
   }
 }
 /* Column container */
