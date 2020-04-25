@@ -14,7 +14,7 @@ const getUsers = () => pool.query('SELECT * FROM users ORDER BY id ASC');
 
 //  retrieve a user by their id number
 const getUserByGoogleId = (req) => {
-  const { googleId } = req.body.googleId;
+  const { googleId } = req.body;
 
   return pool.query('SELECT * FROM users WHERE googleId = $1', [googleId]);
 };

@@ -4,22 +4,21 @@ import {
   Route,
   Switch,
   Redirect,
-} from "react-router-dom";
+} from 'react-router-dom';
 import ReactNotifications from 'react-notifications-component';
 import axios from 'axios';
 import './App.css';
-import Login from './Login/log-in.js'
+import Login from './Login/log-in';
 import Upload from './Upload';
 import Canvas from './Canvas';
-import NavigationBar from './Nav/nav.js'
+import NavigationBar from './Nav/nav';
 import Main from './Main/Main';
 import Search from './Friends/Search';
-import Profile from './Proflie/profile'
+import Profile from './Proflie/profile';
 
 
 function App() {
   const [user, setUser] = useState({ id: null, name: 'Not logged in' });
-  const [imgs, setImgs] = useState([]);
   const [doods, setDoods] = useState({});
   const [friends, setFriends] = useState([]);
   const [requests, setRequests] = useState([]);
@@ -200,7 +199,6 @@ function App() {
             return loadingDoods ? <div>...loading doods...</div> :
                     <Main
                       user={user}
-                      imgs={imgs}
                       doods={doods}
                       friends={friends}
                       getFriends={getFriends}
