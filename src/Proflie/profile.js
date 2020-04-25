@@ -42,6 +42,8 @@ const Profile = ({ user, doods, getImgs, getFriends, requests, allowEditBio, get
         doods={doods}
         getAllDoods={getAllDoods}
         allowDeletePicture={allowDeletePicture}
+        getImgs={getImgs}
+        setImgs={setImgs}
       />
           </Col>
         </Row>
