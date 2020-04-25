@@ -44,7 +44,7 @@ const Bio = ({ user, allowEditBio }) => {
     {loadBio && allowEditBio && !editBio && <p><Button variant="primary" onClick={() => setEditBio(!editBio)}>{!!bio && 'Edit Bio' || 'Add Bio'}</Button></p>}
     {editBio && 
     <div>
-    <p><textarea id="bio" /></p>
+    <p><textarea className ="Bio-input" input type="text" id="bio" maxlength="200" /></p>
     <p><Button variant="primary" onClick={addBio}>Save</Button>{' '}</p>
     </div>
     }
