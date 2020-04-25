@@ -13,17 +13,40 @@ const moment = require('moment');
 
 
 
-const Home = ({user, doods, friends, getFriends, setFriends, likedDoods }) => {
+const Home = ({user, doods, friends, getFriends, setFriends, likedDoods, getAllDoods }) => {
   
-  // const [userId] = useState(user.id)
-  // const [doodCount, setDoodCount] = useState();
+  const [likes, setLikes] = useState({});
+  const [load, setLoad] = useState({});
+
+
 
   const toggleLike = (e) => {
     (e.currentTarget.className.baseVal === 'clear-heart') ? e.currentTarget.className.baseVal = 'red-heart': e.currentTarget.className.baseVal = 'clear-heart';
   }
 
-  const addLikedDood = (user_id, doodler_id) => axios.post(`/api/doodles/likes/${user_id}/${doodler_id}`);
-  const unLikeDood = (user_id, doodler_id) => axios.patch(`/api/doodles/likes/${user_id}/${doodler_id}`)
+  const addLikedDood = (user_id, doodle_id) => {
+    const updateLoad = {...load};
+    updateLoad[doodle_id] = true;
+    setLoad(updateLoad);
+    const updateLikes = {...likes};
+    updateLikes[doodle_id] ? updateLikes[doodle_id]++ : updateLikes[doodle_id] = 1;
+    setLikes(updateLikes);
+    axios.post(`/api/doodles/likes/${user_id}/${doodle_id}`);
+  }
+  const unLikeDood = (user_id, doodle_id) => {
+    const updateLoad = {...load};
+    updateLoad[doodle_id] = true;
+    setLoad(updateLoad);
+    const updateLikes = {...likes};
+    updateLikes[doodle_id] ? updateLikes[doodle_id]-- : updateLikes[doodle_id] = -1;
+    setLikes(updateLikes);
+    axios.patch(`/api/doodles/likes/${user_id}/${doodle_id}`);
+  }
+
+  useEffect(() => {
+    setLoad({});
+    setLikes({});
+  }, [doods]);
 
   const isLiked = (dood) => {
     return likedDoods.some((likedDood) => {
@@ -85,7 +108,7 @@ const Home = ({user, doods, friends, getFriends, setFriends, likedDoods }) => {
             }} /> 
                 </div>
                 <div className='countContainer'>
-                <p>{<b>Total Likes: {dood.count}</b>}</p>
+                <p>{<b>Total Likes: {dood.count + ((load[dood.id] && likes[dood.id]) || 0)}</b>}</p>
                 </div>
               </p>
             <p align="justify"><font className="caption">{dood.caption}</font></p>

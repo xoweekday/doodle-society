@@ -229,6 +229,28 @@ fastify.get('/api/bios/:userId', (req, res) => {
     });
 });
 
+fastify.delete('/api/doodles/:doodleid', (req, res) => {
+  db.deleteDoodle(req, res)
+  .then(() => {
+    res.status(200).send();
+  })
+  .catch(err => {
+    console.log(err);
+    res.status(500).send();
+  })
+})
+
+fastify.delete('/api/images/:imageId', (req, res) => {
+  db.deleteImage(req, res)
+  .then(() => {
+    res.status(200).send();
+  })
+  .catch(err => {
+    console.log(err);
+    res.status(500).send();
+  })
+})
+
 fastify.get('/*', function (req, res) {
   res.sendFile('index.html');
 });

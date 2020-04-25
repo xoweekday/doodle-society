@@ -56,7 +56,7 @@ function Upload({ user }) {
     <div className="Upload-header">
         <CloudinaryContext cloudName='dmxywbm74'>
           {/* <LinkContainer to="/profile" delay={5000}> */}
-          <Button variant="info" onClick={() => {
+          <Button variant="primary" onClick={() => {
           beginUpload("image");
         }}>Upload Image</Button>{' '}
         {/* </LinkContainer> */}

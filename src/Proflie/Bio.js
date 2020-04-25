@@ -1,5 +1,6 @@
 import React, { useState, useEffect} from 'react';
 import axios from 'axios';
+import Button from 'react-bootstrap/Button'
 
 const Bio = ({ user, allowEditBio }) => {
   const [bio, setBio] = useState('');
@@ -38,13 +39,13 @@ const Bio = ({ user, allowEditBio }) => {
   }, [user]);
 
   return (
-    <div>
+    <div className="Bio-box" style={{color:"#FF2372"}}>
       {loadBio && bio}
-    {loadBio && allowEditBio && !editBio && <p><button onClick={() => setEditBio(!editBio)}>{!!bio && 'Edit Bio' || 'Add Bio'}</button></p>}
+    {loadBio && allowEditBio && !editBio && <p><Button variant="primary" onClick={() => setEditBio(!editBio)}>{!!bio && 'Edit Bio' || 'Add Bio'}</Button></p>}
     {editBio && 
     <div>
-    <p><textarea id="bio" /></p>
-    <p><button onClick={addBio}>Save</button></p>
+    <p><textarea className ="Bio-input" input type="text" id="bio" maxlength="200" /></p>
+    <p><Button variant="primary" onClick={addBio}>Save</Button>{' '}</p>
     </div>
     }
     </div>
